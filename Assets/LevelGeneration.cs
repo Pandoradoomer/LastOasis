@@ -24,6 +24,7 @@ public class LevelGeneration : MonoBehaviour
     float randomCompareStart = 0.2f, randomCompareEnd = 0.01f; 
 
     public GameObject roomPrefab;
+    [SerializeField] private GameObject bossRoom;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +37,7 @@ public class LevelGeneration : MonoBehaviour
         CreateRooms();
         SetRoomDoors();
         DrawMap();
+        bossRoom = CreateBossRoom();
     }
 
     void CreateRooms()
@@ -230,7 +232,25 @@ public class LevelGeneration : MonoBehaviour
         }
     }
 
-
+    /* Calculate the distance between the spawn room which is positioned at V2.Zero.
+      Get the furthest room away from the spawn room to make it a boss room.
+      Need to expand onto the code to make sure the correct room is chosen. */
+    private GameObject CreateBossRoom()
+    {
+        GameObject go = null;
+        float largestDistance = 0;
+        for (int i = 0; i < spawnedRooms.Count; i++)
+        {
+            float distance = Vector2.Distance(Vector2.zero, spawnedRooms[i].transform.position);
+            if (distance > largestDistance)
+            {
+                largestDistance = distance;
+                go = spawnedRooms[i];
+            }
+        }
+        Debug.Log("Largest Distance: " + largestDistance);
+        return go;
+    }
 
     void Update()
     {
@@ -243,6 +263,7 @@ public class LevelGeneration : MonoBehaviour
             CreateRooms(); 
             SetRoomDoors();
             DrawMap();
+            bossRoom = CreateBossRoom();
         }
         if (Input.GetKeyDown(KeyCode.LeftControl))
             SetRoomDoors();
