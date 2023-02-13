@@ -1171,6 +1171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1848009948}
   - component: {fileID: 1848009949}
+  - component: {fileID: 1848009950}
   m_Layer: 0
   m_Name: LevelGen
   m_TagString: Untagged
@@ -1209,6 +1210,21 @@ MonoBehaviour:
   randomCompareEnd: 0.01
   roomPrefab: {fileID: 2352875582622572964, guid: 22a17b5e41579d24e93552d5f3d31296, type: 3}
   bossRoom: {fileID: 0}
+  startRoom: {fileID: 0}
+--- !u!114 &1848009950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848009946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e351a762dbe8a5344b2a4bfb16eb61de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossCollidersPrefab: {fileID: 3292840422700681345, guid: e5315444439a15843af369227c6c1e92, type: 3}
+  bossPrefab: {fileID: 3764670392040262333, guid: 45c67d810eb779c4db1f92929f951d3a, type: 3}
 --- !u!1 &2057415432
 GameObject:
   m_ObjectHideFlags: 0

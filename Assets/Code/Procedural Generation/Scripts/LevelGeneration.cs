@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 //reference: https://www.youtube.com/watch?v=nADIYwgKHv4
@@ -24,9 +25,10 @@ public class LevelGeneration : MonoBehaviour
     float randomCompareStart = 0.2f, randomCompareEnd = 0.01f; 
 
     public GameObject roomPrefab;
-    [SerializeField] private GameObject bossRoom;
+    public GameObject bossRoom;
+    public GameObject startRoom;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if(numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
         {
@@ -37,7 +39,7 @@ public class LevelGeneration : MonoBehaviour
         CreateRooms();
         SetRoomDoors();
         DrawMap();
-        bossRoom = CreateBossRoom();
+        CreateBossRoom();
     }
 
     void CreateRooms()
@@ -232,24 +234,41 @@ public class LevelGeneration : MonoBehaviour
         }
     }
 
-    /* Calculate the distance between the spawn room which is positioned at V2.Zero.
-      Get the furthest room away from the spawn room to make it a boss room.
-      Need to expand onto the code to make sure the correct room is chosen. */
-    private GameObject CreateBossRoom()
+    /// <summary>
+    /// Calculate the distance between the spawn room which is positioned at V2.Zero.
+    /// Get the furthest room away from the spawn room to make it a boss room.
+    /// Need to expand onto the code to make sure the correct room is chosen.
+    /// </summary>
+
+    private void CreateBossRoom()
     {
-        GameObject go = null;
         float largestDistance = 0;
+
         for (int i = 0; i < spawnedRooms.Count; i++)
         {
-            float distance = Vector2.Distance(Vector2.zero, spawnedRooms[i].transform.position);
-            if (distance > largestDistance)
+            if (spawnedRooms[i].transform.position == Vector3.zero)
             {
-                largestDistance = distance;
-                go = spawnedRooms[i];
+                startRoom = spawnedRooms[i];
+                startRoom.name = "StartRoom";
             }
         }
-        Debug.Log("Largest Distance: " + largestDistance);
-        return go;
+
+        for (int i = 0; i < spawnedRooms.Count; i++)
+        {
+            if (startRoom != null)
+            {
+                Vector3 difference = (startRoom.transform.position - spawnedRooms[i].transform.position) / Mathf.Sqrt(2);
+                Vector2Int fixedDifference = new Vector2Int(Mathf.RoundToInt(difference.x), Mathf.RoundToInt(difference.z));
+                float absoluteDistance = Mathf.Abs(fixedDifference.x) + Mathf.Abs(fixedDifference.y);
+                if (absoluteDistance > largestDistance)
+                {
+                    bossRoom = spawnedRooms[i];
+                    largestDistance = absoluteDistance;
+                }
+            }
+        }
+
+        bossRoom.name = "BossRoom";
     }
 
     void Update()
@@ -263,9 +282,10 @@ public class LevelGeneration : MonoBehaviour
             CreateRooms(); 
             SetRoomDoors();
             DrawMap();
-            bossRoom = CreateBossRoom();
+            CreateBossRoom();
         }
         if (Input.GetKeyDown(KeyCode.LeftControl))
             SetRoomDoors();
+
     }
 }

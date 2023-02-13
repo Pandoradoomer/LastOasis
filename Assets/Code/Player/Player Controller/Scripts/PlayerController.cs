@@ -26,4 +26,13 @@ public class PlayerController : MonoBehaviour
 
         transform.position = new Vector2(transform.position.x + x, transform.position.y + y);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "BossRoom")
+        {
+            collision.transform.parent.gameObject.SetActive(false);
+            BossRoom.instance.SpawnBoss();
+        }
+    }
 }
