@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public abstract class EnemyBehaviour : MonoBehaviour
+
+public interface IEnemyBehaviour
 {
-    public abstract void Act();
+    public void Act();
+    public void Freeze();
 }

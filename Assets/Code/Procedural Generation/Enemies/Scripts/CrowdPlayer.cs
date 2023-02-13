@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class ShyAway : MonoBehaviour, IEnemyBehaviour
+public class CrowdPlayer : MonoBehaviour, IEnemyBehaviour
 {
     private GameObject player;
     private Rigidbody2D rb;
+    // Start is called before the first frame update
+
+    //TODO: fix duplicate code
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -22,11 +26,11 @@ public class ShyAway : MonoBehaviour, IEnemyBehaviour
         Vector2 playerPos = player.transform.position;
         Vector2 enemyPos = transform.position;
 
-        Vector2 dir = (enemyPos - playerPos).normalized;
+        Vector2 dir = (playerPos - enemyPos).normalized;
 
         rb.velocity = dir;
     }
-    
+
     public void Freeze()
     {
         rb.velocity = Vector2.zero;

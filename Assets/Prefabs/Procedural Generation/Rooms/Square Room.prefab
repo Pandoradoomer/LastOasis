@@ -3497,6 +3497,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomTrigger: {fileID: 9184814590987360192}
   enemyPrefab: {fileID: 2714170247650124136, guid: d551d2569840c454194dcfaa83b36014, type: 3}
+  enemies:
+  - {fileID: 11400000, guid: a2a12f4079843f24892a6113a2d37b97, type: 2}
+  - {fileID: 11400000, guid: cf904527c39429943a32ddc7c90f4b2b, type: 2}
 --- !u!1 &2352875582656944522
 GameObject:
   m_ObjectHideFlags: 0

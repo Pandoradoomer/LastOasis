@@ -14,6 +14,7 @@ public enum EnemyType
 public class Enemy : ScriptableObject
 {
     public string Name;
+    public Sprite Sprite;
     public EnemyType Type;
     public int Damage;
     public MonoScript Behaviour;
