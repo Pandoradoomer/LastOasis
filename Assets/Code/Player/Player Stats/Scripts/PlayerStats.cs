@@ -10,11 +10,12 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] public float currentHealth;
     [SerializeField] public int coinCounter = 0;
     [SerializeField] CollectableData item_coin;
-    [SerializeField] CollectableData item_health;
+    [SerializeField] ConsumeableData item_health;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI healthText;
     private Inventory inventory;
     //Make instance of inv class for robustness
+    //Invoke, coin and health using unity events
     void Start()
     {
         inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
@@ -29,7 +30,7 @@ public class PlayerStats : MonoBehaviour
     void Update()
     {
         currentHealth  -= 0.09f * Time.deltaTime;
-        healthText.text = "Health: " + currentHealth;
+        healthText.text = "Health: " + currentHealth.ToString("#.00");      //Round to 2 d.p
         if (currentHealth <= 0)
         {
             //Reload scene
