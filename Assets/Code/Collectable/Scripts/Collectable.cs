@@ -6,12 +6,8 @@ public class Collectable : MonoBehaviour
 {
     [SerializeField] CollectableData data;
     public int stackSize;                                      //How many of current item stored in inventory
-    private Inventory invScript;
 
-    private void Start()
-    {
-        invScript = FindObjectOfType<Inventory>();          
-    }
+
     private void OnValidate()
     {
         GetComponent<SpriteRenderer>().sprite = data.Sprite;
@@ -27,8 +23,8 @@ public class Collectable : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
-            invScript.Add(data);                            //Gets a reference to the inventory script Add method, accepts argument of data of type CollectableData
-
+            //Gets a reference to the inventory script Add method, accepts argument of data of type CollectableData                       
+            Inventory.instance.Add(data);
         }
     }
     public Collectable(CollectableData collect)             //Constructor to pass in collectableData value

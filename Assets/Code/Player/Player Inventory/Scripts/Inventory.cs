@@ -10,15 +10,19 @@ public class Inventory : MonoBehaviour
     public List<Collectable> inventory = new List<Collectable>();
     //Dictionary handles item stacking from List
     private Dictionary<CollectableData, Collectable> itemDictionary = new Dictionary<CollectableData, Collectable>();
-
-
-    private void Start()
+    public static Inventory instance { get; private set; }
+    //Singleton class for Inventory
+    void Awake()
     {
-
-
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
     }
-    //CREATE SINGLETON CLASS, INSTANCE OF INVENTORY
-
     public void Add(CollectableData collectableData)
     {
         //CAP ITEM STACK TO 1
@@ -101,7 +105,7 @@ public class Inventory : MonoBehaviour
 
     public void DisplayInv(CollectableData collectableData)
     {
-
+        //Display in UI
     }
 
     public bool HasCoin(CollectableData collectableData)

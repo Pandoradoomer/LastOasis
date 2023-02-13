@@ -13,17 +13,23 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] ConsumeableData item_health;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI healthText;
-    private Inventory inventory;
-    //Make instance of inv class for robustness
     //Invoke, coin and health using unity events
+    public static PlayerStats instance { get; private set; }
     void Start()
     {
-        inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
         coinText.text = "Coins: " + 0;
 
     }
     private void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
         currentHealth = maxHealth;
     }
 
@@ -42,9 +48,9 @@ public class PlayerStats : MonoBehaviour
             currentHealth = maxHealth;
         }
 
-        if (Input.GetKeyDown(KeyCode.C) && inventory.HasCoin(item_coin))
+        if (Input.GetKeyDown(KeyCode.C) && Inventory.instance.HasCoin(item_coin))
         {
-            inventory.Remove(item_coin);
+            Inventory.instance.Remove(item_coin);
             Debug.Log("You spent 1 coin");
             coinCounter--;
             coinText.text = "Coins: " + coinCounter;
