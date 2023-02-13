@@ -9,7 +9,7 @@ public class Consumeable : MonoBehaviour
     public float health = 3.0f;
     private void OnValidate()
     {
-        GetComponent<SpriteRenderer>().sprite = data.sprite;
+        GetComponent<SpriteRenderer>().sprite = data.Sprite;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

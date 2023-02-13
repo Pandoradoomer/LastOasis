@@ -9,8 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d80b3951507675b458535f885474739e, type: 3}
-  m_Name: HealthPotion
+  m_Script: {fileID: 11500000, guid: 67ed594a628394c468c33617460cb506, type: 3}
+  m_Name: Enemy1
   m_EditorClassIdentifier: 
-  Name: Health Potion
-  Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Name: Dude
+  Type: 0
+  Damage: 5
+  Difficulty: 0.2
+  itemDrops:
+  - itemType: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
+    itemQuantity: 10
+    dropProbability: 1

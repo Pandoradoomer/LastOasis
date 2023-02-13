@@ -14,7 +14,7 @@ public class Collectable : MonoBehaviour
     }
     private void OnValidate()
     {
-        GetComponent<SpriteRenderer>().sprite = data.sprite;
+        GetComponent<SpriteRenderer>().sprite = data.Sprite;
     }
 
     void Update()

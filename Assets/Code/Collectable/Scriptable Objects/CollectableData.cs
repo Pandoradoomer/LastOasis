@@ -2,15 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "collectabledataScriptableobject", menuName = "ScriptableObjects/Collectable")]
-public class CollectableData : ScriptableObject
+[CreateAssetMenu(fileName = "collectabledataScriptableobject", menuName = "ScriptableObjects/Items/Collectable")]
+public class CollectableData : Item
 {
-    public string itemName;
-    public Sprite sprite;
-    [SerializeField] public int Counter { get; set; } = 0;
-
-    public void Increment()
-    {
-        ++Counter;
-    }
 }
