@@ -14,6 +14,8 @@ public enum EnemyType
 public class Enemy : ScriptableObject
 {
     public string Name;
+    public float MaxHealth;
+    public float CurrentHealth;
     public Sprite Sprite;
     public EnemyType Type;
     public int Damage;

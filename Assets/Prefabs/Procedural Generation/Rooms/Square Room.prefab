@@ -3516,6 +3516,7 @@ MonoBehaviour:
   roomTrigger: {fileID: 9184814590987360192}
   bossPrefab: {fileID: 3764670392040262333, guid: 45c67d810eb779c4db1f92929f951d3a, type: 3}
   boss: {fileID: 11400000, guid: 3437ee279e7bd964f95b0ae989b057ce, type: 2}
+  bossHPSlider: {fileID: 471055936353398517, guid: 1fd711548f9f1f44c8dd81065ee70da1, type: 3}
 --- !u!1 &2352875582656944522
 GameObject:
   m_ObjectHideFlags: 0

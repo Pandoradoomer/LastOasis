@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossManager : MonoBehaviour
 {
+    public static BossManager instance;
     [SerializeField] private BoxCollider2D roomTrigger;
     [SerializeField] private GameObject bossPrefab;
-    [SerializeField] private Enemy boss;
+    
+    public Enemy boss;
+    public GameObject bossHPSlider;
 
     private List<GameObject> spawnedEnemies = new List<GameObject>();
     private bool hasSpawned = false;
@@ -15,10 +20,18 @@ public class BossManager : MonoBehaviour
     void Start()
     {
         EventManager.Instance.EnemyDestroyed += OnEnemyDestroyed;
+
         if (gameObject.name == "BossRoom")
+        {
             isBossRoom = true;
+            bossHPSlider = GameObject.Find("BossHP");
+            bossHPSlider.SetActive(false);
+            instance = this;
+        }
         else
+        {
             this.enabled = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -30,7 +43,7 @@ public class BossManager : MonoBehaviour
                 if (!hasSpawned)
                 {
                     hasSpawned = true;
-                    SpawnEnemies();
+                    SpawnBoss();
                 }
             }
         }
@@ -42,10 +55,18 @@ public class BossManager : MonoBehaviour
         Destroy(o);
     }
 
-    private void SpawnEnemies()
+    private void SpawnBoss()
     {
         GameObject go = Instantiate(bossPrefab, transform.position, Quaternion.identity);
         var behaviour = boss.Behaviour;
         go.AddComponent(behaviour.GetClass());
+
+        bossHPSlider.SetActive(true);
+    }
+
+    public void BossHP()
+    {
+        if(bossHPSlider.activeSelf)
+            bossHPSlider.GetComponent<Slider>().value = boss.CurrentHealth;
     }
 }
