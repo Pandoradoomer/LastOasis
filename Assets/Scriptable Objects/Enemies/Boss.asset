@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Boss
   m_EditorClassIdentifier: 
   Name: Doom Slayer
+  Sprite: {fileID: 0}
   Type: 1
   Damage: 99999999
-  Behaviour: {fileID: 11500000, guid: b5fd1b014ab77cb46938802904cb864d, type: 3}
+  Behaviour: {fileID: 11500000, guid: 71ecb0def39e00242b5c4b0c88112998, type: 3}
   itemDrops: []
