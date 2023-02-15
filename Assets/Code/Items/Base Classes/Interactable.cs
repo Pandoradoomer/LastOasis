@@ -23,12 +23,14 @@ public class Interactable : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //Prompts player with open message if in range and chest hasnt been opened
         if(collision.gameObject.CompareTag("Player") && !ChestControl.instance.isOpen)
         {
             playerInRange = true;
             messages.DisplayChestText();
             Debug.Log("Player in range");
         }
+        //Notifies user theyve already interacted with this chest 
         if (collision.gameObject.CompareTag("Player") && ChestControl.instance.isOpen)
         {
             playerInRange = true;
@@ -42,6 +44,7 @@ public class Interactable : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
+            //When player is out of range, disable canvas text elements
             playerInRange = false;
             messages.DisableChestText();
             messages.DisableChestInteractText();
@@ -51,12 +54,16 @@ public class Interactable : MonoBehaviour
 
     public void SpawnCoinsFromChest()
     {
+        //Checks if player is in range and hasnt been interacted with
         if (playerInRange && !ChestControl.instance.isOpen)
         {
             if (Input.GetKeyDown(chestOpenKey))
-            {
+            {   
+                //Key input E to invoke an event
                 interactAction.Invoke();
+                //Gets reference to the chest control function
                 ChestControl.instance.OpenChest();
+                //Instantiates coin prefab at a fixed position in scene from the chest
                 GameObject newCoin;
                 newCoin = Instantiate(coinPrefab, new Vector3(-2.5f, -2.0f, -1.0f), transform.rotation);
 
