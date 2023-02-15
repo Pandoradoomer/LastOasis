@@ -8,7 +8,7 @@ public class Interactable : MonoBehaviour
     public KeyCode chestOpenKey;
     public UnityEvent interactAction;
     private MessageManager messages;
-
+    public GameObject coinPrefab;
 
     void Start()
     {
@@ -19,20 +19,21 @@ public class Interactable : MonoBehaviour
 
     void Update()
     {
-        if (playerInRange)
-        {
-            if(Input.GetKeyDown(chestOpenKey))
-            {
-                interactAction.Invoke();
-            }
-        }
+        SpawnCoinsFromChest();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if(collision.gameObject.CompareTag("Player") && !ChestControl.instance.isOpen)
         {
             playerInRange = true;
             messages.DisplayChestText();
+            Debug.Log("Player in range");
+        }
+        if (collision.gameObject.CompareTag("Player") && ChestControl.instance.isOpen)
+        {
+            playerInRange = true;
+            messages.DisableChestText();
+            messages.DisplayChestInteractText();
             Debug.Log("Player in range");
         }
     }
@@ -43,7 +44,23 @@ public class Interactable : MonoBehaviour
         {
             playerInRange = false;
             messages.DisableChestText();
+            messages.DisableChestInteractText();
             Debug.Log("Player not in range");
+        }
+    }
+
+    public void SpawnCoinsFromChest()
+    {
+        if (playerInRange && !ChestControl.instance.isOpen)
+        {
+            if (Input.GetKeyDown(chestOpenKey))
+            {
+                interactAction.Invoke();
+                ChestControl.instance.OpenChest();
+                GameObject newCoin;
+                newCoin = Instantiate(coinPrefab, new Vector3(-2.5f, -2.0f, -1.0f), transform.rotation);
+
+            }
         }
     }
 }

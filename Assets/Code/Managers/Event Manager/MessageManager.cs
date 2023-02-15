@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class MessageManager : MonoBehaviour
 {
     public TextMeshProUGUI openChestText;
-    public GameObject interactChest;
+    public TextMeshProUGUI interactChestText;
     TextMeshProUGUI pickupCoinText;
     TextMeshProUGUI pickupHealthText;
     public bool displayMessage;
@@ -22,11 +22,21 @@ public class MessageManager : MonoBehaviour
     public void DisplayChestText()
     {
         openChestText.gameObject.SetActive(true);
-        interactChest.SetActive(true);
+       
     }
 
     public void DisableChestText()
     {
         openChestText.gameObject.SetActive(false);
+    }
+
+    public void DisplayChestInteractText()
+    {
+        interactChestText.gameObject.SetActive(true);
+    }
+
+    public void DisableChestInteractText()
+    {
+        interactChestText.gameObject.SetActive(false);
     }
 }
