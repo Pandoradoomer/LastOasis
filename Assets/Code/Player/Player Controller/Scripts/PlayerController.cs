@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        EventManager.Instance.TeleportInvoked += BossTeleport;
     }
 
     // Update is called once per frame
@@ -25,5 +25,10 @@ public class PlayerController : MonoBehaviour
         float y = vertical * speed * Time.deltaTime;
 
         transform.position = new Vector2(transform.position.x + x, transform.position.y + y);
+    }
+
+    void BossTeleport(Transform t)
+    {
+        transform.position = t.position - Vector3.up * 4.0f;
     }
 }

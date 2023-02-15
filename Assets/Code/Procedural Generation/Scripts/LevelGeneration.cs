@@ -271,6 +271,10 @@ public class LevelGeneration : MonoBehaviour
         bossRoom.name = "BossRoom";
     }
 
+    void TeleportToBossRoom()
+    {
+        EventManager.Instance.OnTeleportInvoked(bossRoom.transform);
+    }
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
@@ -285,7 +289,7 @@ public class LevelGeneration : MonoBehaviour
             CreateBossRoom();
         }
         if (Input.GetKeyDown(KeyCode.LeftControl))
-            SetRoomDoors();
+            TeleportToBossRoom();
 
     }
 }
