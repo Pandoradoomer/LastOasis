@@ -39,9 +39,8 @@ public class PlayerStats : MonoBehaviour
         healthText.text = "Health: " + currentHealth.ToString("#.00");      //Round to 2 d.p
         if (currentHealth <= 0)
         {
-            currentHealth = maxHealth;
             //Reload scene
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             Debug.Log("Player died");
         }
         if (currentHealth >= maxHealth)
