@@ -296,7 +296,7 @@ public class LevelGeneration : MonoBehaviour
                 rs.roomIndex = spawnedRooms.Count;
                 rs.isBoss = rs.roomIndex == bossRoomIndex;
                 rs.distToCentre = room.distToCentre;
-                float difficulty = GenerateDifficulty(drawPos);
+                float difficulty = GenerateDifficulty(rs.distToCentre);
                 rs.roomDifficulty = difficulty;
                 spawnedRooms.Add(go);
                 DoorManager dm = go.GetComponent<DoorManager>();
@@ -312,16 +312,14 @@ public class LevelGeneration : MonoBehaviour
 
     //TODO Andrei: don't assume that the player always starts in a room placed on the origin
     //TODO Andrei: explore DFS distance
-    private float GenerateDifficulty(Vector2 drawPos)
+    private float GenerateDifficulty(int distance)
     {
-        float distance = drawPos.magnitude;
-
-        float r = 0;
-        if (distance < 5 * roomSize)
+        float r;
+        if(distance < 2)
         {
             r = Random.Range(easyDifficultyRange.x, easyDifficultyRange.y);
         }
-        else if (distance < 7 * roomSize) 
+        else if (distance < 4) 
         {
             r = Random.Range(mediumDifficultyRange.x, mediumDifficultyRange.y);
         }
