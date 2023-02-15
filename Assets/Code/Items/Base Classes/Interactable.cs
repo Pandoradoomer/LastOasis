@@ -54,23 +54,24 @@ public class Interactable : MonoBehaviour
 
     public void SpawnCoinsFromChest()
     {
-        //Checks if player is in range and hasnt been interacted with
         if (playerInRange && !ChestControl.instance.isOpen)
         {
             if (Input.GetKeyDown(chestOpenKey))
             {   
-                //Key input E to invoke an event
                 interactAction.Invoke();
-                //Gets reference to the chest control function
                 ChestControl.instance.OpenChest();
-                //Instantiates coin prefab at a fixed position in scene from the chest
                 ChestControl.instance.maxNumberCoins = Random.Range(0, ChestControl.instance.maxNumberCoins);
-                //Spawn random number of coins depending on the Inspector value assigned
                 for (int i = 0; i < ChestControl.instance.maxNumberCoins; i++)
                 {
                     Instantiate(coinPrefab, new Vector3(Random.Range(-2.5f,1.0f), Random.Range(-2.0f,1.0f), -1), transform.rotation);
                 }
-               
+                /// <summary>
+                /// Checks if player is in range and hasnt been interacted with
+                /// Key input E to invoke an event
+                /// Gets reference to the chest control function
+                /// Instantiates coin prefab at a fixed position in scene from the chest
+                /// Spawn random number of coins depending on the Inspector value assigned
+                /// </summary>
 
             }
         }

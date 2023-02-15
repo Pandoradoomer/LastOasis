@@ -7,6 +7,7 @@ public class ChestControl : MonoBehaviour
     //public Animation anim;
     public bool isOpen;
     [SerializeField] public int maxNumberCoins;
+    //Access enemy prefabs & number of them
     private float dropChance;
 
     public static ChestControl instance { get; private set; }
