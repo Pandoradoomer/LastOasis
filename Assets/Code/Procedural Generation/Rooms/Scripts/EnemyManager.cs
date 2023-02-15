@@ -15,6 +15,8 @@ public class EnemyManager : MonoBehaviour
     private Dictionary<int, List<GameObject>> spawnedEnemies;
     private List<int> hasSpawned;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -93,23 +95,30 @@ public class EnemyManager : MonoBehaviour
         if (e.isBoss)
             return;
         //for the sake of the task, let's spawn enemies inside every room, at least 1
-        int x = 1;
-        x += Random.Range(0, 2);
-        for(int i = 0; i < x; i++)
+        float currentDifficulty = 0;
+        while(currentDifficulty < e.difficulty)
         {
             Vector2 pos = Vector2.zero;
-            pos.x = Random.Range(0.0f, 4.0f);
-            pos.y = Random.Range(0.0f, 4.0f);
+            pos.x = Random.Range(-4.0f, 4.0f);
+            pos.y = Random.Range(-4.0f, 4.0f);
+
             var go = Instantiate(enemyPrefab, e.roomCentre + pos, Quaternion.identity);
 
             int index = Random.Range(0, enemies.Count);
+
+            //Setting the colour
+            go.GetComponent<SpriteRenderer>().color = enemies[index].color;
+
+            //Add behaviour;
             var behaviour = enemies[index].Behaviour;
-
             go.AddComponent(behaviour.GetClass());
-            go.GetComponent<EnemyBase>().roomIndex = e.roomIndex;
 
+            //setting the index;
+            go.GetComponent<EnemyBase>().roomIndex = e.roomIndex;
             AddEnemyToDictionary(go, e.roomIndex);
 
+            //increasing the difficulty
+            currentDifficulty += enemies[index].difficulty;
         }
     }
 

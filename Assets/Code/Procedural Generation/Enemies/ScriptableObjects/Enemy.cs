@@ -19,6 +19,9 @@ public class Enemy : ScriptableObject
     public Sprite Sprite;
     public EnemyType Type;
     public int Damage;
+    public float difficulty;
     public MonoScript Behaviour;
     public List<ItemDrop> itemDrops;
+    //debug only, differentiates enemies, remove on future iterations, or when we have sprites
+    public Color color;
 }

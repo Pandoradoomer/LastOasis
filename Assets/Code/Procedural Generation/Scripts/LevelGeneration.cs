@@ -25,9 +25,18 @@ public class LevelGeneration : MonoBehaviour
     float randomCompareStart = 0.2f, randomCompareEnd = 0.01f; 
 
     public GameObject roomPrefab;
-    public GameObject bossRoom;
+    private GameObject bossRoom;
     int bossRoomIndex;
-    public GameObject startRoom;
+    private  GameObject startRoom;
+    float roomSize = 11.0f;
+
+    [SerializeField]
+    private Vector2 easyDifficultyRange;
+    [SerializeField]
+    private Vector2 mediumDifficultyRange;
+    [SerializeField]
+    private Vector2 highDifficultyRange;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -221,12 +230,14 @@ public class LevelGeneration : MonoBehaviour
                 Room room = rooms[x, y];
                 if (room == null)
                     continue;
-                Vector2 drawPos = room.gridPos * 11;
+                Vector2 drawPos = room.gridPos * roomSize;
 
                 var go = Instantiate(roomPrefab, drawPos, Quaternion.identity);
                 RoomScript rs = go.GetComponent<RoomScript>();
                 rs.roomIndex = spawnedRooms.Count;
                 rs.isBoss = rs.roomIndex == bossRoomIndex;
+                float difficulty = GenerateDifficulty(drawPos);
+                rs.roomDifficulty = difficulty;
                 spawnedRooms.Add(go);
                 DoorManager dm = go.GetComponent<DoorManager>();
 
@@ -237,6 +248,29 @@ public class LevelGeneration : MonoBehaviour
                 dm.ReinitialiseDoors(room.doors);
             }
         }
+    }
+
+    //TODO Andrei: don't assume that the player always starts in a room placed on the origin
+    //TODO Andrei: explore DFS distance
+    private float GenerateDifficulty(Vector2 drawPos)
+    {
+        float distance = drawPos.magnitude;
+
+        float r = 0;
+        if (distance < 5 * roomSize)
+        {
+            r = Random.Range(easyDifficultyRange.x, easyDifficultyRange.y);
+        }
+        else if (distance < 7 * roomSize) 
+        {
+            r = Random.Range(mediumDifficultyRange.x, mediumDifficultyRange.y);
+        }
+        else
+        {
+            r = Random.Range(highDifficultyRange.x, highDifficultyRange.y);
+        }
+
+        return Mathf.Floor(r * 2 + 0.5f) / 2;
     }
 
     /// <summary>

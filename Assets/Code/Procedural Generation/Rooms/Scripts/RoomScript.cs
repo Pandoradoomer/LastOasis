@@ -6,6 +6,7 @@ public class RoomScript : MonoBehaviour
 {
     public bool isBoss;
     public int roomIndex;
+    public float roomDifficulty;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +28,8 @@ public class RoomScript : MonoBehaviour
                 { 
                     roomCentre = transform.position,  
                     isBoss = isBoss,
-                    roomIndex = roomIndex
+                    roomIndex = roomIndex,
+                    difficulty = roomDifficulty
                 });
         }
     }
