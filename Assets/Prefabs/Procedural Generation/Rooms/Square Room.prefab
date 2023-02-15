@@ -3413,8 +3413,8 @@ GameObject:
   - component: {fileID: 2352875582622572954}
   - component: {fileID: 4968324125367602342}
   - component: {fileID: 9184814590987360192}
-  - component: {fileID: -8770929870487097198}
   - component: {fileID: -5400136339235419812}
+  - component: {fileID: 2108988027199837622}
   m_Layer: 0
   m_Name: Square Room
   m_TagString: Untagged
@@ -3484,23 +3484,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9, y: 9}
   m_EdgeRadius: 0
---- !u!114 &-8770929870487097198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2352875582622572964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 928b6bf9587de7f46939334b5ad59c77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomTrigger: {fileID: 9184814590987360192}
-  enemyPrefab: {fileID: 2714170247650124136, guid: d551d2569840c454194dcfaa83b36014, type: 3}
-  enemies:
-  - {fileID: 11400000, guid: a2a12f4079843f24892a6113a2d37b97, type: 2}
-  - {fileID: 11400000, guid: cf904527c39429943a32ddc7c90f4b2b, type: 2}
 --- !u!114 &-5400136339235419812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3517,6 +3500,18 @@ MonoBehaviour:
   bossPrefab: {fileID: 3764670392040262333, guid: 45c67d810eb779c4db1f92929f951d3a, type: 3}
   boss: {fileID: 11400000, guid: 3437ee279e7bd964f95b0ae989b057ce, type: 2}
   bossHPSlider: {fileID: 471055936353398517, guid: 1fd711548f9f1f44c8dd81065ee70da1, type: 3}
+--- !u!114 &2108988027199837622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2352875582622572964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1aef78331bc33f4081c9e9b589df6bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2352875582656944522
 GameObject:
   m_ObjectHideFlags: 0

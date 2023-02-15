@@ -26,6 +26,7 @@ public class LevelGeneration : MonoBehaviour
 
     public GameObject roomPrefab;
     public GameObject bossRoom;
+    int bossRoomIndex;
     public GameObject startRoom;
     // Start is called before the first frame update
     void Awake()
@@ -223,8 +224,12 @@ public class LevelGeneration : MonoBehaviour
                 Vector2 drawPos = room.gridPos * 11;
 
                 var go = Instantiate(roomPrefab, drawPos, Quaternion.identity);
+                RoomScript rs = go.GetComponent<RoomScript>();
+                rs.roomIndex = spawnedRooms.Count;
+                rs.isBoss = rs.roomIndex == bossRoomIndex;
                 spawnedRooms.Add(go);
                 DoorManager dm = go.GetComponent<DoorManager>();
+
                 //Purely debug variables, can be eliminated; allows you to see the non-intuitive grid placement at runtime
                 dm.doorsBits = room.doors;
                 dm.x = x;
@@ -263,6 +268,7 @@ public class LevelGeneration : MonoBehaviour
                 if (absoluteDistance > largestDistance)
                 {
                     bossRoom = spawnedRooms[i];
+                    bossRoomIndex = i;
                     largestDistance = absoluteDistance;
                 }
             }

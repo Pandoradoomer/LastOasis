@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RoomScript : MonoBehaviour
+{
+    public bool isBoss;
+    public int roomIndex;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            EventManager.Instance.OnRoomEnter(
+                new EnemySpawnPacket() 
+                { 
+                    roomCentre = transform.position,  
+                    isBoss = isBoss,
+                    roomIndex = roomIndex
+                });
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            EventManager.Instance.OnRoomExit(roomIndex);
+        }
+    }
+}

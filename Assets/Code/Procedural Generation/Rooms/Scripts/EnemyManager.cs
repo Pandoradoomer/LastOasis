@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Schema;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,21 +6,23 @@ using UnityEngine.EventSystems;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField]
-    private BoxCollider2D roomTrigger;
     //TODO: add to singleton;
     [SerializeField]
     private GameObject enemyPrefab;
     [SerializeField]
     private List<Enemy> enemies;
 
-    private List<GameObject> spawnedEnemies = new List<GameObject>();
-    private bool hasSpawned = false;
+    private Dictionary<int, List<GameObject>> spawnedEnemies;
+    private List<int> hasSpawned;
 
     // Start is called before the first frame update
     void Start()
     {
         EventManager.Instance.EnemyDestroyed += OnEnemyDestroyed;
+        EventManager.Instance.RoomEnter += OnRoomEnter;
+        EventManager.Instance.RoomExit += OnRoomExit;
+        spawnedEnemies = new Dictionary<int, List<GameObject>>();
+        hasSpawned= new List<int>();
     }
 
     // Update is called once per frame
@@ -28,60 +31,54 @@ public class EnemyManager : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnRoomEnter(EnemySpawnPacket e)
     {
-        CheckEnemies();
-        if(collision.gameObject.tag == "Player")
+        if(hasSpawned.Contains(e.roomIndex))
         {
-            if (roomTrigger != null)
-            {
-                if (!hasSpawned)
-                {
-                    hasSpawned = true;
-                    SpawnEnemies();
-                }
-                else
-                {
-                    ActivateEnemies();
-                }
-            }
+            ActivateEnemies(e.roomIndex);
+        }
+        else
+        {
+            hasSpawned.Add(e.roomIndex);
+            SpawnEnemies(e);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnRoomExit(int index)
     {
-        CheckEnemies();
-        if(roomTrigger != null && collision.gameObject.tag == "Player")
-        {
-            DisableEnemies();
-        }
+        DisableEnemies(index);
     }
 
     private void OnEnemyDestroyed(GameObject o)
     {
-        spawnedEnemies.Remove(o);
+        int index = o.GetComponent<EnemyBase>().roomIndex;
+        spawnedEnemies[index].Remove(o);
+        if (spawnedEnemies[index].Count == 0)
+            spawnedEnemies.Remove(index);
         Destroy(o);
     }
 
-    private void CheckEnemies()
+    private void ActivateEnemies(int index)
     {
-    }
-    private void ActivateEnemies()
-    {
-        foreach(var enemy in spawnedEnemies)
+        if (spawnedEnemies.ContainsKey(index) == false)
+            return;
+        foreach(var enemy in spawnedEnemies[index])
         {
             IEnemyBehaviour behaviourComponent = enemy.GetComponent<IEnemyBehaviour>();
-            if(behaviourComponent != null )
-            {
-                var specificComponent = behaviourComponent as MonoBehaviour;
-                specificComponent.enabled = true;
-            }
+                if(behaviourComponent != null )
+                {
+                    var specificComponent = behaviourComponent as MonoBehaviour;
+                    specificComponent.enabled = true;
+                }
         }
     }
 
-    private void DisableEnemies()
+    private void DisableEnemies(int index)
     {
-        foreach (var enemy in spawnedEnemies)
+        if (spawnedEnemies.ContainsKey(index) == false)
+            return;
+        foreach (var enemy in spawnedEnemies[index])
         {
             IEnemyBehaviour behaviourComponent = enemy.GetComponent<IEnemyBehaviour>();
             if (behaviourComponent != null)
@@ -91,24 +88,41 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    private void SpawnEnemies()
+    private void SpawnEnemies(EnemySpawnPacket e)
     {
+        if (e.isBoss)
+            return;
         //for the sake of the task, let's spawn enemies inside every room, at least 1
         int x = 1;
         x += Random.Range(0, 2);
         for(int i = 0; i < x; i++)
         {
-            Vector3 pos = Vector2.zero;
+            Vector2 pos = Vector2.zero;
             pos.x = Random.Range(0.0f, 4.0f);
             pos.y = Random.Range(0.0f, 4.0f);
-            var go = Instantiate(enemyPrefab, transform.position + pos, Quaternion.identity);
+            var go = Instantiate(enemyPrefab, e.roomCentre + pos, Quaternion.identity);
 
             int index = Random.Range(0, enemies.Count);
             var behaviour = enemies[index].Behaviour;
 
             go.AddComponent(behaviour.GetClass());
-            spawnedEnemies.Add(go);
+            go.GetComponent<EnemyBase>().roomIndex = e.roomIndex;
 
+            AddEnemyToDictionary(go, e.roomIndex);
+
+        }
+    }
+
+    void AddEnemyToDictionary(GameObject go, int index)
+    {
+        if(spawnedEnemies.ContainsKey(index))
+        {
+            spawnedEnemies[index].Add(go);
+        }
+        else
+        {
+            spawnedEnemies.Add(index, new List<GameObject>());
+            spawnedEnemies[index].Add(go);
         }
     }
 }
