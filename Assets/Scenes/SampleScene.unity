@@ -1721,6 +1721,10 @@ PrefabInstance:
       value: Chest
       objectReference: {fileID: 0}
     - target: {fileID: 8570356814790907323, guid: eb0d6784aa26105439909e77c0050c3f, type: 3}
+      propertyPath: maxNumberCoins
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8570356814790907323, guid: eb0d6784aa26105439909e77c0050c3f, type: 3}
       propertyPath: dropItem.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}

@@ -64,8 +64,13 @@ public class Interactable : MonoBehaviour
                 //Gets reference to the chest control function
                 ChestControl.instance.OpenChest();
                 //Instantiates coin prefab at a fixed position in scene from the chest
-                GameObject newCoin;
-                newCoin = Instantiate(coinPrefab, new Vector3(-2.5f, -2.0f, -1.0f), transform.rotation);
+                ChestControl.instance.maxNumberCoins = Random.Range(0, ChestControl.instance.maxNumberCoins);
+                //Spawn random number of coins depending on the Inspector value assigned
+                for (int i = 0; i < ChestControl.instance.maxNumberCoins; i++)
+                {
+                    Instantiate(coinPrefab, new Vector3(Random.Range(-2.5f,1.0f), Random.Range(-2.0f,1.0f), -1), transform.rotation);
+                }
+               
 
             }
         }
