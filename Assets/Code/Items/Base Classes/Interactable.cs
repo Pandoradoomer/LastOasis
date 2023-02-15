@@ -9,12 +9,13 @@ public class Interactable : MonoBehaviour
     public UnityEvent interactAction;
     private MessageManager messages;
 
+
     void Start()
     {
         messages = GetComponent<MessageManager>();
 
     }
-
+    //TODO Dylan: Use the in-house Event System not the in-built one
 
     void Update()
     {
