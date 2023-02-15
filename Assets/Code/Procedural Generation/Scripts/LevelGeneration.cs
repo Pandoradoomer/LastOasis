@@ -48,6 +48,7 @@ public class LevelGeneration : MonoBehaviour
         gridSizeY = Mathf.RoundToInt(worldSize.y);
         CreateRooms();
         SetRoomDoors();
+        CalculateDistanceFromCentre();
         DrawMap();
         CreateBossRoom();
     }
@@ -56,6 +57,8 @@ public class LevelGeneration : MonoBehaviour
     {
         rooms = new Room[gridSizeX *2, gridSizeY *2];
         rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, 1);
+        rooms[gridSizeX, gridSizeY].x = gridSizeX;
+        rooms[gridSizeX, gridSizeY].y = gridSizeY;
         takenPositions.Add(Vector2.zero);
         Vector2 checkPos = Vector2.zero;
 
@@ -84,6 +87,9 @@ public class LevelGeneration : MonoBehaviour
             }
 
             rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, 0);
+            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY].x = (int)checkPos.x + gridSizeX;
+            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY].y = (int)checkPos.y + gridSizeY;
+
             takenPositions.Insert(0, checkPos);
         }
     }
@@ -219,6 +225,59 @@ public class LevelGeneration : MonoBehaviour
         }
     }
 
+    void CalculateDistanceFromCentre()
+    {
+        rooms[gridSizeX, gridSizeY].distToCentre = 0;
+        Queue<Room> roomQueue = new Queue<Room>();
+        roomQueue.Enqueue(rooms[gridSizeX, gridSizeY]);
+        while(roomQueue.Count > 0)
+        {
+            Room room = roomQueue.Dequeue();
+            List<Room> neighbours = GetCellNeighbours(room.x, room.y);
+            foreach(Room neighbor in neighbours)
+            {
+                if(neighbor.distToCentre == -1)
+                {
+                    List<Room> neighbourNeighbours = GetCellNeighbours(neighbor.x, neighbor.y);
+                    int minDist = 9999;
+                    foreach(Room nb in neighbourNeighbours)
+                    {
+                        if (nb.distToCentre != -1 && nb.distToCentre < minDist)
+                            minDist = nb.distToCentre;
+                    }
+                    neighbor.distToCentre = minDist + 1;
+                    roomQueue.Enqueue(neighbor);
+                }
+            }
+        }
+    }
+
+    List<Room> GetCellNeighbours(int i, int j)
+    {
+        List<Room> neighbours = new List<Room>();
+        if(i - 1 >= 0)
+        {
+            if (rooms[i - 1, j] != null)
+                neighbours.Add(rooms[i - 1, j]);
+        }
+        if(j-1 >=0)
+        {
+            if (rooms[i, j - 1] != null)
+                neighbours.Add(rooms[i, j - 1]);
+        }
+        if(i+1 < gridSizeX * 2)
+        {
+            if (rooms[i + 1, j] != null)
+                neighbours.Add(rooms[i + 1, j]);
+        }
+        if(j + 1 < gridSizeY * 2)
+        {
+            if (rooms[i, j + 1] != null)
+                neighbours.Add(rooms[i, j + 1]);
+        }
+        return neighbours;
+    }
+
     //exists only so we can reset the map on spacebar
     List<GameObject> spawnedRooms = new List<GameObject>();
     void DrawMap()
@@ -236,6 +295,7 @@ public class LevelGeneration : MonoBehaviour
                 RoomScript rs = go.GetComponent<RoomScript>();
                 rs.roomIndex = spawnedRooms.Count;
                 rs.isBoss = rs.roomIndex == bossRoomIndex;
+                rs.distToCentre = room.distToCentre;
                 float difficulty = GenerateDifficulty(drawPos);
                 rs.roomDifficulty = difficulty;
                 spawnedRooms.Add(go);
@@ -281,34 +341,24 @@ public class LevelGeneration : MonoBehaviour
 
     private void CreateBossRoom()
     {
-        float largestDistance = 0;
-
-        for (int i = 0; i < spawnedRooms.Count; i++)
+        int largestDistance = 0;
+        int largestDistanceIndex = 0;
+        for(int i = 0; i < spawnedRooms.Count; i++)
         {
-            if (spawnedRooms[i].transform.position == Vector3.zero)
+            RoomScript rs = spawnedRooms[i].GetComponent<RoomScript>();
+            if (rs.distToCentre > largestDistance)
             {
-                startRoom = spawnedRooms[i];
-                startRoom.name = "StartRoom";
+                largestDistance = rs.distToCentre;
+                largestDistanceIndex = i;
             }
-        }
+            if (rs.distToCentre == 0)
+                spawnedRooms[i].name = "StartRoom";
 
-        for (int i = 0; i < spawnedRooms.Count; i++)
-        {
-            if (startRoom != null)
-            {
-                Vector3 difference = (startRoom.transform.position - spawnedRooms[i].transform.position) / Mathf.Sqrt(2);
-                Vector2Int fixedDifference = new Vector2Int(Mathf.RoundToInt(difference.x), Mathf.RoundToInt(difference.z));
-                float absoluteDistance = Mathf.Abs(fixedDifference.x) + Mathf.Abs(fixedDifference.y);
-                if (absoluteDistance > largestDistance)
-                {
-                    bossRoom = spawnedRooms[i];
-                    bossRoomIndex = i;
-                    largestDistance = absoluteDistance;
-                }
-            }
         }
-
+        bossRoom = spawnedRooms[largestDistanceIndex];
+        bossRoom.GetComponent<RoomScript>().isBoss = true;
         bossRoom.name = "BossRoom";
+
     }
 
     void TeleportToBossRoom()

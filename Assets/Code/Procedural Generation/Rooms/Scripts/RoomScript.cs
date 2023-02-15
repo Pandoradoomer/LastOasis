@@ -7,6 +7,7 @@ public class RoomScript : MonoBehaviour
     public bool isBoss;
     public int roomIndex;
     public float roomDifficulty;
+    public int distToCentre;
     // Start is called before the first frame update
     void Start()
     {
