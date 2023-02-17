@@ -30,7 +30,7 @@ public class BossManager : MonoBehaviour
         }
         else
         {
-            this.enabled = false;
+            Destroy(this);
         }
     }
 

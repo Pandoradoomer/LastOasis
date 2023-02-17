@@ -368,6 +368,7 @@ public class LevelGeneration : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
+            BossManager.instance.bossHPSlider.SetActive(true);
             foreach (GameObject go in spawnedRooms)
                 Destroy(go);
             spawnedRooms.Clear();

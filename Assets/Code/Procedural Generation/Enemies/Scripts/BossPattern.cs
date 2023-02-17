@@ -27,7 +27,7 @@ public class BossPattern : MonoBehaviour
                 FirstStage();
                 break;
             // Second stage when lower than 50% but not 0%.
-            case float i when i < BossManager.instance.boss.MaxHealth / 2 && i > 0:
+            case float i when i <= BossManager.instance.boss.MaxHealth / 2 && i > 0:
                 SecondStage();
                 break;
             // Destroys the boss when 0%.
