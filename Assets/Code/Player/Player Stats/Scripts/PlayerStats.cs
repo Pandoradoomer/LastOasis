@@ -15,7 +15,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] ConsumeableData item_health;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI healthText;
-    //Invoke, coin and health using unity events
+    
     public static PlayerStats instance { get; private set; }
     void Start()
     {
@@ -63,6 +63,7 @@ public class PlayerStats : MonoBehaviour
         }
         //Fix bug of removing coins after its reached 0
         //Key press to spend all coins
+
       
     }
 

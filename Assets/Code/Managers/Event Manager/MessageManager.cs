@@ -7,18 +7,19 @@ public class MessageManager : MonoBehaviour
 {
     public TextMeshProUGUI openChestText;
     public TextMeshProUGUI interactChestText;
-    TextMeshProUGUI pickupCoinText;
-    TextMeshProUGUI pickupHealthText;
-    public bool displayMessage;
-    void Start()
-    {
+    public TextMeshProUGUI pickupHealthActivateText;
+    public bool displayMessages;
 
-    }
     void Update()
     {
-
+        if (!displayMessages)
+        {
+            DisableChestText();
+            DisableChestInteractText();
+            DisableHealthConsumableText();
+        }
     }
-
+    //***************** CHEST MESSAGES *****************//
     public void DisplayChestText()
     {
         openChestText.gameObject.SetActive(true);
@@ -38,5 +39,17 @@ public class MessageManager : MonoBehaviour
     public void DisableChestInteractText()
     {
         interactChestText.gameObject.SetActive(false);
+    }
+
+    //***************** HEALTH MESSAGES *****************//
+
+    public void DisplayHealthConsumableText()
+    {
+        pickupHealthActivateText.gameObject.SetActive(true);
+    }
+
+    public void DisableHealthConsumableText()
+    {
+        pickupHealthActivateText.gameObject.SetActive(false);
     }
 }

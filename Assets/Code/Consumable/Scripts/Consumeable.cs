@@ -6,6 +6,13 @@ public class Consumeable : MonoBehaviour
 {
     [SerializeField] ConsumeableData data;
     public float health = 3.0f;
+    private MessageManager messages;
+
+    void Start()
+    {
+        messages = GetComponent<MessageManager>();
+
+    }
     private void OnValidate()
     {
         GetComponent<SpriteRenderer>().sprite = data.Sprite;
@@ -17,6 +24,7 @@ public class Consumeable : MonoBehaviour
         {
             Destroy(gameObject);
             PlayerStats.instance.currentHealth += health;
+            //messages.DisplayChestInteractText();
         }
     }
 

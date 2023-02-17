@@ -7,9 +7,11 @@ public class Interactable : MonoBehaviour
     public bool playerInRange;
     public KeyCode chestOpenKey;
     public UnityEvent interactAction;
+   // public event <Action> interactInvoked;
     private MessageManager messages;
     public GameObject coinPrefab;
-
+    public GameObject coinPilePrefab;
+    public GameObject coinBagPrefab;
     void Start()
     {
         messages = GetComponent<MessageManager>();
@@ -58,7 +60,7 @@ public class Interactable : MonoBehaviour
         {
             if (Input.GetKeyDown(chestOpenKey))
             {   
-                interactAction.Invoke();
+                interactAction?.Invoke();
                 ChestControl.instance.OpenChest();
                 ChestControl.instance.maxNumberCoins = Random.Range(0, ChestControl.instance.maxNumberCoins);
                 for (int i = 0; i < ChestControl.instance.maxNumberCoins; i++)

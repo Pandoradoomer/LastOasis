@@ -32,6 +32,12 @@ public class RoomScript : MonoBehaviour
                     roomIndex = roomIndex,
                     difficulty = roomDifficulty
                 });
+            //EventManager.Instance.OnRoomEnter(new ChestSpawnPacket()
+            //{
+            // roomCenter = transform.position,
+            // chestPos = transform.position,
+            // roomIndex = roomIndex,
+            // 
         }
     }
 

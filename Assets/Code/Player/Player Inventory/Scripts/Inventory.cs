@@ -105,7 +105,8 @@ public class Inventory : MonoBehaviour
 
     public void DisplayInv(CollectableData collectableData)
     {
-        //Display in UI
+        //Display in UI as Stretch goal
+
     }
 
     public bool HasCoin(CollectableData collectableData)
