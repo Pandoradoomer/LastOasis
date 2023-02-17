@@ -9,6 +9,8 @@ TagManager:
   - Chest
   - HealthPotion
   - BossRoom
+  - CoinPile
+  - CoinBag
   layers:
   - Default
   - TransparentFX

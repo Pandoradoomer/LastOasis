@@ -10,6 +10,8 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] public float currentHealth;
     [SerializeField] public int coinCounter = 0;
     [SerializeField] CollectableData item_coin;
+    [SerializeField] CollectableData item_coin_pile;
+    [SerializeField] CollectableData item_coin_bag;
     [SerializeField] ConsumeableData item_health;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI healthText;
@@ -68,9 +70,24 @@ public class PlayerStats : MonoBehaviour
     {
         if (coll.gameObject.CompareTag("Coin"))
         {
-            coinCounter++;
+            
+            coinCounter += Random.Range(item_coin.minValue,item_coin.maxValue);
             coinText.text = "Coins: " + coinCounter;
         }
+
+        else if (coll.gameObject.CompareTag("CoinPile"))
+        {
+            coinCounter += Random.Range(item_coin_pile.minValue, item_coin_pile.maxValue);
+            coinText.text = "Coins: " + coinCounter;
+        }
+
+        else if (coll.gameObject.CompareTag("CoinBag"))
+        {
+            coinCounter += Random.Range(item_coin_bag.minValue, item_coin_bag.maxValue);
+            coinText.text = "Coins: " + coinCounter;
+        }
+
+
     }
 
 
