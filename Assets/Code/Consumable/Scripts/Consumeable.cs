@@ -6,11 +6,11 @@ public class Consumeable : MonoBehaviour
 {
     [SerializeField] ConsumeableData data;
     public float health = 3.0f;
-    private MessageManager messages;
+    //private MessageManager messages;
 
     void Start()
     {
-        messages = GetComponent<MessageManager>();
+       // messages = GetComponent<MessageManager>();
 
     }
     private void OnValidate()
@@ -24,7 +24,7 @@ public class Consumeable : MonoBehaviour
         {
             Destroy(gameObject);
             PlayerStats.instance.currentHealth += health;
-            //messages.DisplayChestInteractText();
+           // messages.DisplayHealthConsumableText();
         }
     }
 

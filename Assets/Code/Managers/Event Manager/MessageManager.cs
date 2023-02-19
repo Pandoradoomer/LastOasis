@@ -7,7 +7,8 @@ public class MessageManager : MonoBehaviour
 {
     public TextMeshProUGUI openChestText;
     public TextMeshProUGUI interactChestText;
-    public TextMeshProUGUI pickupHealthActivateText;
+    [SerializeField]
+    private TextMeshProUGUI pickupHealthActivateText;
     public bool displayMessages;
 
     void Update()
@@ -22,8 +23,7 @@ public class MessageManager : MonoBehaviour
     //***************** CHEST MESSAGES *****************//
     public void DisplayChestText()
     {
-        openChestText.gameObject.SetActive(true);
-       
+        openChestText.gameObject.SetActive(true); 
     }
 
     public void DisableChestText()
