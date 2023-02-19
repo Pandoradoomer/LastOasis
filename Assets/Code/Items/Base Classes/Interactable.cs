@@ -8,13 +8,13 @@ public class Interactable : MonoBehaviour
     public KeyCode chestOpenKey;
     public UnityEvent interactAction;
    // public event <Action> interactInvoked;
-    private MessageManager messages;
+    //private MessageManager messages;
     public GameObject coinPrefab;
     public GameObject coinPilePrefab;
     public GameObject coinBagPrefab;
     void Start()
     {
-        messages = GetComponent<MessageManager>();
+       // messages = GetComponent<MessageManager>();
 
     }
     //TODO Dylan: Use the in-house Event System not the in-built one
@@ -29,15 +29,18 @@ public class Interactable : MonoBehaviour
         if(collision.gameObject.CompareTag("Player") && !ChestControl.instance.isOpen)
         {
             playerInRange = true;
-            messages.DisplayChestText();
+            MessageManager.instance.DisplayChestText();
+           // messages.DisplayChestText();
             Debug.Log("Player in range");
         }
         //Notifies user theyve already interacted with this chest 
         if (collision.gameObject.CompareTag("Player") && ChestControl.instance.isOpen)
         {
             playerInRange = true;
-            messages.DisableChestText();
-            messages.DisplayChestInteractText();
+            //messages.DisableChestText();
+            MessageManager.instance.DisableChestText();
+            MessageManager.instance.DisplayChestInteractText();
+            //messages.DisplayChestInteractText();
             Debug.Log("Player in range");
         }
     }
@@ -48,8 +51,11 @@ public class Interactable : MonoBehaviour
         {
             //When player is out of range, disable canvas text elements
             playerInRange = false;
-            messages.DisableChestText();
-            messages.DisableChestInteractText();
+            //messages.DisableChestText();
+            MessageManager.instance.DisableChestText();
+            MessageManager.instance.DisableChestInteractText();
+
+            //messages.DisableChestInteractText();
             Debug.Log("Player not in range");
         }
     }

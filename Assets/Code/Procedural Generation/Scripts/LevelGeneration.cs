@@ -55,7 +55,6 @@ public class LevelGeneration : MonoBehaviour
 
     void CreateRooms()
     {
-        //TO-DO dylan: Spawn chests in rooms at predefined locations
         rooms = new Room[gridSizeX *2, gridSizeY *2];
         rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, 1);
         rooms[gridSizeX, gridSizeY].x = gridSizeX;

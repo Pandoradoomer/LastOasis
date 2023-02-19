@@ -22,22 +22,27 @@ public class RoomScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             EventManager.Instance.OnRoomEnter(
-                new EnemySpawnPacket() 
-                { 
-                    roomCentre = transform.position,  
+                new EnemySpawnPacket()
+                {
+                    roomCentre = transform.position,
                     isBoss = isBoss,
                     roomIndex = roomIndex,
                     difficulty = roomDifficulty
                 });
-            //EventManager.Instance.OnRoomEnter(new ChestSpawnPacket()
-            //{
-            // roomCenter = transform.position,
-            // chestPos = transform.position,
-            // roomIndex = roomIndex,
-            // 
+            EventManager.Instance.SpawnInRoom(
+                new ChestSpawnPacket()
+                {
+                    roomCentre = transform.position,
+                    chestPos = transform.position,
+                    roomIndex = roomIndex,
+                    difficulty = roomDifficulty,
+                    canSpawnChest = true
+
+
+                });
         }
     }
 

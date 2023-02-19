@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class ChestControl : MonoBehaviour
 {
     public bool isOpen;
+    public int roomIndex;
     [SerializeField] public int maxNumberCoins;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite openChest, closeChest;

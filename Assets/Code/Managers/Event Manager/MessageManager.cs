@@ -5,6 +5,20 @@ using TMPro;
 using UnityEngine.Events;
 public class MessageManager : MonoBehaviour
 {
+    public static MessageManager instance { get; private set; }
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+
     public TextMeshProUGUI openChestText;
     public TextMeshProUGUI interactChestText;
     [SerializeField]

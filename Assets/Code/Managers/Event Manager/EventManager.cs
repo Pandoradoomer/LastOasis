@@ -21,6 +21,7 @@ public class EventManager : MonoBehaviour
     public event Action<GameObject> EnemyDestroyed;
     public event Action<Transform> TeleportInvoked;
     public event Action<EnemySpawnPacket> RoomEnter;
+    public event Action<ChestSpawnPacket> ChestSpawn;
     public event Action<int> RoomExit;
     public void OnDestroyObject(GameObject o)
     {
@@ -35,6 +36,12 @@ public class EventManager : MonoBehaviour
     public void OnRoomEnter(EnemySpawnPacket t)
     {
         RoomEnter?.Invoke(t);
+
+    }
+
+    public void SpawnInRoom(ChestSpawnPacket o)
+    {
+        ChestSpawn?.Invoke(o);
     }
 
     public void OnRoomExit(int index)
