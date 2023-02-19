@@ -37,10 +37,10 @@ public class ChestManager : MonoBehaviour
     {
         Vector2 pos = Vector2.zero;
         //For now spawn in room center
-        pos.x = o.roomCenter.x;
-        pos.y = o.roomCenter.y;
+        pos.x = o.roomCentre.x;
+        pos.y = o.roomCentre.y;
 
-        var go = Instantiate(chestPrefab, o.roomCenter + pos, Quaternion.identity);
+        var go = Instantiate(chestPrefab, o.roomCentre + pos, Quaternion.identity);
         AddChestToDictionary(go, o.roomIndex);
 
     }
