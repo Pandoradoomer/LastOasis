@@ -1673,6 +1673,7 @@ MonoBehaviour:
   coinText: {fileID: 176066924}
   healthText: {fileID: 1370863165}
   invulnerability: 0
+  invulnerabilityDuration: 3
 --- !u!1 &1848009946
 GameObject:
   m_ObjectHideFlags: 0
@@ -1723,9 +1724,6 @@ MonoBehaviour:
   easyDifficultyRange: {x: 1, y: 3}
   mediumDifficultyRange: {x: 2, y: 4}
   highDifficultyRange: {x: 3, y: 5}
-  enemySpawnPositions:
-  - {fileID: 11400000, guid: 60d8ddd7ad13e2a488f7e51e38459298, type: 2}
-  - {fileID: 11400000, guid: c2328be07d4e01d40af028c80ab60bf9, type: 2}
 --- !u!1 &1897260046
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,14 +15,19 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] ConsumeableData item_health;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI healthText;
+    private SpriteRenderer sr;
 
     // Test bool to prevent insta kill.
     public bool invulnerability;
+    public float invulnerabilityDuration;
+    private float invulnerabilityHolder;
+    private float blinkTimer;
     public static PlayerStats instance { get; private set; }
     void Start()
     {
         coinText.text = "Coins: " + 0;
-
+        sr = GetComponent<SpriteRenderer>();
+        invulnerabilityHolder = invulnerabilityDuration;
     }
     private void Awake()
     {
@@ -65,10 +70,11 @@ public class PlayerStats : MonoBehaviour
         //Fix bug of removing coins after its reached 0
         //Key press to spend all coins
         coinText.text = $"Coins: {Singleton.Instance.Inventory.GetCoins()}";
-      
+
+        Invulnerability();
     }
 
-    
+
     void OnTriggerEnter2D(Collider2D coll)
     {
         //if (coll.gameObject.CompareTag("Coin"))
@@ -95,31 +101,66 @@ public class PlayerStats : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // When collided with enemy or boss, the player will take damage.
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (!invulnerability)
         {
-            currentHealth -= collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
-        }
-        if (collision.gameObject.CompareTag("Boss"))
-        {
-            currentHealth -= collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                currentHealth -= collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
+                invulnerability = true;
+            }
+            if (collision.gameObject.CompareTag("Boss"))
+            {
+                currentHealth -= collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
+                invulnerability = true;
+            }
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        // Quick test of invulnerability. Only take stay damage when bool is true to prevent insta kills.
-        if(invulnerability)
+        // When player does not move from the collision point, player will still take damage.
+        if (!invulnerability)
         {
-            invulnerability = false;
-
             if (collision.gameObject.CompareTag("Enemy"))
             {
                 currentHealth -= collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
+                invulnerability = true;
             }
             if (collision.gameObject.CompareTag("Boss"))
             {
                 currentHealth -= collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
+                invulnerability = true;
             }
         }
+    }
+
+    private void Invulnerability()
+    {
+        if (invulnerability)
+        {
+            blinkTimer -= Time.deltaTime;
+            ChangePlayerAlpha();
+
+            if (blinkTimer <= 0.5f)
+            {
+                blinkTimer = 1;
+                invulnerabilityDuration--;
+
+                if (invulnerabilityDuration < 0)
+                {
+                    invulnerability = false;
+                    invulnerabilityDuration = invulnerabilityHolder;
+                    blinkTimer = 1;
+                    ChangePlayerAlpha();
+                }
+            }
+        }
+    }
+
+    private void ChangePlayerAlpha()
+    {
+        Color playerColor = sr.color;
+        playerColor.a = blinkTimer;
+        gameObject.GetComponent<SpriteRenderer>().color = playerColor;
     }
 }
