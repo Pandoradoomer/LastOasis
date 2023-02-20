@@ -115,6 +115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1b5ec3d5226bf4ca0671178590cf49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomIndex: 0
+  currentHealth: 10
+  onCollisionDamage: 2
 --- !u!50 &2902856258695615456
 Rigidbody2D:
   serializedVersion: 4

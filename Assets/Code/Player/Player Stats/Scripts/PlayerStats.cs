@@ -15,7 +15,9 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] ConsumeableData item_health;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI healthText;
-    
+
+    // Test bool to prevent insta kill.
+    public bool invulnerability;
     public static PlayerStats instance { get; private set; }
     void Start()
     {
@@ -37,7 +39,6 @@ public class PlayerStats : MonoBehaviour
 
     void Update()
     {
-        currentHealth  -= 0.09f * Time.deltaTime;
         healthText.text = "Health: " + currentHealth.ToString("#.00");      //Round to 2 d.p
         if (currentHealth <= 0)
         {
@@ -91,5 +92,34 @@ public class PlayerStats : MonoBehaviour
 
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // When collided with enemy or boss, the player will take damage.
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            currentHealth -= collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
+        }
+        if (collision.gameObject.CompareTag("Boss"))
+        {
+            currentHealth -= collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
+        }
+    }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        // Quick test of invulnerability. Only take stay damage when bool is true to prevent insta kills.
+        if(invulnerability)
+        {
+            invulnerability = false;
+
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                currentHealth -= collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
+            }
+            if (collision.gameObject.CompareTag("Boss"))
+            {
+                currentHealth -= collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
+            }
+        }
+    }
 }

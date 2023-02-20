@@ -6,10 +6,11 @@ public class BossPattern : MonoBehaviour
 {
     private GameObject player;
     public float speed;
+    public float onCollisionDamage;
 
     private void Start()
     {
-        
+        onCollisionDamage = 5;
         speed = 2f;
         player = GameObject.FindGameObjectWithTag("Player");
     }

@@ -11,6 +11,7 @@ TagManager:
   - BossRoom
   - CoinPile
   - CoinBag
+  - Boss
   layers:
   - Default
   - TransparentFX
