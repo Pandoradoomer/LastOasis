@@ -12,12 +12,14 @@ public class Singleton
     private PlayerStats playerStats;
     private Inventory inventory;
     private ItemSpawnManager itemSpawnManager;
+    private EnemyManager enemyManager;
     private Singleton()
     {
         levelGeneration = GameObject.FindObjectOfType<LevelGeneration>();
         playerStats = GameObject.FindObjectOfType<PlayerStats>();
         inventory = GameObject.FindObjectOfType<Inventory>();
         itemSpawnManager = GameObject.FindObjectOfType<ItemSpawnManager>();
+        enemyManager = GameObject.FindObjectOfType<EnemyManager>();
     }
 
     public static Singleton Instance
@@ -34,6 +36,7 @@ public class Singleton
     public PlayerStats PlayerStats { get => playerStats;}
     public Inventory Inventory { get => inventory; }
     public ItemSpawnManager ItemSpawnManager { get => itemSpawnManager;}
+    public EnemyManager EnemyManager { get => enemyManager; }
 
 
 }
