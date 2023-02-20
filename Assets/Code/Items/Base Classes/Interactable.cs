@@ -12,6 +12,10 @@ public class Interactable : MonoBehaviour
     public GameObject coinPrefab;
     public GameObject coinPilePrefab;
     public GameObject coinBagPrefab;
+    //TODO Dylan: modify this so that it holds a list of all items to spawn, alongside their amounts
+    //You'll need to do something like the way enemies select which items to drop.
+    [SerializeField]
+    private CollectableData itemToSpawn;
     void Start()
     {
        // messages = GetComponent<MessageManager>();
@@ -71,8 +75,13 @@ public class Interactable : MonoBehaviour
                 ChestControl.instance.maxNumberCoins = Random.Range(0, ChestControl.instance.maxNumberCoins);
                 for (int i = 0; i < ChestControl.instance.maxNumberCoins; i++)
                 {
-                    var go = Instantiate(coinPrefab, new Vector3(Random.Range(-2.5f,1.0f), Random.Range(-2.0f,1.0f), -1), transform.rotation);
-                    go.GetComponent<Collectable>().stackSize = Random.Range(1, 10);
+                    Transform t = transform;
+                    Vector3 r = new Vector3(Random.Range(-2.5f, 1.5f), Random.Range(-2.0f, 1.0f));
+                    t.position += r;
+                    Singleton.Instance.ItemSpawnManager.Spawn(itemToSpawn, t, Random.Range(1, 10));
+                    t.position -= r;
+                    //var go = Instantiate(coinPrefab, new Vector3(Random.Range(-2.5f,1.0f), Random.Range(-2.0f,1.0f), -1), transform.rotation);
+                    //go.GetComponent<Collectable>().stackSize = Random.Range(1, 10);
                 }
                 /// <summary>
                 /// Checks if player is in range and hasnt been interacted with

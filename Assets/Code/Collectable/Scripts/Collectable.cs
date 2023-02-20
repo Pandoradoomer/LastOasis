@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    [SerializeField] CollectableData data;
+    private CollectableData data;
     public int stackSize;                                      //How many of current item stored in inventory
 
 
     private void OnValidate()
     {
-        GetComponent<SpriteRenderer>().sprite = data.Sprite;
+        //GetComponent<SpriteRenderer>().sprite = data.Sprite;
     }
 
     void Update()
     {
 
+    }
+    
+    public void SetCollectableData(CollectableData data)
+    {
+        this.data = data;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,11 +30,6 @@ public class Collectable : MonoBehaviour
             Singleton.Instance.Inventory.Add(data, stackSize);
             Destroy(gameObject);                   
         }
-    }
-    public Collectable(CollectableData collect)             //Constructor to pass in collectableData value
-    {
-        data = collect;                                     //Set CollectableData variable "data" to collect
-        AddToStack();
     }
 
     public void AddToStack()

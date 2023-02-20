@@ -128,6 +128,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1846795114986802201, guid: 49d133e3c1e2332498906a2193112db1, type: 3}
     - target: {fileID: 972936816540606470, guid: ab0e59db73ba28742a90fe4c104c6265, type: 3}
+      propertyPath: itemToSpawn
+      value: 
+      objectReference: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
+    - target: {fileID: 972936816540606470, guid: ab0e59db73ba28742a90fe4c104c6265, type: 3}
       propertyPath: chestOpenKey
       value: 101
       objectReference: {fileID: 0}

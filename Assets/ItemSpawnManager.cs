@@ -21,5 +21,6 @@ public class ItemSpawnManager : MonoBehaviour
         //Set Collectable info
         Collectable coll = go.GetComponent<Collectable>();
         coll.stackSize = amount;
+        coll.SetCollectableData(data);
     }
 }
