@@ -36,6 +36,8 @@ public class LevelGeneration : MonoBehaviour
     private Vector2 mediumDifficultyRange;
     [SerializeField]
     private Vector2 highDifficultyRange;
+    [SerializeField]
+    List<EnemySpawnPosition> enemySpawnPositions;
 
     // Start is called before the first frame update
     void Awake()
@@ -298,6 +300,7 @@ public class LevelGeneration : MonoBehaviour
                 rs.distToCentre = room.distToCentre;
                 float difficulty = GenerateDifficulty(rs.distToCentre);
                 rs.roomDifficulty = difficulty;
+                rs.spawnPosition = enemySpawnPositions[Random.Range(0, 2)];
                 spawnedRooms.Add(go);
                 DoorManager dm = go.GetComponent<DoorManager>();
 

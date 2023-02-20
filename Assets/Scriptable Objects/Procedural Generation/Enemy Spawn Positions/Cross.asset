@@ -9,9 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c271d935a50d7c9419e74e59b9651447, type: 3}
-  m_Name: CoinCollectable
+  m_Script: {fileID: 11500000, guid: 67404b59f9df10f42a6ad54c95b846a8, type: 3}
+  m_Name: Cross
   m_EditorClassIdentifier: 
-  Name: Coin
-  Sprite: {fileID: 21300000, guid: 1d5095ad7ae8389429ac5785db173def, type: 3}
-  isCoin: 1
+  enemyPositions:
+  - {x: 0, y: 0}
+  - {x: 0, y: -3.5}
+  - {x: -3.5, y: -0}
+  - {x: 3.5, y: 0}
+  - {x: 0, y: 3.5}
+  isExpandable: 0

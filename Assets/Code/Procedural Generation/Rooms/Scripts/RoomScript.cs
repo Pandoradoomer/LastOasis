@@ -8,6 +8,7 @@ public class RoomScript : MonoBehaviour
     public int roomIndex;
     public float roomDifficulty;
     public int distToCentre;
+    public EnemySpawnPosition spawnPosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +30,8 @@ public class RoomScript : MonoBehaviour
                 roomCentre = transform.position,
                 isBoss = isBoss,
                 roomIndex = roomIndex,
-                difficulty = roomDifficulty
+                difficulty = roomDifficulty,
+                enemyPositions = spawnPosition
             });
             EventManager.TriggerEvent(Event.ChestSpawn, new ChestSpawnPacket
             {

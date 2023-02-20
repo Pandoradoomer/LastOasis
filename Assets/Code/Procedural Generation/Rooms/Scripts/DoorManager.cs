@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DoorManager : MonoBehaviour
@@ -7,11 +8,21 @@ public class DoorManager : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     List<GameObject> doors = new List<GameObject>();
+    List<bool> doorOpen;
+
+    [SerializeField]
+    List<Sprite> doorOpenSprites;
+    [SerializeField]
+    List<Sprite> doorClosedSprites;
+    [SerializeField]
+    List<Sprite> wallSprites;
     public int doorsBits;
     public int x, y;
-    void Start()
+    void Awake()
     {
-        //ReinitialiseDoors(0);
+        doorOpen = new List<bool>();
+        for (int i = 0; i < doors.Count; i++)
+            doorOpen.Add(true);
     }
 
     // Update is called once per frame
@@ -24,7 +35,20 @@ public class DoorManager : MonoBehaviour
     {
         for(int i =0; i < 4; i++)
         {
-            doors[i].SetActive((doorsBits & (1 << i)) == 0);
+            bool isDoor = (doorsBits & (1 << i)) != 0;
+            bool isOpen = doorOpen[i];
+            SpriteRenderer sr = doors[i].GetComponent<SpriteRenderer>();
+            if(isDoor)
+            {
+                if (isOpen)
+                    sr.sprite = doorOpenSprites[i];
+                else
+                    sr.sprite = doorClosedSprites[i];
+            }
+            else
+            {
+                sr.sprite = wallSprites[i];
+            }
         }
     }
 }

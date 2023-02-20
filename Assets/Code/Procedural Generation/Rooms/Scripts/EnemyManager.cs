@@ -117,11 +117,11 @@ public class EnemyManager : MonoBehaviour
             return;
         //for the sake of the task, let's spawn enemies inside every room, at least 1
         float currentDifficulty = 0;
+        List<Vector2> filledPositions = new List<Vector2>();
         while(currentDifficulty < e.difficulty)
         {
             Vector2 pos = Vector2.zero;
-            pos.x = Random.Range(-4.0f, 4.0f);
-            pos.y = Random.Range(-4.0f, 4.0f);
+            pos = DecideEnemySpawnPosition(e.enemyPositions, filledPositions);
 
             var go = Instantiate(enemyPrefab, e.roomCentre + pos, Quaternion.identity);
 
@@ -153,6 +153,31 @@ public class EnemyManager : MonoBehaviour
             //increasing the difficulty
             currentDifficulty += enemies[index].difficulty;
         }
+    }
+    
+    Vector2 DecideEnemySpawnPosition(EnemySpawnPosition esp, List<Vector2> takenPositions)
+    {
+        List<Vector2> buffer = new List<Vector2>(esp.enemyPositions);
+        buffer.RemoveAll(x => takenPositions.Contains(x));
+        while(buffer.Count == 0)
+        {
+            buffer = new List<Vector2>(esp.enemyPositions);
+            int mult = (takenPositions.Count / esp.enemyPositions.Count) % 2;
+            int inc = (takenPositions.Count / esp.enemyPositions.Count);
+            if (mult == 0)
+                mult--;
+            for(int i = 0; i < buffer.Count; i++)
+            {
+                buffer[i] += Vector2.left * mult * inc * 0.5f;
+            }
+
+            buffer.RemoveAll(x => takenPositions.Contains(x));
+            
+
+        }
+        int index = Random.Range(0, buffer.Count);
+        takenPositions.Add(buffer[index]);
+        return buffer[index];
     }
 
     void AddEnemyToDictionary(GameObject go, int index)
