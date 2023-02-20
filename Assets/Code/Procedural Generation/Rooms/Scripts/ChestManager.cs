@@ -9,10 +9,14 @@ public class ChestManager : MonoBehaviour
     private List<int> hasSpawnedChest;
     void Start()
     {
-       // EventManager.Instance.ChestSpawn += SpawnChestInRoom;
-        EventManager.Instance.ChestSpawn += OnRoomEnter;
+        EventManager.StartListening(Event.ChestSpawn, OnRoomEnter);
         spawnedChests = new Dictionary<int, List<GameObject>>();
         hasSpawnedChest = new List<int>();
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Event.ChestSpawn, OnRoomEnter);
     }
 
     //SPAWN A CHEST UPON ENTERING A ROOM, GIVEN PROBABILITY BASED OFF ROOM DIFFICULTY
@@ -21,16 +25,17 @@ public class ChestManager : MonoBehaviour
         
     }
 
-    private void OnRoomEnter(ChestSpawnPacket o)
+    private void OnRoomEnter(IEventPacket packet)
     {
-        if (hasSpawnedChest.Contains(o.roomIndex))
+        ChestSpawnPacket csp = packet as ChestSpawnPacket;
+        if (hasSpawnedChest.Contains(csp.roomIndex))
         {
-            ActivateChests(o.roomIndex);
+            ActivateChests(csp.roomIndex);
         }
         else
         {
-            hasSpawnedChest.Add(o.roomIndex);
-            SpawnChestInRoom(o);
+            hasSpawnedChest.Add(csp.roomIndex);
+            SpawnChestInRoom(csp);
         }
     }
     private void SpawnChestInRoom(ChestSpawnPacket o)

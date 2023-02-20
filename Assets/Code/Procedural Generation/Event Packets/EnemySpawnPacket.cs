@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawnPacket
+public class EnemySpawnPacket : IEventPacket
 {
     public Vector2 roomCentre;
     public int roomIndex;

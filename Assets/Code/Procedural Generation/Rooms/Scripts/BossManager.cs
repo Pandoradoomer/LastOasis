@@ -19,7 +19,7 @@ public class BossManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.Instance.EnemyDestroyed += OnEnemyDestroyed;
+        EventManager.StartListening(Event.EnemyDestroyed, OnEnemyDestroyed);
 
         if (gameObject.name == "BossRoom")
         {
@@ -32,6 +32,11 @@ public class BossManager : MonoBehaviour
         {
             Destroy(this);
         }
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Event.EnemyDestroyed, OnEnemyDestroyed);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -49,10 +54,11 @@ public class BossManager : MonoBehaviour
         }
     }
 
-    private void OnEnemyDestroyed(GameObject o)
+    private void OnEnemyDestroyed(IEventPacket packet)
     {
-        spawnedEnemies.Remove(o);
-        Destroy(o);
+        EnemyDestroyedPacket edp = packet as EnemyDestroyedPacket;
+        spawnedEnemies.Remove(edp.go);
+        Destroy(edp.go);
     }
 
     private void SpawnBoss()

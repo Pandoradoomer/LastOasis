@@ -361,7 +361,11 @@ public class LevelGeneration : MonoBehaviour
 
     void TeleportToBossRoom()
     {
-        EventManager.Instance.OnTeleportInvoked(bossRoom.transform);
+        EventManager.TriggerEvent(Event.BossTeleport,
+            new BossTeleportPacket
+            {
+                transform = bossRoom.transform
+            });
     }
     void Update()
     {

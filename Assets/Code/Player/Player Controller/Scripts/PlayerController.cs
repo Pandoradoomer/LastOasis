@@ -12,7 +12,12 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.Instance.TeleportInvoked += BossTeleport;
+        EventManager.StartListening(Event.BossTeleport, BossTeleport);
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Event.BossTeleport, BossTeleport);
     }
 
     // Update is called once per frame
@@ -27,8 +32,9 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector2(transform.position.x + x, transform.position.y + y);
     }
 
-    void BossTeleport(Transform t)
+    void BossTeleport(IEventPacket packet)
     {
-        transform.position = t.position - Vector3.up * 4.0f;
+        BossTeleportPacket btp = packet as BossTeleportPacket;
+        transform.position = btp.transform.position - Vector3.up * 4.0f;
     }
 }

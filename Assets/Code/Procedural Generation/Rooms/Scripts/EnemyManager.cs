@@ -20,11 +20,18 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.Instance.EnemyDestroyed += OnEnemyDestroyed;
-        EventManager.Instance.RoomEnter += OnRoomEnter;
-        EventManager.Instance.RoomExit += OnRoomExit;
+        EventManager.StartListening(Event.EnemyDestroyed, OnEnemyDestroyed);
+        EventManager.StartListening(Event.RoomEnter, OnRoomEnter);
+        EventManager.StartListening(Event.RoomExit, OnRoomExit);
         spawnedEnemies = new Dictionary<int, List<GameObject>>();
         hasSpawned= new List<int>();
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Event.EnemyDestroyed, OnEnemyDestroyed);
+        EventManager.StopListening(Event.RoomEnter, OnRoomEnter);
+        EventManager.StopListening(Event.RoomExit, OnRoomExit);
     }
 
     // Update is called once per frame
@@ -34,8 +41,9 @@ public class EnemyManager : MonoBehaviour
     }
 
 
-    private void OnRoomEnter(EnemySpawnPacket e)
+    private void OnRoomEnter(IEventPacket packet)
     {
+        EnemySpawnPacket e = packet as EnemySpawnPacket;
         if(hasSpawned.Contains(e.roomIndex))
         {
             ActivateEnemies(e.roomIndex);
@@ -47,18 +55,19 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    private void OnRoomExit(int index)
+    private void OnRoomExit(IEventPacket packet)
     {
-        DisableEnemies(index);
+        RoomExitPacket rep = packet as RoomExitPacket;
+        DisableEnemies(rep.roomIndex);
     }
-
-    private void OnEnemyDestroyed(GameObject o)
+    private void OnEnemyDestroyed(IEventPacket packet)
     {
-        int index = o.GetComponent<EnemyBase>().roomIndex;
-        spawnedEnemies[index].Remove(o);
+        EnemyDestroyedPacket edp = packet as EnemyDestroyedPacket;
+        int index = edp.go.GetComponent<EnemyBase>().roomIndex;
+        spawnedEnemies[index].Remove(edp.go);
         if (spawnedEnemies[index].Count == 0)
             spawnedEnemies.Remove(index);
-        Destroy(o);
+        Destroy(edp.go);
     }
 
     private void ActivateEnemies(int index)

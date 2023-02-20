@@ -1,53 +1,80 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
-    public static EventManager Instance;
+    
+    private Dictionary<Event, Action<IEventPacket>> eventDictionary;
 
-    private void Awake()
+    private static EventManager eventManager;
+    public static EventManager Instance
     {
-        if (Instance == null)
-            Instance = this;
-        else
+        get
         {
-            Destroy(this);
+            if(!eventManager)
+            {
+                eventManager = FindObjectOfType(typeof(EventManager)) as EventManager;
+            }
+            if(!eventManager)
+            {
+                Debug.LogError("There needs to be one active EventManager script on a GameObject in your scene!");
+            }
+            else
+            {
+                eventManager.Init();
+                DontDestroyOnLoad(eventManager);
+            }
+            return eventManager;
         }
     }
 
-    public event Action<GameObject> EnemyDestroyed;
-    public event Action<Transform> TeleportInvoked;
-    public event Action<EnemySpawnPacket> RoomEnter;
-    public event Action<ChestSpawnPacket> ChestSpawn;
-    public event Action<int> RoomExit;
-    public void OnDestroyObject(GameObject o)
+    void Init()
     {
-        EnemyDestroyed?.Invoke(o);
+        if(eventDictionary == null)
+        {
+            eventDictionary = new Dictionary<Event, Action<IEventPacket>>();
+        }
     }
 
-    public void OnTeleportInvoked(Transform t)
+    public static void StartListening(Event e, Action<IEventPacket> listener)
     {
-        TeleportInvoked?.Invoke(t);
+        Action<IEventPacket> thisEvent;
+        if(Instance.eventDictionary.TryGetValue(e, out thisEvent))
+        {
+            thisEvent += listener;
+            Instance.eventDictionary[e] = thisEvent;
+        }
+        else
+        {
+            thisEvent += listener;
+            Instance.eventDictionary.Add(e, thisEvent);
+        }
     }
 
-    public void OnRoomEnter(EnemySpawnPacket t)
+    public static void StopListening(Event e, Action<IEventPacket> listener)
     {
-        RoomEnter?.Invoke(t);
-
+        if (eventManager == null)
+            return;
+        Action<IEventPacket> thisEvent;
+        if(Instance.eventDictionary.TryGetValue(e, out thisEvent))
+        {
+            thisEvent -= listener;
+            Instance.eventDictionary[e] = thisEvent;
+        }
     }
 
-    public void SpawnInRoom(ChestSpawnPacket o)
+    public static void TriggerEvent(Event e, IEventPacket packet)
     {
-        ChestSpawn?.Invoke(o);
+        Action<IEventPacket> thisEvent = null;
+        if(Instance.eventDictionary.TryGetValue(e, out thisEvent))
+        {
+            thisEvent.Invoke(packet);
+        }
     }
 
-    public void OnRoomExit(int index)
-    {
-        RoomExit.Invoke(index);
-    }
+
 
 
 }

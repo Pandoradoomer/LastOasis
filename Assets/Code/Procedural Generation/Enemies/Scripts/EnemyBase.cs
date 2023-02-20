@@ -9,7 +9,11 @@ public class EnemyBase : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            EventManager.Instance.OnDestroyObject(this.gameObject);
+            EventManager.TriggerEvent(Event.EnemyDestroyed,
+                new EnemyDestroyedPacket()
+                {
+                    go = this.gameObject
+                });
         }
     }
 }

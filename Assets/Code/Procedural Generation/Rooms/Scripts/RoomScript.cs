@@ -24,25 +24,21 @@ public class RoomScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            EventManager.Instance.OnRoomEnter(
-                new EnemySpawnPacket()
-                {
-                    roomCentre = transform.position,
-                    isBoss = isBoss,
-                    roomIndex = roomIndex,
-                    difficulty = roomDifficulty
-                });
-            EventManager.Instance.SpawnInRoom(
-                new ChestSpawnPacket()
-                {
-                    roomCentre = transform.position,
-                    chestPos = transform.position,
-                    roomIndex = roomIndex,
-                    difficulty = roomDifficulty,
-                    canSpawnChest = true
-
-
-                });
+            EventManager.TriggerEvent(Event.RoomEnter, new EnemySpawnPacket
+            {
+                roomCentre = transform.position,
+                isBoss = isBoss,
+                roomIndex = roomIndex,
+                difficulty = roomDifficulty
+            });
+            EventManager.TriggerEvent(Event.ChestSpawn, new ChestSpawnPacket
+            {
+                roomCentre = transform.position,
+                chestPos = transform.position,
+                roomIndex = roomIndex,
+                difficulty = roomDifficulty,
+                canSpawnChest = true
+            });
         }
     }
 
@@ -50,7 +46,12 @@ public class RoomScript : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            EventManager.Instance.OnRoomExit(roomIndex);
+            EventManager.TriggerEvent(Event.RoomExit,
+                new RoomExitPacket
+                {
+                    roomIndex = roomIndex
+                }
+                );
         }
     }
 }
