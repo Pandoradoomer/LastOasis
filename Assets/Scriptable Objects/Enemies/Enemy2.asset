@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Dude
   MaxHealth: 0
-  CurrentHealth: 0
   Sprite: {fileID: 0}
   Type: 0
   Damage: 5
@@ -22,6 +21,7 @@ MonoBehaviour:
   Behaviour: {fileID: 11500000, guid: 71ecb0def39e00242b5c4b0c88112998, type: 3}
   itemDrops:
   - itemType: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
-    itemQuantity: 10
+    minItemQuantity: 7
+    maxItemQuantity: 12
     dropProbability: 1
   color: {r: 0, g: 1, b: 0.080822706, a: 1}

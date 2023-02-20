@@ -5,6 +5,12 @@ using UnityEngine;
 public class EnemyBase : MonoBehaviour
 {
     public int roomIndex;
+    public float currentHealth = 10;
+    public Dictionary<Item, int> lootToDrop;
+    private void Awake()
+    {
+        lootToDrop = new Dictionary<Item, int>();
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
@@ -12,7 +18,8 @@ public class EnemyBase : MonoBehaviour
             EventManager.TriggerEvent(Event.EnemyDestroyed,
                 new EnemyDestroyedPacket()
                 {
-                    go = this.gameObject
+                    go = this.gameObject,
+                    lootToDrop = lootToDrop
                 });
         }
     }

@@ -63,10 +63,19 @@ public class EnemyManager : MonoBehaviour
     private void OnEnemyDestroyed(IEventPacket packet)
     {
         EnemyDestroyedPacket edp = packet as EnemyDestroyedPacket;
+
+        //removing the reference to the enemy in the list of spawned enemies
         int index = edp.go.GetComponent<EnemyBase>().roomIndex;
         spawnedEnemies[index].Remove(edp.go);
         if (spawnedEnemies[index].Count == 0)
             spawnedEnemies.Remove(index);
+
+        //awarding the player the necessary items
+        foreach(var kvp in edp.lootToDrop)
+        {
+            Debug.Log($"The player has been awarded {kvp.Value} amount of type {kvp.Key.name}");
+        }
+
         Destroy(edp.go);
     }
 
@@ -114,16 +123,28 @@ public class EnemyManager : MonoBehaviour
             var go = Instantiate(enemyPrefab, e.roomCentre + pos, Quaternion.identity);
 
             int index = Random.Range(0, enemies.Count);
+            Enemy enemyData = enemies[index];
 
             //Setting the colour
-            go.GetComponent<SpriteRenderer>().color = enemies[index].color;
+            go.GetComponent<SpriteRenderer>().color = enemyData.color;
 
             //Add behaviour;
-            var behaviour = enemies[index].Behaviour;
+            var behaviour = enemyData.Behaviour;
             go.AddComponent(behaviour.GetClass());
 
             //setting the index;
-            go.GetComponent<EnemyBase>().roomIndex = e.roomIndex;
+            EnemyBase eb = go.GetComponent<EnemyBase>();
+            eb.roomIndex = e.roomIndex;
+            eb.currentHealth = enemyData.MaxHealth;
+            foreach(ItemDrop id in enemyData.itemDrops)
+            {
+                float random = Random.Range(0.0f, 1.0f);
+                if(random <= id.dropProbability)
+                {
+                    eb.lootToDrop.Add(id.itemType, Random.Range(id.minItemQuantity, id.maxItemQuantity + 1));
+                }
+            }
+
             AddEnemyToDictionary(go, e.roomIndex);
 
             //increasing the difficulty

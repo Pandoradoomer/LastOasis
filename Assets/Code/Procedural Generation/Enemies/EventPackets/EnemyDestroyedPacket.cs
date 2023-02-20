@@ -5,4 +5,5 @@ using UnityEngine;
 public class EnemyDestroyedPacket : IEventPacket
 {
     public GameObject go;
+    public Dictionary<Item, int> lootToDrop;
 }

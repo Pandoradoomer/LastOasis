@@ -7,6 +7,7 @@ using UnityEngine;
 public class ItemDrop 
 {
     public Item itemType;
-    public int itemQuantity;
+    public int minItemQuantity;
+    public int maxItemQuantity;
     public float dropProbability;
 }
