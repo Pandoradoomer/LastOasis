@@ -71,7 +71,8 @@ public class Interactable : MonoBehaviour
                 ChestControl.instance.maxNumberCoins = Random.Range(0, ChestControl.instance.maxNumberCoins);
                 for (int i = 0; i < ChestControl.instance.maxNumberCoins; i++)
                 {
-                    Instantiate(coinPrefab, new Vector3(Random.Range(-2.5f,1.0f), Random.Range(-2.0f,1.0f), -1), transform.rotation);
+                    var go = Instantiate(coinPrefab, new Vector3(Random.Range(-2.5f,1.0f), Random.Range(-2.0f,1.0f), -1), transform.rotation);
+                    go.GetComponent<Collectable>().stackSize = Random.Range(1, 10);
                 }
                 /// <summary>
                 /// Checks if player is in range and hasnt been interacted with

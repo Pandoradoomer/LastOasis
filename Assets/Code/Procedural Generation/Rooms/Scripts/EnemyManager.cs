@@ -73,7 +73,10 @@ public class EnemyManager : MonoBehaviour
         //awarding the player the necessary items
         foreach(var kvp in edp.lootToDrop)
         {
-            Debug.Log($"The player has been awarded {kvp.Value} amount of type {kvp.Key.name}");
+            if(kvp.Key is CollectableData)
+            {
+                Singleton.Instance.Inventory.Add(kvp.Key as CollectableData, kvp.Value);
+            }
         }
 
         Destroy(edp.go);

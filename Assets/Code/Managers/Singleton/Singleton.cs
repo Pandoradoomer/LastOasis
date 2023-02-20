@@ -10,10 +10,12 @@ public class Singleton
 
     private LevelGeneration levelGeneration;
     private PlayerStats playerStats;
+    private Inventory inventory;
     private Singleton()
     {
         levelGeneration = GameObject.FindObjectOfType<LevelGeneration>();
         playerStats = GameObject.FindObjectOfType<PlayerStats>();
+        inventory = GameObject.FindObjectOfType<Inventory>();
     }
 
     public static Singleton Instance
@@ -28,6 +30,7 @@ public class Singleton
 
     public LevelGeneration LevelGeneration { get => levelGeneration; }
     public PlayerStats PlayerStats { get => playerStats;}
+    public Inventory Inventory { get => inventory; }
 
 
 }

@@ -5,6 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "collectabledataScriptableobject", menuName = "ScriptableObjects/Items/Collectable")]
 public class CollectableData : Item
 {
-    public int maxValue;
-    public int minValue;
+    public bool isCoin;
 }

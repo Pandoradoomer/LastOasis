@@ -50,43 +50,43 @@ public class PlayerStats : MonoBehaviour
             currentHealth = maxHealth;
         }
 
-        if (Input.GetKeyDown(KeyCode.C) && Inventory.instance.HasCoin(item_coin))
-        {
-            Inventory.instance.Remove(item_coin);
-            Debug.Log("You spent 1 coin");
-            coinCounter--;
-            coinText.text = "Coins: " + coinCounter;
-            if (coinCounter <= 0)
-            {
-                Debug.Log("You have no coins");
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.C) && Inventory.instance.HasCoin(item_coin))
+        //{
+        //    Inventory.instance.Remove(item_coin, 1);
+        //    Debug.Log("You spent 1 coin");
+        //    coinCounter--;
+        //    coinText.text = "Coins: " + coinCounter;
+        //    if (coinCounter <= 0)
+        //    {
+        //        Debug.Log("You have no coins");
+        //    }
+        //}
         //Fix bug of removing coins after its reached 0
         //Key press to spend all coins
-
+        coinText.text = $"Coins: {Singleton.Instance.Inventory.GetCoins()}";
       
     }
 
+    
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.gameObject.CompareTag("Coin"))
-        {
-            
-            coinCounter += Random.Range(item_coin.minValue,item_coin.maxValue);
-            coinText.text = "Coins: " + coinCounter;
-        }
-
-        else if (coll.gameObject.CompareTag("CoinPile"))
-        {
-            coinCounter += Random.Range(item_coin_pile.minValue, item_coin_pile.maxValue);
-            coinText.text = "Coins: " + coinCounter;
-        }
-
-        else if (coll.gameObject.CompareTag("CoinBag"))
-        {
-            coinCounter += Random.Range(item_coin_bag.minValue, item_coin_bag.maxValue);
-            coinText.text = "Coins: " + coinCounter;
-        }
+        //if (coll.gameObject.CompareTag("Coin"))
+        //{
+        //    coinCounter += Random.Range(item_coin.minValue,item_coin.maxValue);
+        //    coinText.text = "Coins: " + coinCounter;
+        //}
+        //
+        //else if (coll.gameObject.CompareTag("CoinPile"))
+        //{
+        //    coinCounter += Random.Range(item_coin_pile.minValue, item_coin_pile.maxValue);
+        //    coinText.text = "Coins: " + coinCounter;
+        //}
+        //
+        //else if (coll.gameObject.CompareTag("CoinBag"))
+        //{
+        //    coinCounter += Random.Range(item_coin_bag.minValue, item_coin_bag.maxValue);
+        //    coinText.text = "Coins: " + coinCounter;
+        //}
 
 
     }

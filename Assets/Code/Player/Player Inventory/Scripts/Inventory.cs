@@ -5,103 +5,92 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     
-    //Inventory items in list:
-    //Collectable (scriptable object)
-    public List<Collectable> inventory = new List<Collectable>();
     //Dictionary handles item stacking from List
-    private Dictionary<CollectableData, Collectable> itemDictionary = new Dictionary<CollectableData, Collectable>();
-    public static Inventory instance { get; private set; }
-    //Singleton class for Inventory
-    void Awake()
+    private Dictionary<CollectableData, int> itemDictionary = new Dictionary<CollectableData, int>();
+    [SerializeField]
+    private CollectableData coinEntry;
+
+    private void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
+        if(coinEntry != null)
+            itemDictionary.Add(coinEntry, 0);
     }
-    public void Add(CollectableData collectableData)
+
+
+    public void Add(CollectableData collectableData, int amount)
     {
-        //CAP ITEM STACK TO 1
-        if (itemDictionary.TryGetValue(collectableData, out Collectable item))      //Checks if item is already existing in Dictionary, returns null if it doesnt find
+        //we handle the coin addition separately
+        if (collectableData.isCoin)
         {
-            item.AddToStack();                                                      //If we get the value of collectableData and we find an item, then add it to the stack
-            Debug.Log(collectableData.name + "(s)" + " in stack " + item.stackSize);
-            //Adds collectable name to item stack and displays stack size
+            itemDictionary[coinEntry] += amount;
+            return;
+        }
+        
+        if(itemDictionary.ContainsKey(collectableData))
+        {
+            itemDictionary[collectableData] += amount;
         }
         else
         {
-            Collectable newCollectable = new Collectable(collectableData);              //If it doesnt exist in inventory, create a new collectable
-            inventory.Add(newCollectable);                                              //Add the newly found collectable to the List
-            itemDictionary.Add(collectableData, newCollectable);                        //Store this collectable along with its data in the dictionary
-            Debug.Log(collectableData.name + " added to inv for first time");
+            itemDictionary.Add(collectableData, amount);
         }
     }
 
     //Check for Collisions with enemies and remove items
-    public void Remove(CollectableData collectableData)
+    public void Remove(CollectableData collectableData, int amount)
     {
-        if (itemDictionary.TryGetValue(collectableData, out Collectable item))          //Finds a collectable in the item dictionary (queries it)
+        if (itemDictionary.ContainsKey(collectableData))
         {
-            item.RemoveFromStack();                                                     //Removes item from collectable stack
-            Debug.Log(/*item.stackSize +*/ collectableData.name + " removed from stack");
-            if (item.stackSize == 0)                                    //Remove collectable from the collectable list (inventory) and the dictionary, Once the stack is empty enter the if
+            if (itemDictionary[collectableData] <= amount)
             {
-                inventory.Remove(item);                                 //Remove item from inv list
-                itemDictionary.Remove(collectableData);                 //Remove collectableData from dict
-                //REMOVE 1 ITEM AT A TIME
-
+                itemDictionary[collectableData] = 0;
             }
-            else if (item.stackSize == 0)
-            {
-                Debug.Log("You dont have any items to remove");
-            }
+            else
+                itemDictionary[collectableData] -= amount;
         }
+        else
+        {
+            Debug.LogError($"Could not find item of type {collectableData.name} in the inventory!");
+            return;
+        }
+        ///}
     }
     public void ClearInventory(CollectableData collectableData)
     {   //Clear inv when player dies in dungeon, keep items at save points
         //NEEDS MAKING MORE ROBUST, CLEAR MORE THAN ONE TYPE OF COLLECTABLE
-        if (itemDictionary.TryGetValue(collectableData, out Collectable item))
+
+        if(itemDictionary.ContainsKey(collectableData))
         {
-            if (inventory.Contains(item) && itemDictionary.Count > 0 && collectableData.name == "Coin"/*&& inventory.Count > 0*/)            //Removes Coin collectable both from inventory list and item dictionary
-            {
-                inventory.Clear();
-                itemDictionary.Clear();
-                Debug.Log("Cleared" + " " + item.stackSize + " " + collectableData.name + "(s)");
-                //Debug.Log("Cleared" + item.stackSize + "items");
-            }
-            if (inventory.Contains(item) && itemDictionary.Count > 0 && collectableData.name == "Health Potion")
-            {
-                inventory.Clear();
-                itemDictionary.Clear();
-                Debug.Log("Cleared" + " " + item.stackSize + " " + collectableData.name + "(s)");
-                //Debug.Log("You have no " + collectableData.name + " to remove");       //No items to remove from an empty dictionary
-            }
-            else
-            {
-                inventory.Clear();
-                itemDictionary.Clear();
-                Debug.Log("Cleared" + " " + item.stackSize + " " + collectableData.name + "(s)");
-            }
-        }
-
-
-    }
-
-    public void QueryInv(CollectableData collectableData)
-    {
-        if (itemDictionary.ContainsKey(collectableData))                                    //Checks if dictionary contains collectableData scriptable objects
-        {
-            Debug.Log("There is a " + collectableData.name);                                //If so then print the name of the CollectableData to console
+            // do we want to remove the item altogether and therefore not have the possibility
+            // to ever display it with UI, or do we want to set it to 0?
+            itemDictionary.Remove(collectableData);
         }
         else
         {
-            Debug.Log("Item " + collectableData.name + " doesnt exist in your inventory");
+            Debug.LogError($"Could not find item of type {typeof(CollectableData)} in the inventory!");
+            return;
+        }
+
+
+    }
+
+    public int QueryInv(CollectableData collectableData)
+    {
+        if(itemDictionary.ContainsKey(collectableData))
+        {
+            return itemDictionary[collectableData];
+        }
+        else
+        {
+            return 0;
         }
     }
+
+    public int GetCoins()
+    {
+        return coinEntry == null ? 0 : itemDictionary[coinEntry];
+    }
+
 
     public void DisplayInv(CollectableData collectableData)
     {

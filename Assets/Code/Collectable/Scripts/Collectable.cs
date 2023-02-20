@@ -22,9 +22,8 @@ public class Collectable : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Destroy(gameObject);
-            //Gets a reference to the inventory script Add method, accepts argument of data of type CollectableData                       
-            Inventory.instance.Add(data);
+            Singleton.Instance.Inventory.Add(data, stackSize);
+            Destroy(gameObject);                   
         }
     }
     public Collectable(CollectableData collect)             //Constructor to pass in collectableData value
