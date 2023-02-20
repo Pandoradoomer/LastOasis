@@ -75,7 +75,7 @@ public class EnemyManager : MonoBehaviour
         {
             if(kvp.Key is CollectableData)
             {
-                Singleton.Instance.Inventory.Add(kvp.Key as CollectableData, kvp.Value);
+                Singleton.Instance.ItemSpawnManager.Spawn(kvp.Key as CollectableData, edp.go.transform, kvp.Value);
             }
         }
 
