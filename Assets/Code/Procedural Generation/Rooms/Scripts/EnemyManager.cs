@@ -108,6 +108,7 @@ public class EnemyManager : MonoBehaviour
         {
             IEnemyBehaviour behaviourComponent = enemy.go.GetComponent<IEnemyBehaviour>();
             enemy.go.transform.position = enemy.SpawnPos;
+            enemy.go.GetComponent<EnemyBase>().currentHealth = enemy.maxHealth;
             if (behaviourComponent != null)
             {
                 behaviourComponent.Freeze();
@@ -129,15 +130,16 @@ public class EnemyManager : MonoBehaviour
 
             var go = Instantiate(enemyPrefab, e.roomCentre + pos, Quaternion.identity);
 
+            int index = Random.Range(0, enemies.Count);
+            Enemy enemyData = enemies[index];
+
 
             EnemyRuntimeData erd = new EnemyRuntimeData()
             {
                 go = go,
-                SpawnPos = e.roomCentre + pos
+                SpawnPos = e.roomCentre + pos,
+                maxHealth = enemyData.MaxHealth
             };
-            int index = Random.Range(0, enemies.Count);
-            Enemy enemyData = enemies[index];
-
             //Setting the colour
             go.GetComponent<SpriteRenderer>().color = enemyData.color;
 
@@ -207,4 +209,5 @@ public class EnemyRuntimeData
 {
     public GameObject go;
     public Vector2 SpawnPos;
+    public float maxHealth;
 }
