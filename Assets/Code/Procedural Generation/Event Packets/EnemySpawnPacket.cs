@@ -8,4 +8,5 @@ public class EnemySpawnPacket : IEventPacket
     public int roomIndex;
     public float difficulty;
     public bool isBoss;
+    public EnemySpawnPosition enemyPositions;
 }

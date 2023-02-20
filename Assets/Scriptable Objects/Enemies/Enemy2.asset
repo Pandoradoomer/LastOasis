@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy2
   m_EditorClassIdentifier: 
   Name: Dude
-  MaxHealth: 0
+  MaxHealth: 10
   Sprite: {fileID: 0}
   Type: 0
   Damage: 5
