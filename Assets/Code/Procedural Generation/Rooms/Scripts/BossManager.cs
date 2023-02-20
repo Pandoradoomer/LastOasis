@@ -10,7 +10,9 @@ public class BossManager : MonoBehaviour
     [SerializeField] private BoxCollider2D roomTrigger;
     [SerializeField] private GameObject bossPrefab;
     
+    //Scriptable Object
     public Enemy boss;
+    public float currentHealth;
     public GameObject bossHPSlider;
 
     private List<GameObject> spawnedEnemies = new List<GameObject>();
@@ -23,6 +25,7 @@ public class BossManager : MonoBehaviour
 
         if (gameObject.name == "BossRoom")
         {
+            currentHealth = boss.MaxHealth;
             isBossRoom = true;
             bossHPSlider = GameObject.Find("BossHP");
             bossHPSlider.SetActive(false);
@@ -73,6 +76,6 @@ public class BossManager : MonoBehaviour
     public void BossHP()
     {
         if(bossHPSlider.activeSelf)
-            bossHPSlider.GetComponent<Slider>().value = boss.CurrentHealth;
+            bossHPSlider.GetComponent<Slider>().value = currentHealth;
     }
 }

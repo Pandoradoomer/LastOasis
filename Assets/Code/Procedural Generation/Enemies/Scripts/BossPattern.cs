@@ -6,12 +6,9 @@ public class BossPattern : MonoBehaviour
 {
     private GameObject player;
     public float speed;
-    public float health;
 
     private void Start()
     {
-        health = BossManager.instance.boss.MaxHealth = 50;
-        BossManager.instance.boss.CurrentHealth = BossManager.instance.boss.MaxHealth;
         
         speed = 2f;
         player = GameObject.FindGameObjectWithTag("Player");
@@ -20,7 +17,7 @@ public class BossPattern : MonoBehaviour
     private void Update()
     {
         // Calculates the percent of health instead of numbers to trigger boss attack patterns.
-        switch(BossManager.instance.boss.CurrentHealth)
+        switch(BossManager.instance.currentHealth)
         {
             // First stage when 100% health and greater than 50%.
             case float i when i > BossManager.instance.boss.MaxHealth / 2:
@@ -42,8 +39,7 @@ public class BossPattern : MonoBehaviour
         // Debugging purposes.
         if(Input.GetKeyDown(KeyCode.RightShift))
         {
-            BossManager.instance.boss.CurrentHealth -= 5;
-            health = BossManager.instance.boss.CurrentHealth;
+            BossManager.instance.currentHealth -= 5;
         }
         
     }
