@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Linq;
+
+
 
 public class EnemyManager : MonoBehaviour
 {
@@ -12,7 +15,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private List<Enemy> enemies;
 
-    private Dictionary<int, List<GameObject>> spawnedEnemies;
+    private Dictionary<int, List<EnemyRuntimeData>> spawnedEnemies;
     private List<int> hasSpawned;
 
 
@@ -23,7 +26,7 @@ public class EnemyManager : MonoBehaviour
         EventManager.StartListening(Event.EnemyDestroyed, OnEnemyDestroyed);
         EventManager.StartListening(Event.RoomEnter, OnRoomEnter);
         EventManager.StartListening(Event.RoomExit, OnRoomExit);
-        spawnedEnemies = new Dictionary<int, List<GameObject>>();
+        spawnedEnemies = new Dictionary<int, List<EnemyRuntimeData>>();
         hasSpawned= new List<int>();
     }
 
@@ -66,7 +69,7 @@ public class EnemyManager : MonoBehaviour
 
         //removing the reference to the enemy in the list of spawned enemies
         int index = edp.go.GetComponent<EnemyBase>().roomIndex;
-        spawnedEnemies[index].Remove(edp.go);
+        spawnedEnemies[index].RemoveAll(x => x.go == edp.go);
         if (spawnedEnemies[index].Count == 0)
             spawnedEnemies.Remove(index);
 
@@ -88,7 +91,7 @@ public class EnemyManager : MonoBehaviour
             return;
         foreach(var enemy in spawnedEnemies[index])
         {
-            IEnemyBehaviour behaviourComponent = enemy.GetComponent<IEnemyBehaviour>();
+            IEnemyBehaviour behaviourComponent = enemy.go.GetComponent<IEnemyBehaviour>();
                 if(behaviourComponent != null )
                 {
                     var specificComponent = behaviourComponent as MonoBehaviour;
@@ -103,7 +106,8 @@ public class EnemyManager : MonoBehaviour
             return;
         foreach (var enemy in spawnedEnemies[index])
         {
-            IEnemyBehaviour behaviourComponent = enemy.GetComponent<IEnemyBehaviour>();
+            IEnemyBehaviour behaviourComponent = enemy.go.GetComponent<IEnemyBehaviour>();
+            enemy.go.transform.position = enemy.SpawnPos;
             if (behaviourComponent != null)
             {
                 behaviourComponent.Freeze();
@@ -125,6 +129,12 @@ public class EnemyManager : MonoBehaviour
 
             var go = Instantiate(enemyPrefab, e.roomCentre + pos, Quaternion.identity);
 
+
+            EnemyRuntimeData erd = new EnemyRuntimeData()
+            {
+                go = go,
+                SpawnPos = e.roomCentre + pos
+            };
             int index = Random.Range(0, enemies.Count);
             Enemy enemyData = enemies[index];
 
@@ -147,8 +157,7 @@ public class EnemyManager : MonoBehaviour
                     eb.lootToDrop.Add(id.itemType, Random.Range(id.minItemQuantity, id.maxItemQuantity + 1));
                 }
             }
-
-            AddEnemyToDictionary(go, e.roomIndex);
+            AddEnemyToDictionary(erd, e.roomIndex);
 
             //increasing the difficulty
             currentDifficulty += enemies[index].difficulty;
@@ -180,16 +189,22 @@ public class EnemyManager : MonoBehaviour
         return buffer[index];
     }
 
-    void AddEnemyToDictionary(GameObject go, int index)
+    void AddEnemyToDictionary(EnemyRuntimeData erd, int index)
     {
         if(spawnedEnemies.ContainsKey(index))
         {
-            spawnedEnemies[index].Add(go);
+            spawnedEnemies[index].Add(erd);
         }
         else
         {
-            spawnedEnemies.Add(index, new List<GameObject>());
-            spawnedEnemies[index].Add(go);
+            spawnedEnemies.Add(index, new List<EnemyRuntimeData>());
+            spawnedEnemies[index].Add(erd);
         }
     }
+}
+
+public class EnemyRuntimeData
+{
+    public GameObject go;
+    public Vector2 SpawnPos;
 }
