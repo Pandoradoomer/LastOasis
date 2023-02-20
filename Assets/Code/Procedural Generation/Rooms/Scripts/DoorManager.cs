@@ -41,13 +41,21 @@ public class DoorManager : MonoBehaviour
             if(isDoor)
             {
                 if (isOpen)
+                {
                     sr.sprite = doorOpenSprites[i];
+                    doors[i].layer = 6;
+                }
+
                 else
+                {
                     sr.sprite = doorClosedSprites[i];
+                    doors[i].layer = 6;
+                }
             }
             else
             {
                 sr.sprite = wallSprites[i];
+                doors[i].layer = 8;
             }
         }
     }
