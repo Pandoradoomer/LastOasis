@@ -779,6 +779,8 @@ Transform:
   - {fileID: 1897260047}
   - {fileID: 657289897}
   - {fileID: 629299676}
+  - {fileID: 1702803282}
+  - {fileID: 2060320100}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1464,6 +1466,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654173795}
   m_CullTransparentMesh: 1
+--- !u!1 &1702803281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1702803282}
+  - component: {fileID: 1702803283}
+  m_Layer: 0
+  m_Name: Inventory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1702803282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702803281}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 792733579}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1702803283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702803281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c8dbf27358a6fb48a0146eea4156207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinEntry: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
 --- !u!1 &1703071640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,7 +1934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8dbf27358a6fb48a0146eea4156207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: []
+  coinEntry: {fileID: 0}
 --- !u!4 &2057415434
 Transform:
   m_ObjectHideFlags: 0
@@ -1903,6 +1950,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2060320099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2060320100}
+  - component: {fileID: 2060320101}
+  m_Layer: 0
+  m_Name: ItemSpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2060320100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060320099}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 792733579}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2060320101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060320099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddc7c2882123f234bb1b7503d40ae027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectablePrefab: {fileID: 6544740558085239819, guid: db857e1168378e2458d6c5e03bd38774, type: 3}
+  consumablePrefab: {fileID: 4795170935815726585, guid: 5260a9f612d0c3b4ab6fbc8d9a982bdc, type: 3}
 --- !u!1001 &1497921655095486066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2015,6 +2108,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6710083849916286704, guid: b38ad311132681b4cb63053967e13652, type: 3}
+      propertyPath: itemToSpawn
+      value: 
+      objectReference: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
     - target: {fileID: 7065475365605425503, guid: b38ad311132681b4cb63053967e13652, type: 3}
       propertyPath: m_Name
       value: InteractableBox
