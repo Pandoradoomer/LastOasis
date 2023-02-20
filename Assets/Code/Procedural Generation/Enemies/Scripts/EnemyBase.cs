@@ -15,12 +15,16 @@ public class EnemyBase : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            EventManager.TriggerEvent(Event.EnemyDestroyed,
-                new EnemyDestroyedPacket()
-                {
-                    go = this.gameObject,
-                    lootToDrop = lootToDrop
-                });
+            currentHealth -= 2;
+            if (currentHealth <= 0)
+            {
+                EventManager.TriggerEvent(Event.EnemyDestroyed,
+                    new EnemyDestroyedPacket()
+                    {
+                        go = this.gameObject,
+                        lootToDrop = lootToDrop
+                    });
+            }
         }
     }
 }
