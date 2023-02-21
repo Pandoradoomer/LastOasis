@@ -1935,6 +1935,9 @@ MonoBehaviour:
   currentState: 0
   rb: {fileID: 1703071644}
   speed: 5
+  dashDistance: 8
+  dashCooldown: 4
+  dashLength: 0.75
 --- !u!114 &1703071646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1947,7 +1950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b767754c5c346544b9f0a6d10755277c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 100
   currentHealth: 0
   coinCounter: 0
   item_coin: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
@@ -1959,6 +1962,7 @@ MonoBehaviour:
   healthText: {fileID: 1370863165}
   invulnerability: 0
   invulnerabilityDuration: 3
+  collisionIgnore: 1
 --- !u!1 &1848009946
 GameObject:
   m_ObjectHideFlags: 0

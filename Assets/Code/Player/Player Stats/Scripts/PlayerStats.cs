@@ -24,6 +24,12 @@ public class PlayerStats : MonoBehaviour
     public float invulnerabilityDuration;
     private float invulnerabilityHolder;
     private float blinkTimer;
+
+    private Color originalColor;
+
+
+    // Testing bool.
+    public bool collisionIgnore;
     public static PlayerStats instance { get; private set; }
     void Start()
     {
@@ -31,6 +37,7 @@ public class PlayerStats : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         invulnerabilityHolder = invulnerabilityDuration;
         playerHealthSlider.maxValue = maxHealth;
+        originalColor = GetComponent<SpriteRenderer>().color;
     }
     private void Awake()
     {
@@ -75,6 +82,7 @@ public class PlayerStats : MonoBehaviour
         //Key press to spend all coins
         coinText.text = $"Coins: {Singleton.Instance.Inventory.GetCoins()}";
 
+        ChangeColorOnDash();
         Invulnerability();
     }
 
@@ -166,5 +174,13 @@ public class PlayerStats : MonoBehaviour
         Color playerColor = sr.color;
         playerColor.a = blinkTimer;
         gameObject.GetComponent<SpriteRenderer>().color = playerColor;
+    }
+
+    private void ChangeColorOnDash()
+    {
+        if (PlayerController.instance.currentState == PlayerController.CURRENT_STATE.DASHING)
+            sr.color = Color.white;
+        else
+            sr.color = originalColor;
     }
 }
