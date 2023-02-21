@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -13,11 +14,12 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] CollectableData item_coin_pile;
     [SerializeField] CollectableData item_coin_bag;
     [SerializeField] ConsumeableData item_health;
+    [SerializeField] private Slider playerHealthSlider;
+
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI healthText;
     private SpriteRenderer sr;
 
-    // Test bool to prevent insta kill.
     public bool invulnerability;
     public float invulnerabilityDuration;
     private float invulnerabilityHolder;
@@ -28,6 +30,7 @@ public class PlayerStats : MonoBehaviour
         coinText.text = "Coins: " + 0;
         sr = GetComponent<SpriteRenderer>();
         invulnerabilityHolder = invulnerabilityDuration;
+        playerHealthSlider.maxValue = maxHealth;
     }
     private void Awake()
     {
@@ -55,6 +58,7 @@ public class PlayerStats : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        playerHealthSlider.value = currentHealth;
 
         //if (Input.GetKeyDown(KeyCode.C) && Inventory.instance.HasCoin(item_coin))
         //{
