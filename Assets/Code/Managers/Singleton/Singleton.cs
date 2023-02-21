@@ -13,6 +13,8 @@ public class Singleton
     private Inventory inventory;
     private ItemSpawnManager itemSpawnManager;
     private EnemyManager enemyManager;
+    private RoomScript roomScript;
+    private Enemy enemy;
     private Singleton()
     {
         levelGeneration = GameObject.FindObjectOfType<LevelGeneration>();
@@ -20,6 +22,8 @@ public class Singleton
         inventory = GameObject.FindObjectOfType<Inventory>();
         itemSpawnManager = GameObject.FindObjectOfType<ItemSpawnManager>();
         enemyManager = GameObject.FindObjectOfType<EnemyManager>();
+        roomScript = GameObject.FindObjectOfType<RoomScript>();
+        enemy = GameObject.FindObjectOfType<Enemy>();
     }
 
     public static Singleton Instance
@@ -38,5 +42,7 @@ public class Singleton
     public ItemSpawnManager ItemSpawnManager { get => itemSpawnManager;}
     public EnemyManager EnemyManager { get => enemyManager; }
 
-
+    public RoomScript RoomScript { get => roomScript; }
+    public Enemy Enemy { get => enemy; }
+   
 }

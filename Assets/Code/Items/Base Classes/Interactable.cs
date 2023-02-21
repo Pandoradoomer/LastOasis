@@ -8,7 +8,6 @@ public class Interactable : MonoBehaviour
     public KeyCode chestOpenKey;
     public UnityEvent interactAction;
    // public event <Action> interactInvoked;
-    //private MessageManager messages;
     public GameObject coinPrefab;
     public GameObject coinPilePrefab;
     public GameObject coinBagPrefab;
@@ -16,9 +15,10 @@ public class Interactable : MonoBehaviour
     //You'll need to do something like the way enemies select which items to drop.
     [SerializeField]
     private CollectableData itemToSpawn;
+
+    
     void Start()
     {
-       // messages = GetComponent<MessageManager>();
 
     }
     //TODO Dylan: Use the in-house Event System not the in-built one
@@ -29,23 +29,19 @@ public class Interactable : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        var open = gameObject.GetComponent<ChestControl>().isOpen;
         //Prompts player with open message if in range and chest hasnt been opened
-        if(collision.gameObject.CompareTag("Player") && !ChestControl.instance.isOpen)
+        if (collision.gameObject.CompareTag("Player") && !open)
         {
             playerInRange = true;
             MessageManager.instance.DisplayChestText();
-           // messages.DisplayChestText();
-            Debug.Log("Player in range");
         }
         //Notifies user theyve already interacted with this chest 
-        if (collision.gameObject.CompareTag("Player") && ChestControl.instance.isOpen)
+        if (collision.gameObject.CompareTag("Player") && open)
         {
             playerInRange = true;
-            //messages.DisableChestText();
             MessageManager.instance.DisableChestText();
             MessageManager.instance.DisplayChestInteractText();
-            //messages.DisplayChestInteractText();
-            Debug.Log("Player in range");
         }
     }
 
@@ -55,26 +51,31 @@ public class Interactable : MonoBehaviour
         {
             //When player is out of range, disable canvas text elements
             playerInRange = false;
-            //messages.DisableChestText();
             MessageManager.instance.DisableChestText();
             MessageManager.instance.DisableChestInteractText();
 
-            //messages.DisableChestInteractText();
-            Debug.Log("Player not in range");
         }
     }
 
     public void SpawnCoinsFromChest()
     {
-        if (playerInRange && !ChestControl.instance.isOpen)
+        var open = gameObject.GetComponent<ChestControl>().isOpen;
+        var Chest = gameObject.GetComponent<ChestControl>();
+
+        if (playerInRange && !open)
         {
             if (Input.GetKeyDown(chestOpenKey))
             {   
                 interactAction?.Invoke();
-                ChestControl.instance.OpenChest();
-                ChestControl.instance.maxNumberCoins = Random.Range(0, ChestControl.instance.maxNumberCoins);
-                for (int i = 0; i < ChestControl.instance.maxNumberCoins; i++)
+               // ChestControl.instance.OpenChest();
+                Chest.OpenChest();
+                //open.Op
+                Chest.maxNumberCoins = Random.Range(0, Chest.maxNumberCoins);
+                GetDifficulty();
+                for (int i = 0; i < Chest.maxNumberCoins; i++)
                 {
+                    //Get room difficulty from script, clamp item cap based on condition of difficulty
+                    //If difficulty is above 10 spawn a coin bag in chest
                     Transform t = transform;
                     Vector3 r = new Vector3(Random.Range(-2.5f, 1.5f), Random.Range(-2.0f, 1.0f));
                     t.position += r;
@@ -93,5 +94,28 @@ public class Interactable : MonoBehaviour
 
             }
         }
+    }
+
+    private void GetDifficulty()
+    {
+        //Get room difficulty of current room index
+        float roomDif = Singleton.Instance.RoomScript.roomDifficulty;
+        //get difficulty from enemyspawnpacket
+
+        //Get room index from ChestManager script
+        int currentRoom = Singleton.Instance.RoomScript.roomIndex.GetHashCode();
+        //Get the variables from the current room youre in
+        Debug.Log("Current difficulty " + roomDif);
+        Debug.Log("Current room " + currentRoom);
+
+        //Get number of Enemy type 1's, Get number of enemy type 2's in room
+        int numberOfEnemies = Singleton.Instance.EnemyManager.spawnedEnemies.Count;
+        //float difficulty = Singleton.Instance.Enemy.difficulty;
+        Debug.Log("number " + numberOfEnemies);
+        //Debug.Log("difficulty " + difficulty);
+
+
+        //Total their difficulty = sum of enemies spawned * enemy difficulty
+
     }
 }

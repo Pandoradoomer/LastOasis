@@ -15,7 +15,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private List<Enemy> enemies;
 
-    private Dictionary<int, List<EnemyRuntimeData>> spawnedEnemies;
+    public Dictionary<int, List<EnemyRuntimeData>> spawnedEnemies;
     private List<int> hasSpawned;
 
 
@@ -160,7 +160,7 @@ public class EnemyManager : MonoBehaviour
                 }
             }
             AddEnemyToDictionary(erd, e.roomIndex);
-
+            Debug.Log("Spawned enemy");
             //increasing the difficulty
             currentDifficulty += enemies[index].difficulty;
         }

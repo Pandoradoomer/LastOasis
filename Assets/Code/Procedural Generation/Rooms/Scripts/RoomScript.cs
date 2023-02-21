@@ -36,7 +36,7 @@ public class RoomScript : MonoBehaviour
             EventManager.TriggerEvent(Event.ChestSpawn, new ChestSpawnPacket
             {
                 roomCentre = transform.position,
-                chestPos = transform.position,
+                //chestPos = transform.position,
                 roomIndex = roomIndex,
                 difficulty = roomDifficulty,
                 canSpawnChest = true
