@@ -14,20 +14,6 @@ public class ChestControl : MonoBehaviour
     [SerializeField] private Sprite openChest, closeChest;
     //Access enemy prefabs & number of them
     private float dropChance;
-
-    //public static ChestControl instance { get; private set; }
-
-    //void Awake()
-    //{
-    //    if (instance != null && instance != this)
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //    else
-    //    {
-    //        instance = this;
-    //    }
-    //}
     public void OpenChest()
     {
         if (!isOpen)

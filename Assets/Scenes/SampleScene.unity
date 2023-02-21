@@ -641,8 +641,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chestPrefab: {fileID: 2486005194946431289, guid: eb0d6784aa26105439909e77c0050c3f, type: 3}
-  chests:
-  - {fileID: 11400000, guid: 2758bc51644519b40a92157064ba4086, type: 2}
+  spawnProbability: 0.5
+  maxNumberChests: 8
+  chestCounter: 0
 --- !u!1 &696659258
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,7 +1746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1897260047
 Transform:
   m_ObjectHideFlags: 0

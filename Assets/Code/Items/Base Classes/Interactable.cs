@@ -67,9 +67,7 @@ public class Interactable : MonoBehaviour
             if (Input.GetKeyDown(chestOpenKey))
             {   
                 interactAction?.Invoke();
-               // ChestControl.instance.OpenChest();
                 Chest.OpenChest();
-                //open.Op
                 Chest.maxNumberCoins = Random.Range(0, Chest.maxNumberCoins);
                 GetDifficulty();
                 for (int i = 0; i < Chest.maxNumberCoins; i++)
@@ -99,19 +97,19 @@ public class Interactable : MonoBehaviour
     private void GetDifficulty()
     {
         //Get room difficulty of current room index
-        float roomDif = Singleton.Instance.RoomScript.roomDifficulty;
+        //float roomDif = Singleton.Instance.RoomScript.roomDifficulty;
         //get difficulty from enemyspawnpacket
 
         //Get room index from ChestManager script
-        int currentRoom = Singleton.Instance.RoomScript.roomIndex.GetHashCode();
+       // int currentRoom = Singleton.Instance.RoomScript.roomIndex.GetHashCode();
         //Get the variables from the current room youre in
-        Debug.Log("Current difficulty " + roomDif);
-        Debug.Log("Current room " + currentRoom);
+       // Debug.Log("Current difficulty " + roomDif);
+       //Debug.Log("Current room " + currentRoom);
 
         //Get number of Enemy type 1's, Get number of enemy type 2's in room
-        int numberOfEnemies = Singleton.Instance.EnemyManager.spawnedEnemies.Count;
+       // int numberOfEnemies = Singleton.Instance.EnemyManager.spawnedEnemies.Count;
         //float difficulty = Singleton.Instance.Enemy.difficulty;
-        Debug.Log("number " + numberOfEnemies);
+        //Debug.Log("number " + numberOfEnemies);
         //Debug.Log("difficulty " + difficulty);
 
 
