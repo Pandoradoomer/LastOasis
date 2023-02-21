@@ -152,6 +152,7 @@ public class PlayerStats : MonoBehaviour
         {
             blinkTimer -= Time.deltaTime;
             ChangePlayerAlpha();
+            IgnoreCollider(true);
 
             if (blinkTimer <= 0.5f)
             {
@@ -164,6 +165,7 @@ public class PlayerStats : MonoBehaviour
                     invulnerabilityDuration = invulnerabilityHolder;
                     blinkTimer = 1;
                     ChangePlayerAlpha();
+                    IgnoreCollider(false);
                 }
             }
         }
@@ -182,5 +184,12 @@ public class PlayerStats : MonoBehaviour
             sr.color = Color.white;
         else
             sr.color = originalColor;
+    }
+
+    private void IgnoreCollider(bool ignore)
+    {
+        int playerLayer = gameObject.layer;
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, ignore);
     }
 }
