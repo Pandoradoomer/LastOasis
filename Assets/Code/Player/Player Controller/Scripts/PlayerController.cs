@@ -4,10 +4,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    Rigidbody2D rb;
-    [SerializeField]
-    float speed;
+    // Getting state for future development once we have animations.
+    public enum CURRENT_STATE
+    {
+        RUN,
+        IDLE,
+        ATTACK
+    };
+
+    public CURRENT_STATE currentState;
+
+    [SerializeField] Rigidbody2D rb;
+    [SerializeField] float speed;
+
+    private Vector2 movement;
 
     // Start is called before the first frame update
     void Start()
@@ -21,15 +31,13 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
 
-        float x = horizontal * speed * Time.deltaTime;
-        float y = vertical * speed * Time.deltaTime;
-
-        transform.position = new Vector2(transform.position.x + x, transform.position.y + y);
+        movement.Normalize();
+        rb.MovePosition(new Vector2(transform.position.x, transform.position.y) + movement * speed * Time.deltaTime);
     }
 
     void BossTeleport(IEventPacket packet)
