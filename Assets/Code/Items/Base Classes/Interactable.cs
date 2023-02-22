@@ -68,20 +68,54 @@ public class Interactable : MonoBehaviour
             {   
                 interactAction?.Invoke();
                 Chest.OpenChest();
-                Chest.maxNumberCoins = Random.Range(0, Chest.maxNumberCoins);
-                GetDifficulty();
-                for (int i = 0; i < Chest.maxNumberCoins; i++)
+
+                //Set random range value of coins to corresponding variable
+                int easyCoins = Random.Range(1, Chest.maxNumberCoins/4);
+                int mediumCoins = Random.Range(5, Chest.maxNumberCoins/2);
+                int hardCoins = Random.Range(10, Chest.maxNumberCoins);
+                //Loop through number of coins and spawn the random value
+                for (int i = 0; i < easyCoins; i++)
                 {
-                    //Get room difficulty from script, clamp item cap based on condition of difficulty
-                    //If difficulty is above 10 spawn a coin bag in chest
-                    Transform t = transform;
-                    Vector3 r = new Vector3(Random.Range(-2.5f, 1.5f), Random.Range(-2.0f, 1.0f));
-                    t.position += r;
-                    Singleton.Instance.ItemSpawnManager.Spawn(itemToSpawn, t, Random.Range(1, 10));
-                    t.position -= r;
+                    if (GetDifficulty() <= 1.5)
+                    {
+                        Transform t = transform;
+                        Vector3 r = new Vector3(Random.Range(-2.5f, 1.5f), Random.Range(-2.0f, 1.0f));
+                        t.position += r;
+                        Singleton.Instance.ItemSpawnManager.Spawn(itemToSpawn, t, easyCoins);
+                        t.position -= r;
+                        Debug.Log("Coins spawned:" + easyCoins);
+                    }
+                }
+                for (int i =0; i < mediumCoins; i++)
+                {
+                    if (GetDifficulty() <= 3 && GetDifficulty() > 1.5)
+                    {
+                        Transform t = transform;
+                        Vector3 r = new Vector3(Random.Range(-2.5f, 1.5f), Random.Range(-2.0f, 1.0f));
+                        t.position += r;
+                        Singleton.Instance.ItemSpawnManager.Spawn(itemToSpawn, t, mediumCoins);
+                        t.position -= r;
+                    }
+                }
+                //Hardest difficulty loops through 10-20 coins and spawns the range as long as the float difficulty meets the condition
+                for (int i =0; i < hardCoins;i++)
+                {
+                    if (GetDifficulty() <= 6 && GetDifficulty() > 3)
+                    {
+                        Transform t = transform;
+                        Vector3 r = new Vector3(Random.Range(-2.5f, 1.5f), Random.Range(-2.0f, 1.0f));
+                        t.position += r;
+                        Singleton.Instance.ItemSpawnManager.Spawn(itemToSpawn, t, hardCoins);
+                        t.position -= r;
+                    }
+                }
+
+
+
+
                     //var go = Instantiate(coinPrefab, new Vector3(Random.Range(-2.5f,1.0f), Random.Range(-2.0f,1.0f), -1), transform.rotation);
                     //go.GetComponent<Collectable>().stackSize = Random.Range(1, 10);
-                }
+               // }
                 /// <summary>
                 /// Checks if player is in range and hasnt been interacted with
                 /// Key input E to invoke an event
@@ -94,26 +128,33 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    private void GetDifficulty()
+    private float GetDifficulty()
     {
-        //Get room difficulty of current room index
-        //float roomDif = Singleton.Instance.RoomScript.roomDifficulty;
-        //get difficulty from enemyspawnpacket
+        //Get current room index of the chest, store it in variable
+        int curRoom = gameObject.GetComponent<ChestControl>().roomIndex;
+        //Find all objects with roomscript at runtime and store them in an array
+        RoomScript[] rooms = FindObjectsOfType<RoomScript>();
+        RoomScript room = null;
+        //Iterate through number of rooms
+        for (int i = 0; i < rooms.Length; i++)
+        {
+            //Set the current index of the arrays room index equal to the chest index
+            if (rooms[i].roomIndex == curRoom)
+            {
+                room = rooms[i];
+                break;
+            }
 
-        //Get room index from ChestManager script
-       // int currentRoom = Singleton.Instance.RoomScript.roomIndex.GetHashCode();
-        //Get the variables from the current room youre in
-       // Debug.Log("Current difficulty " + roomDif);
-       //Debug.Log("Current room " + currentRoom);
 
-        //Get number of Enemy type 1's, Get number of enemy type 2's in room
-       // int numberOfEnemies = Singleton.Instance.EnemyManager.spawnedEnemies.Count;
-        //float difficulty = Singleton.Instance.Enemy.difficulty;
-        //Debug.Log("number " + numberOfEnemies);
-        //Debug.Log("difficulty " + difficulty);
+        }
+        //Store the rooms difficulty the chest is in
+        float totalDif = room.roomDifficulty;
+        Debug.Log("Total dif" + totalDif);
+        Debug.Log("Index" + curRoom);
+        //Return the float so it can be called
+        return totalDif;
 
-
-        //Total their difficulty = sum of enemies spawned * enemy difficulty
+        //Total their difficulty = sum of enemies spawned * enemy difficulty => Room Difficulty
 
     }
 }
