@@ -13,6 +13,14 @@ public class EnemyBase : MonoBehaviour
     {
         lootToDrop = new Dictionary<Item, int>();
     }
+
+    private void Update()
+    {
+        if(currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")

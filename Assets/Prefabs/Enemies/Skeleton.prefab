@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 839718538307826720}
   - component: {fileID: 3577938583720602036}
   - component: {fileID: 8776054469119358847}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: AttackHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
