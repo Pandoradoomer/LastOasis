@@ -7,6 +7,7 @@ public class EnemyBase : MonoBehaviour
     public int roomIndex;
     public float currentHealth = 10;
     public float onCollisionDamage;
+    public float attackDamage;
     public Dictionary<Item, int> lootToDrop;
     private void Awake()
     {
@@ -16,16 +17,7 @@ public class EnemyBase : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            //currentHealth -= 2;
-            //if (currentHealth <= 0)
-            //{
-            //    EventManager.TriggerEvent(Event.EnemyDestroyed,
-            //        new EnemyDestroyedPacket()
-            //        {
-            //            go = this.gameObject,
-            //            lootToDrop = lootToDrop
-            //        });
-            //}
+
         }
     }
 }

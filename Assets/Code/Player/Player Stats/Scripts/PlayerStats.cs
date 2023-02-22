@@ -38,6 +38,7 @@ public class PlayerStats : MonoBehaviour
         invulnerabilityHolder = invulnerabilityDuration;
         playerHealthSlider.maxValue = maxHealth;
         originalColor = GetComponent<SpriteRenderer>().color;
+        EventManager.StartListening(Event.EnemyHit, OnEnemyHit);
     }
     private void Awake()
     {
@@ -191,5 +192,19 @@ public class PlayerStats : MonoBehaviour
         int playerLayer = gameObject.layer;
         int enemyLayer = LayerMask.NameToLayer("Enemy");
         Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, ignore);
+    }
+
+    private void OnEnemyHit(IEventPacket packet)
+    {
+        EnemyHitPacket ehp = packet as EnemyHitPacket;
+        if(!invulnerability)
+        {
+            currentHealth -= ehp.healthDeplete;
+            invulnerability = true;
+        }
+    }
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Event.EnemyHit, OnEnemyHit);
     }
 }

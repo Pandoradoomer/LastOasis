@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShyAway : MonoBehaviour, IEnemyBehaviour
+public class SwarmerBehaviour : MonoBehaviour, IEnemyBehaviour
 {
-    private GameObject player;
+    public float speed = 1f;
     private Rigidbody2D rb;
+
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
         rb = gameObject.GetComponent<Rigidbody2D>();
     }
 
@@ -19,17 +19,18 @@ public class ShyAway : MonoBehaviour, IEnemyBehaviour
     }
     public void Act()
     {
-        Vector2 playerPos = player.transform.position;
-        Vector2 enemyPos = transform.position;
-
-        Vector2 dir = (enemyPos - playerPos).normalized;
-
-        rb.velocity = dir;
+        rb.velocity = Move();
     }
-    
+
+    private Vector2 Move()
+    {
+        return MovementFunctions.FollowPlayer(speed, transform.position);
+    }
+
     public void Freeze()
     {
         rb.velocity = Vector2.zero;
         this.enabled = false;
     }
 }
+

@@ -19,6 +19,7 @@ MonoBehaviour:
   Damage: 5
   difficulty: 0.5
   Behaviour: {fileID: 11500000, guid: 7d7ea66a5de1c3e43acfb28eee4622d7, type: 3}
+  prefabToSpawn: {fileID: 2714170247650124136, guid: d551d2569840c454194dcfaa83b36014, type: 3}
   itemDrops:
   - itemType: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
     minItemQuantity: 5

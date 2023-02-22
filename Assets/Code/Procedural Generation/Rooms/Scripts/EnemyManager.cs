@@ -128,11 +128,11 @@ public class EnemyManager : MonoBehaviour
             Vector2 pos = Vector2.zero;
             pos = DecideEnemySpawnPosition(e.enemyPositions, filledPositions);
 
-            var go = Instantiate(enemyPrefab, e.roomCentre + pos, Quaternion.identity);
-
             int index = Random.Range(0, enemies.Count);
             Enemy enemyData = enemies[index];
 
+
+            var go = Instantiate(enemyData.prefabToSpawn, e.roomCentre + pos, Quaternion.identity);
 
             EnemyRuntimeData erd = new EnemyRuntimeData()
             {
@@ -144,13 +144,14 @@ public class EnemyManager : MonoBehaviour
             go.GetComponent<SpriteRenderer>().color = enemyData.color;
 
             //Add behaviour;
-            var behaviour = enemyData.Behaviour;
-            go.AddComponent(behaviour.GetClass());
+            //var behaviour = enemyData.Behaviour;
+            //go.AddComponent(behaviour.GetClass());
 
             //setting the index;
             EnemyBase eb = go.GetComponent<EnemyBase>();
             eb.roomIndex = e.roomIndex;
             eb.currentHealth = enemyData.MaxHealth;
+            eb.attackDamage = enemyData.Damage;
             foreach(ItemDrop id in enemyData.itemDrops)
             {
                 float random = Random.Range(0.0f, 1.0f);

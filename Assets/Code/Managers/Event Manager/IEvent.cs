@@ -9,5 +9,7 @@ public enum Event
     BossTeleport,
     ChestSpawn,
     RoomExit,
+    EnemyHitboxEntered,
+    EnemyHit
 
 }

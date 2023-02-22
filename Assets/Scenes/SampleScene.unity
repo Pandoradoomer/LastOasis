@@ -1935,7 +1935,7 @@ MonoBehaviour:
   currentState: 0
   rb: {fileID: 1703071644}
   speed: 5
-  dashDistance: 8
+  dashDistance: 6
   dashCooldown: 4
   dashLength: 0.75
 --- !u!114 &1703071646
@@ -2069,7 +2069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1897260047
 Transform:
   m_ObjectHideFlags: 0

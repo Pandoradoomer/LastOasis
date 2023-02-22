@@ -13,6 +13,7 @@ public class Singleton
     private Inventory inventory;
     private ItemSpawnManager itemSpawnManager;
     private EnemyManager enemyManager;
+    private PlayerController playerController;
 
     private Singleton()
     {
@@ -21,6 +22,7 @@ public class Singleton
         inventory = GameObject.FindObjectOfType<Inventory>();
         itemSpawnManager = GameObject.FindObjectOfType<ItemSpawnManager>();
         enemyManager = GameObject.FindObjectOfType<EnemyManager>();
+        playerController = GameObject.FindObjectOfType<PlayerController>();
 
     }
 
@@ -39,6 +41,7 @@ public class Singleton
     public Inventory Inventory { get => inventory; }
     public ItemSpawnManager ItemSpawnManager { get => itemSpawnManager;}
     public EnemyManager EnemyManager { get => enemyManager; }
+    public PlayerController PlayerController { get => playerController;}
 
 
    
