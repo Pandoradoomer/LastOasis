@@ -11,6 +11,7 @@ public class Interactable : MonoBehaviour
     public GameObject coinPrefab;
     public GameObject coinPilePrefab;
     public GameObject coinBagPrefab;
+    //Prefab list
     //TODO Dylan: modify this so that it holds a list of all items to spawn, alongside their amounts
     //You'll need to do something like the way enemies select which items to drop.
     [SerializeField]
@@ -61,8 +62,7 @@ public class Interactable : MonoBehaviour
     {
         var open = gameObject.GetComponent<ChestControl>().isOpen;
         var Chest = gameObject.GetComponent<ChestControl>();
-
-        if (playerInRange && !open)
+        if (playerInRange && !open && InteractWithNoEnemies())
         {
             if (Input.GetKeyDown(chestOpenKey))
             {   
@@ -83,7 +83,6 @@ public class Interactable : MonoBehaviour
                         t.position += r;
                         Singleton.Instance.ItemSpawnManager.Spawn(itemToSpawn, t, easyCoins);
                         t.position -= r;
-                        Debug.Log("Coins spawned:" + easyCoins);
                     }
                 }
                 for (int i =0; i < mediumCoins; i++)
@@ -156,5 +155,42 @@ public class Interactable : MonoBehaviour
 
         //Total their difficulty = sum of enemies spawned * enemy difficulty => Room Difficulty
 
+    }
+
+    private bool InteractWithNoEnemies()
+    {
+       
+        //Get list of spawned enemies in the current room room
+        bool canInteract = true;
+        //Get room index of chest 
+        int curRoom = gameObject.GetComponent<ChestControl>().roomIndex;
+        //Get room index off enemybase
+        EnemyBase[] enemyIndex = GameObject.FindObjectsOfType<EnemyBase>();
+        EnemyBase enemy = null;
+
+        Dictionary<int,List<EnemyRuntimeData>> enemiesInCurRoom = Singleton.Instance.EnemyManager.spawnedEnemies;
+        var enemyGet = enemiesInCurRoom.ContainsKey(curRoom);
+        int enemiesInRoom = 0;
+        for (int i = 0; i < enemyIndex.Length; i++)
+        {
+            if (curRoom == enemyIndex[i].roomIndex)
+            {
+                enemy = enemyIndex[i];
+                enemyGet = enemyIndex[i];
+                enemiesInRoom++;
+            }
+        }
+        //Checks for enemies in the room Index
+        int newIndex = enemy.roomIndex;
+        Debug.Log("Number of enemies in room" + " { " + newIndex + " } " + " is " + " { " + enemiesInRoom + " } " );
+        //Return canInteract based on condition, prevent interaction while enemy count is over 0
+        while (enemiesInRoom > 0)
+        {
+            return !canInteract;
+        }
+
+        return canInteract;
+
+        //FIX BUG OF INTERACTING WITH CHEST IF NO ENEMIES SPAWN IN THE ROOM BUT A CHEST DOES
     }
 }

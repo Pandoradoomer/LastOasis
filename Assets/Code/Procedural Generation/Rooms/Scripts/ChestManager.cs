@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class ChestManager : MonoBehaviour
 {
     [SerializeField] private GameObject chestPrefab;
+    //List of game objects to spawn 
     private Dictionary<int, List<GameObject>> spawnedChests;
     private List<int> hasSpawnedChest;
     //Chest spawn chance set in inspector, 0.5 = 50%

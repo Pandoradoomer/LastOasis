@@ -55,6 +55,7 @@ public class EnemyManager : MonoBehaviour
         {
             hasSpawned.Add(e.roomIndex);
             SpawnEnemies(e);
+            //query dict and count number of enemies
         }
     }
 
@@ -161,7 +162,6 @@ public class EnemyManager : MonoBehaviour
                 }
             }
             AddEnemyToDictionary(erd, e.roomIndex);
-            Debug.Log("Spawned enemy");
             //increasing the difficulty
             currentDifficulty += enemies[index].difficulty;
         }
