@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwarmerBehaviour : MonoBehaviour, IEnemyBehaviour
+public class SwarmerBehaviour : MonoBehaviour, IEnemyBehaviour, IMovementBehaviour
 {
     public float speed = 1f;
     private Rigidbody2D rb;
 
+    bool canMove = true;
+    bool isFlipped = false;
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
@@ -19,18 +21,37 @@ public class SwarmerBehaviour : MonoBehaviour, IEnemyBehaviour
     }
     public void Act()
     {
-        rb.velocity = Move();
+        if (canMove)
+            rb.velocity = GetNextMovement();
+        else
+            rb.velocity = Vector2.zero;
     }
 
-    private Vector2 Move()
+    public Vector2 GetNextMovement()
     {
-        return MovementFunctions.FollowPlayer(speed, transform.position);
+        Vector2 dir = MovementFunctions.FollowPlayer(speed, transform.position);
+        FlipSrite(dir);
+        return dir;
     }
 
+    private void FlipSrite(Vector2 dir)
+    {
+        isFlipped = dir.x <= 0 ? true : false;
+    }
     public void Freeze()
     {
         rb.velocity = Vector2.zero;
         this.enabled = false;
+    }
+
+    public void StopMovement()
+    {
+        canMove = false;
+    }
+
+    public void ResumeMovement()
+    {
+        canMove = true;
     }
 }
 
