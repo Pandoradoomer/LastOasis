@@ -13,11 +13,17 @@ public interface IEnemyBehaviour
 public interface IMovementBehaviour
 {
     public Vector2 GetNextMovement();
+
+    public void StopMovement();
+
+    public void ResumeMovement();
 }
 
 public interface IAttackBehaviour
 {
-    public IEnumerator Attack();
+    public void BeginAttack();
 
-    public bool CanAttack();
+    public void StopAttack();
+
+    public void Attack();
 }

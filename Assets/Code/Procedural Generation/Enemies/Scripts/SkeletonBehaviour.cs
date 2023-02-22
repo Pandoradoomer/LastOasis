@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class SkeletonBehaviour : MonoBehaviour, IEnemyBehaviour
+public class SkeletonBehaviour : MonoBehaviour, IEnemyBehaviour, IMovementBehaviour, IAttackBehaviour
 {
     [SerializeField]
     AttackBase attackHitbox;
@@ -33,16 +33,25 @@ public class SkeletonBehaviour : MonoBehaviour, IEnemyBehaviour
     public void Act()
     {
         if (canMove)
-            rb.velocity = Move();
+            rb.velocity = GetNextMovement();
         else
             rb.velocity = Vector2.zero;
     }
 
-    private Vector2 Move()
+    public Vector2 GetNextMovement()
     {
         Vector2 dir = MovementFunctions.FollowPlayer(speed, transform.position);
         attackHitbox.transform.rotation = dir.x <= 0 ? Quaternion.Euler(new Vector3(0,0,180)) : Quaternion.identity;
         return dir;
+    }
+
+    public void StopMovement()
+    {
+        canMove = false;
+    }
+    public void ResumeMovement()
+    {
+        canMove = true;
     }
 
     public void OnHitboxEntered(IEventPacket packet)
@@ -50,7 +59,7 @@ public class SkeletonBehaviour : MonoBehaviour, IEnemyBehaviour
         EnemyHitboxEnteredPacket ehep = packet as EnemyHitboxEnteredPacket;
         if(ehep.Hitbox == attackHitbox.gameObject && !isAttacking)
         {
-            StartCoroutine(Attack(windUpTime, strikeTime));
+            Attack();
         }
     }
 
@@ -59,26 +68,26 @@ public class SkeletonBehaviour : MonoBehaviour, IEnemyBehaviour
         rb.velocity = Vector2.zero;
         this.enabled = false;
     }
-
-    public IEnumerator Attack(float windUpTime, float strikeTime)
+    public void Attack()
     {
-        isAttacking = true;
-        canMove = false;
-        for(float i = 0; i < windUpTime; i += Time.deltaTime)
-        {
-            yield return null;
-        }
+        Attack(windUpTime, strikeTime);
+    }
+
+    private void Attack(float windUpTime, float strikeTime)
+    {
+        StartCoroutine(AttackFunctions.Swing(this, this, windUpTime, strikeTime));
+        
+    }
+
+    public void BeginAttack()
+    {
         attackHitbox.IsAttacking = true;
         attackHitbox.SetSpriteActive(true);
-        for(float i = 0; i < strikeTime; i+= Time.deltaTime)
-        {
-            yield return null;
-        }
+    }
+    public void StopAttack()
+    {
         attackHitbox.IsAttacking = false;
         attackHitbox.SetSpriteActive(false);
-        canMove = true;
-        isAttacking = false;
-        
     }
 
     public void OnDestroy()

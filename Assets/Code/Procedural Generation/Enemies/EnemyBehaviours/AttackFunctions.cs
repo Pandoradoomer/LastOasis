@@ -5,8 +5,15 @@ using UnityEngine;
 public static class AttackFunctions
 {
     //Swing - 
-    public static IEnumerator Swing()
+    public static IEnumerator Swing(IAttackBehaviour atk, IMovementBehaviour move, float windUpTime, float strikeTime)
     {
-        yield return null;
+        move.StopMovement();
+        for (float i = 0; i < windUpTime; i += Time.deltaTime)
+            yield return null;
+        atk.BeginAttack();
+        for (float i = 0; i < strikeTime; i += Time.deltaTime)
+            yield return null;
+        atk.StopAttack();
+        move.ResumeMovement();
     }
 }
