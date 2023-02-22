@@ -18,6 +18,7 @@ public class EnemyBase : MonoBehaviour
     {
         if(currentHealth <= 0)
         {
+            //TO-DO Andrei: Requires debugging
             Destroy(gameObject);
         }
     }

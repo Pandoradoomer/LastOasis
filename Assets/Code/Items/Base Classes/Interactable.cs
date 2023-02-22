@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Events;
 public class Interactable : MonoBehaviour
@@ -169,27 +170,33 @@ public class Interactable : MonoBehaviour
         EnemyBase enemy = null;
 
         Dictionary<int,List<EnemyRuntimeData>> enemiesInCurRoom = Singleton.Instance.EnemyManager.spawnedEnemies;
-        var enemyGet = enemiesInCurRoom.ContainsKey(curRoom);
-        int enemiesInRoom = 0;
-        for (int i = 0; i < enemyIndex.Length; i++)
-        {
-            if (curRoom == enemyIndex[i].roomIndex)
-            {
-                enemy = enemyIndex[i];
-                enemyGet = enemyIndex[i];
-                enemiesInRoom++;
-            }
-        }
-        //Checks for enemies in the room Index
-        int newIndex = enemy.roomIndex;
-        Debug.Log("Number of enemies in room" + " { " + newIndex + " } " + " is " + " { " + enemiesInRoom + " } " );
-        //Return canInteract based on condition, prevent interaction while enemy count is over 0
-        while (enemiesInRoom > 0)
-        {
-            return !canInteract;
-        }
 
-        return canInteract;
+        int enemiesInRoom = 0;
+        if (enemyIndex != null && enemy == null)
+        {
+            for (int i = 0; i < enemyIndex.Length; i++)
+            {
+                if (curRoom == enemyIndex[i].roomIndex)
+                {
+                    enemy = enemyIndex[i];
+                    enemiesInRoom++;
+                }
+            }
+            //Set a new index from the current room index of the chest
+            int newIndex = curRoom;
+            Debug.Log("Number of enemies in room" + " { " + newIndex + " } " + " is " + " { " + enemiesInRoom + " } ");
+            //Return canInteract based on condition, prevent interaction while enemy count is over 0
+            while (enemiesInRoom > 0)
+            {
+                return !canInteract;
+            }
+
+            return canInteract;
+        }
+        else
+        {
+            return canInteract;
+        }
 
         //FIX BUG OF INTERACTING WITH CHEST IF NO ENEMIES SPAWN IN THE ROOM BUT A CHEST DOES
     }
