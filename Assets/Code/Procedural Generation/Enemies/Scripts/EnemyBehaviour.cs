@@ -7,17 +7,11 @@ using UnityEngine;
 public interface IEnemyBehaviour
 {
     public void Act();
-    public void Freeze();
+    public void ResetEnemy();
+    public void SetAnimatorVariables();
+    public void OnHit(IEventPacket packet);
 }
 
-public interface IMovementBehaviour
-{
-    public Vector2 GetNextMovement();
-
-    public void StopMovement();
-
-    public void ResumeMovement();
-}
 
 public interface IAttackBehaviour
 {

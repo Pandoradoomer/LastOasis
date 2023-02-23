@@ -4,77 +4,30 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public class SkeletonBehaviour : MonoBehaviour, IEnemyBehaviour, IMovementBehaviour, IAttackBehaviour
+public class SkeletonBehaviour : BaseMoveAndAttackBehaviour
 {
     [SerializeField]
     AttackBase attackHitbox;
-
-    public float speed;
-    private Rigidbody2D rb;
-    // Start is called before the first frame update
-
-    bool canMove = true;
-    bool isAttacking = false;
-
+    public float stunTime;
     public float windUpTime;
     public float strikeTime;
 
-    //TODO: fix duplicate code
-    void Start()
-    {
-        rb = gameObject.GetComponent<Rigidbody2D>();
-        EventManager.StartListening(Event.EnemyHitboxEntered, OnHitboxEntered);
-        EventManager.StartListening(Event.PlayerHitEnemy, OnHit);
-    }
+    private float initialXPos;
+    private float initialYPos;
+    private float initialXScale;
+    private float initialYScale;
 
-    // Update is called once per frame
-    void Update()
-    {
-        Act();
-    }
-    public void Act()
-    {
-        if (canMove)
-            rb.velocity = GetNextMovement();
-        else
-            rb.velocity = Vector2.zero;
-    }
+    public int xDir, yDir;
 
-    public Vector2 GetNextMovement()
+    new void Start()
     {
-        Vector2 dir = MovementFunctions.FollowPlayer(speed, transform.position);
-        attackHitbox.transform.rotation = dir.x <= 0 ? Quaternion.Euler(new Vector3(0,0,180)) : Quaternion.identity;
-        return dir;
-    }
+        base.Start();
+        initialXScale = attackHitbox.transform.localScale.x;
+        initialYScale = attackHitbox.transform.localScale.y;
+        initialXPos = attackHitbox.transform.localPosition.x;
+        initialYPos = attackHitbox.transform.localPosition.y;
 
-    public void StopMovement()
-    {
-        canMove = false;
-    }
-    public void ResumeMovement()
-    {
-        canMove = true;
-    }
-
-    public void OnHitboxEntered(IEventPacket packet)
-    {
-        EnemyHitboxEnteredPacket ehep = packet as EnemyHitboxEnteredPacket;
-        if(ehep.Hitbox == attackHitbox.gameObject && !isAttacking)
-        {
-            Attack();
-        }
-    }
-
-    public void OnHit(IEventPacket packet)
-    {
-        PlayerHitPacket php = packet as PlayerHitPacket;
-        if(php.enemy == this.gameObject)
-        {
-            Debug.Log("Stunned!");
-            Stun(0.25f);
-        }
-    }
-
+    }    
     private IEnumerator Stun(float duration)
     {
         canMove = false;
@@ -84,36 +37,102 @@ public class SkeletonBehaviour : MonoBehaviour, IEnemyBehaviour, IMovementBehavi
         }
         canMove = true;
     }
-    public void Freeze()
+    protected override void DoAct()
     {
-        rb.velocity = Vector2.zero;
-        canMove = true;
-        StopAttack();
-    }
-    public void Attack()
-    {
-        Attack(windUpTime, strikeTime);
+        if(!isAttacking && canMove)
+            TurnAttackHitbox(rb.velocity);
+        if (canMove)
+            rb.velocity = GetNextMovement();
+        else
+            rb.velocity = Vector2.zero;
     }
 
-    private void Attack(float windUpTime, float strikeTime)
+    void TurnAttackHitbox(Vector2 dir)
+    {
+        dir = dir.normalized;
+
+        //it is closer on the x axis
+        if(Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+        {
+            yDir = 0;
+            attackHitbox.transform.localScale = new Vector3(initialXScale, initialYScale, 1);
+            if (dir.x < 0)
+            {
+                attackHitbox.transform.localPosition = new Vector3(-initialXPos, initialYPos, 0);
+                xDir = -1;
+            }
+            else
+            {
+                attackHitbox.transform.localPosition = new Vector3(initialXPos, initialYPos, 0);
+                xDir = 1;
+            }
+        }
+        //closer on the y axis
+        else
+        {
+            xDir = 0;
+            attackHitbox.transform.localScale = new Vector3(initialYScale, initialXScale, 1);
+            if(dir.y < 0)
+            {
+                attackHitbox.transform.localPosition = new Vector3(initialYPos, -initialXPos, 0);
+                yDir = -1;
+            }
+            else
+            {
+                attackHitbox.transform.localPosition = new Vector3(initialYPos, initialXPos, 0);
+                yDir = -1;
+            }
+
+        }
+    }
+
+    protected override void DoSetAnimatorVariables()
+    {
+
+    }
+    protected override void OnHitAction()
+    {
+        StartCoroutine(Stun(stunTime));
+    }
+
+    protected override Vector2 GetMovement()
+    {
+        return MovementFunctions.FollowPlayer(speed, transform.position);
+    }
+
+    public void OnHitboxEntered(IEventPacket packet)
+    {
+        EnemyHitboxEnteredPacket ehep = packet as EnemyHitboxEnteredPacket;
+        if (ehep.Hitbox == attackHitbox.gameObject && !isAttacking)
+        {
+            Attack();
+        }
+    }
+    protected override void DoAttack()
     {
         StartCoroutine(AttackFunctions.Swing(this, this, windUpTime, strikeTime));
     }
 
-    public void BeginAttack()
+    protected override void AddAdditionalEventListeners()
     {
-        attackHitbox.IsAttacking = true;
-        attackHitbox.SetSpriteActive(true);
-    }
-    public void StopAttack()
-    {
-        attackHitbox.IsAttacking = false;
-        attackHitbox.SetSpriteActive(false);
+        EventManager.StartListening(Event.EnemyHitboxEntered, OnHitboxEntered);
     }
 
-    public void OnDestroy()
+    protected override void RemoveAdditionalEventListeners()
     {
+
         EventManager.StopListening(Event.EnemyHitboxEntered, OnHitboxEntered);
-        EventManager.StopListening(Event.PlayerHitEnemy, OnHit);
+    }
+
+    protected override void DoBeginAttack()
+    {
+        attackHitbox.IsAttacking = true;
+        attackHitbox.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+    }
+
+    protected override void DoStopAttack()
+    {
+        attackHitbox.IsAttacking = false;
+        attackHitbox.gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
 }

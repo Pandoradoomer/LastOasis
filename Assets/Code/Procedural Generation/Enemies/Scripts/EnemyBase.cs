@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//holds all the enemy's data from which all the other behaviours are derived
 public class EnemyBase : MonoBehaviour
 {
     public int roomIndex;

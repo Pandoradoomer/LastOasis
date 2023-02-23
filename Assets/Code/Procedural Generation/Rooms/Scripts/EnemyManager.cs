@@ -112,7 +112,7 @@ public class EnemyManager : MonoBehaviour
             enemy.go.GetComponent<EnemyBase>().currentHealth = enemy.maxHealth;
             if (behaviourComponent != null)
             {
-                behaviourComponent.Freeze();
+                behaviourComponent.ResetEnemy();
             }
             enemy.go.SetActive(false);
         }
