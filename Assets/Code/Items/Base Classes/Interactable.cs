@@ -16,8 +16,12 @@ public class Interactable : MonoBehaviour
     [SerializeField]
     private CollectableData itemToSpawn;
     [SerializeField]
+    //3 types: Coin, CoinPile, CoinBag
     private List<CollectableData> coinsToSpawn;
-    //Drop coin collectabledata type as loot from chest based in difficulty, given drop chance is higher on harder difficulties
+    [SerializeField]
+    //Store max content size of Chest
+    private int[] maxStorage = new int[100];
+    
     void Update()
     {
         SpawnCoinsFromChest();
@@ -184,5 +188,12 @@ public class Interactable : MonoBehaviour
             return canInteract;
         }
         //??Bug => Interacting with chest when no enemies are present in room
+    }
+
+    private void ChestStorage()
+    {
+        //Store all items & drop chances in here
+        //Drop coin collectabledata type as loot from chest based in difficulty, given drop chance is higher on harder difficulties
+        //https://answers.unity.com/questions/1630997/chest-items-get-added-to-the-wrong-stackchest-item.html
     }
 }
