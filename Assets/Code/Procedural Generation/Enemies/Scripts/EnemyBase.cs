@@ -12,6 +12,7 @@ public class EnemyBase : MonoBehaviour
     private void Awake()
     {
         lootToDrop = new Dictionary<Item, int>();
+        EventManager.StartListening(Event.PlayerHitEnemy, OnHit);
     }
 
     private void Update()
@@ -25,11 +26,18 @@ public class EnemyBase : MonoBehaviour
             });
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
 
+    private void OnHit(IEventPacket packet)
+    {
+        PlayerHitPacket php = packet as PlayerHitPacket;
+        if(php.enemy == this.gameObject)
+        {
+            currentHealth -= php.damage;
         }
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Event.PlayerHitEnemy, OnHit);
     }
 }

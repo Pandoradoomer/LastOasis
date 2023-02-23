@@ -12,6 +12,7 @@ public class SwarmerBehaviour : MonoBehaviour, IEnemyBehaviour, IMovementBehavio
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
+        EventManager.StartListening(Event.PlayerHitEnemy, OnHit);
     }
 
     // Update is called once per frame
@@ -44,6 +45,25 @@ public class SwarmerBehaviour : MonoBehaviour, IEnemyBehaviour, IMovementBehavio
         this.enabled = false;
     }
 
+    public void OnHit(IEventPacket packet)
+    {
+        PlayerHitPacket php = packet as PlayerHitPacket;
+        if(php.enemy == this.gameObject)
+        {
+            StartCoroutine(Stun(0.25f));
+        }
+    }
+
+    private IEnumerator Stun(float duration)
+    {
+        canMove = false;
+        for (float i = 0; i <= duration; i += Time.deltaTime)
+        {
+            yield return null;
+        }
+        canMove = true;
+    }
+
     public void StopMovement()
     {
         canMove = false;
@@ -52,6 +72,11 @@ public class SwarmerBehaviour : MonoBehaviour, IEnemyBehaviour, IMovementBehavio
     public void ResumeMovement()
     {
         canMove = true;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Event.PlayerHitEnemy, OnHit);
     }
 }
 

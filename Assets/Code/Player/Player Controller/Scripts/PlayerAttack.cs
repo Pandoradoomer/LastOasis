@@ -53,8 +53,12 @@ public class PlayerAttack : MonoBehaviour
         // Compares the target layer to the object that was hit.
         if (isSwinging && (targetLayer & 1 << other.gameObject.layer) != 0)
         {
-            Debug.Log("Hit: " + other.name);
-            other.gameObject.GetComponent<EnemyBase>().currentHealth -= swingDamage;
+            EventManager.TriggerEvent(Event.PlayerHitEnemy, new PlayerHitPacket()
+            {
+                damage = swingDamage,
+                enemy = other.gameObject
+            });
+            //other.gameObject.GetComponent<EnemyBase>().currentHealth -= swingDamage;
         }
     }
 

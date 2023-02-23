@@ -24,6 +24,7 @@ public class SkeletonBehaviour : MonoBehaviour, IEnemyBehaviour, IMovementBehavi
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         EventManager.StartListening(Event.EnemyHitboxEntered, OnHitboxEntered);
+        EventManager.StartListening(Event.PlayerHitEnemy, OnHit);
     }
 
     // Update is called once per frame
@@ -64,6 +65,25 @@ public class SkeletonBehaviour : MonoBehaviour, IEnemyBehaviour, IMovementBehavi
         }
     }
 
+    public void OnHit(IEventPacket packet)
+    {
+        PlayerHitPacket php = packet as PlayerHitPacket;
+        if(php.enemy == this.gameObject)
+        {
+            Debug.Log("Stunned!");
+            Stun(0.25f);
+        }
+    }
+
+    private IEnumerator Stun(float duration)
+    {
+        canMove = false;
+        for(float i = 0; i <= duration; i += Time.deltaTime)
+        {
+            yield return null;
+        }
+        canMove = true;
+    }
     public void Freeze()
     {
         rb.velocity = Vector2.zero;
@@ -94,5 +114,6 @@ public class SkeletonBehaviour : MonoBehaviour, IEnemyBehaviour, IMovementBehavi
     public void OnDestroy()
     {
         EventManager.StopListening(Event.EnemyHitboxEntered, OnHitboxEntered);
+        EventManager.StopListening(Event.PlayerHitEnemy, OnHit);
     }
 }

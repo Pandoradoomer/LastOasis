@@ -10,6 +10,7 @@ public enum Event
     ChestSpawn,
     RoomExit,
     EnemyHitboxEntered,
-    EnemyHitPlayer
+    EnemyHitPlayer,
+    PlayerHitEnemy
 
 }
