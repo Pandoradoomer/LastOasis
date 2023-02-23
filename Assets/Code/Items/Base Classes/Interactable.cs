@@ -7,8 +7,6 @@ public class Interactable : MonoBehaviour
 {
     public bool playerInRange;
     public KeyCode chestOpenKey;
-    public UnityEvent interactAction;
-   // public event <Action> interactInvoked;
     public GameObject coinPrefab;
     public GameObject coinPilePrefab;
     public GameObject coinBagPrefab;
@@ -17,14 +15,9 @@ public class Interactable : MonoBehaviour
     //You'll need to do something like the way enemies select which items to drop.
     [SerializeField]
     private CollectableData itemToSpawn;
-
-    
-    void Start()
-    {
-
-    }
-    //TODO Dylan: Use the in-house Event System not the in-built one
-
+    [SerializeField]
+    private List<CollectableData> coinsToSpawn;
+    //Drop coin collectabledata type as loot from chest based in difficulty, given drop chance is higher on harder difficulties
     void Update()
     {
         SpawnCoinsFromChest();
@@ -67,7 +60,6 @@ public class Interactable : MonoBehaviour
         {
             if (Input.GetKeyDown(chestOpenKey))
             {   
-                interactAction?.Invoke();
                 Chest.OpenChest();
 
                 //Set random range value of coins to corresponding variable
@@ -109,13 +101,7 @@ public class Interactable : MonoBehaviour
                         t.position -= r;
                     }
                 }
-
-
-
-
-                    //var go = Instantiate(coinPrefab, new Vector3(Random.Range(-2.5f,1.0f), Random.Range(-2.0f,1.0f), -1), transform.rotation);
-                    //go.GetComponent<Collectable>().stackSize = Random.Range(1, 10);
-               // }
+               //INCREASE COINPILE & COINBAG DROP CHANCE IN THE HIGHER DIFFICULTIES
                 /// <summary>
                 /// Checks if player is in range and hasnt been interacted with
                 /// Key input E to invoke an event
@@ -197,7 +183,6 @@ public class Interactable : MonoBehaviour
         {
             return canInteract;
         }
-
-        //FIX BUG OF INTERACTING WITH CHEST IF NO ENEMIES SPAWN IN THE ROOM BUT A CHEST DOES
+        //??Bug => Interacting with chest when no enemies are present in room
     }
 }
