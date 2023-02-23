@@ -50,7 +50,7 @@ public class AttackBase : MonoBehaviour
         {
             if(IsAttacking)
             {
-                EventManager.TriggerEvent(Event.EnemyHit, new EnemyHitPacket()
+                EventManager.TriggerEvent(Event.EnemyHitPlayer, new EnemyHitPacket()
                 {
                     healthDeplete = enemyBase.attackDamage
                 });

@@ -38,7 +38,7 @@ public class PlayerStats : MonoBehaviour
         invulnerabilityHolder = invulnerabilityDuration;
         playerHealthSlider.maxValue = maxHealth;
         originalColor = GetComponent<SpriteRenderer>().color;
-        EventManager.StartListening(Event.EnemyHit, OnEnemyHit);
+        EventManager.StartListening(Event.EnemyHitPlayer, OnEnemyHit);
     }
     private void Awake()
     {
@@ -205,6 +205,6 @@ public class PlayerStats : MonoBehaviour
     }
     private void OnDestroy()
     {
-        EventManager.StopListening(Event.EnemyHit, OnEnemyHit);
+        EventManager.StopListening(Event.EnemyHitPlayer, OnEnemyHit);
     }
 }

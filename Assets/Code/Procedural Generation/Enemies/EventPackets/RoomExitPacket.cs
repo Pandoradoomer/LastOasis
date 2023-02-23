@@ -5,4 +5,5 @@ using UnityEngine;
 public class RoomExitPacket : IEventPacket
 {
     public int roomIndex;
+    public int nextRoomIndex;
 }

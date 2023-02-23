@@ -18,8 +18,11 @@ public class EnemyBase : MonoBehaviour
     {
         if(currentHealth <= 0)
         {
-            //TO-DO Andrei: Requires debugging
-            Destroy(gameObject);
+            EventManager.TriggerEvent(Event.EnemyDestroyed, new EnemyDestroyedPacket()
+            {
+                go = gameObject,
+                lootToDrop = lootToDrop
+            });
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
