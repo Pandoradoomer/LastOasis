@@ -170,7 +170,7 @@ public class Interactable : MonoBehaviour
             }
             //Set a new index from the current room index of the chest
             int newIndex = curRoom;
-            Debug.Log("Number of enemies in room" + " { " + newIndex + " } " + " is " + " { " + enemiesInRoom + " } ");
+            //Debug.Log("Number of enemies in room" + " { " + newIndex + " } " + " is " + " { " + enemiesInRoom + " } ");
             //Return canInteract based on condition, prevent interaction while enemy count is over 0
             while (enemiesInRoom > 0)
             {
