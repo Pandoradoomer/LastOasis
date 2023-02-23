@@ -12,15 +12,18 @@ public class PlayerAttack : MonoBehaviour
 
     private CircleCollider2D swordCollider;
     private bool isSwinging = false;
+    private SpriteRenderer sr;
 
     private void Awake()
     {
         swordCollider = GetComponent<CircleCollider2D>();
+        sr = GetComponent<SpriteRenderer>();
+        sr.enabled = false;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && !isSwinging)
+        if (Input.GetMouseButton(0) && !isSwinging && PlayerController.instance.currentState != PlayerController.CURRENT_STATE.DASHING)
         {
             StartCoroutine(SwingSword());
         }
@@ -30,7 +33,9 @@ public class PlayerAttack : MonoBehaviour
     {
         // TODO: Add animation to make it look like a sword swing.
         // DISCUSSION: Do we want the player to be unable to move the sword once the swing has happened?
+        PlayerController.instance.currentState = PlayerController.CURRENT_STATE.ATTACK;
         isSwinging = true;
+        sr.enabled = isSwinging;
 
         swordCollider.enabled = true;
         yield return new WaitForSeconds(swingDuration);
@@ -39,6 +44,8 @@ public class PlayerAttack : MonoBehaviour
         yield return new WaitForSeconds(swingDelay);
 
         isSwinging = false;
+        sr.enabled = isSwinging;
+        PlayerController.instance.currentState = PlayerController.CURRENT_STATE.RUNNING;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

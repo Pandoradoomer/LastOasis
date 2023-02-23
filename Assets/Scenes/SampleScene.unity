@@ -1733,7 +1733,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ed130aac49764ad4f9d35454c297b75a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2102,6 +2102,8 @@ MonoBehaviour:
   currentState: 0
   rb: {fileID: 1703071644}
   speed: 5
+  invulnerability: 0
+  invulnerabilityDuration: 2
   dashDistance: 6
   dashCooldown: 4
   dashLength: 0.75
@@ -2127,9 +2129,6 @@ MonoBehaviour:
   playerHealthSlider: {fileID: 833101058}
   coinText: {fileID: 176066924}
   healthText: {fileID: 1370863165}
-  invulnerability: 0
-  invulnerabilityDuration: 3
-  collisionIgnore: 1
 --- !u!1 &1848009946
 GameObject:
   m_ObjectHideFlags: 0

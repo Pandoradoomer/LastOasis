@@ -18,27 +18,12 @@ public class PlayerStats : MonoBehaviour
 
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI healthText;
-    private SpriteRenderer sr;
-
-    public bool invulnerability;
-    public float invulnerabilityDuration;
-    private float invulnerabilityHolder;
-    private float blinkTimer;
-
-    private Color originalColor;
-
-
-    // Testing bool.
-    public bool collisionIgnore;
     public static PlayerStats instance { get; private set; }
     void Start()
     {
         coinText.text = "Coins: " + 0;
-        sr = GetComponent<SpriteRenderer>();
-        invulnerabilityHolder = invulnerabilityDuration;
         playerHealthSlider.maxValue = maxHealth;
-        originalColor = GetComponent<SpriteRenderer>().color;
-        EventManager.StartListening(Event.EnemyHitPlayer, OnEnemyHit);
+        EventManager.StartListening(Event.EnemyHit, OnEnemyHit);
     }
     private void Awake()
     {
@@ -82,9 +67,6 @@ public class PlayerStats : MonoBehaviour
         //Fix bug of removing coins after its reached 0
         //Key press to spend all coins
         coinText.text = $"Coins: {Singleton.Instance.Inventory.GetCoins()}";
-
-        ChangeColorOnDash();
-        Invulnerability();
     }
 
 
@@ -114,17 +96,17 @@ public class PlayerStats : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // When collided with enemy or boss, the player will take damage.
-        if (!invulnerability)
+        if (!PlayerController.instance.invulnerability)
         {
             if (collision.gameObject.CompareTag("Enemy"))
             {
                 currentHealth -= collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
-                invulnerability = true;
+                PlayerController.instance.invulnerability = true;
             }
             if (collision.gameObject.CompareTag("Boss"))
             {
                 currentHealth -= collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
-                invulnerability = true;
+                PlayerController.instance.invulnerability = true;
             }
         }
     }
@@ -132,75 +114,28 @@ public class PlayerStats : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         // When player does not move from the collision point, player will still take damage.
-        if (!invulnerability)
+        if (!PlayerController.instance.invulnerability)
         {
             if (collision.gameObject.CompareTag("Enemy"))
             {
                 currentHealth -= collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
-                invulnerability = true;
+                PlayerController.instance.invulnerability = true;
             }
             if (collision.gameObject.CompareTag("Boss"))
             {
                 currentHealth -= collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
-                invulnerability = true;
+                PlayerController.instance.invulnerability = true;
             }
         }
-    }
-
-    private void Invulnerability()
-    {
-        if (invulnerability)
-        {
-            blinkTimer -= Time.deltaTime;
-            ChangePlayerAlpha();
-            IgnoreCollider(true);
-
-            if (blinkTimer <= 0.5f)
-            {
-                blinkTimer = 1;
-                invulnerabilityDuration--;
-
-                if (invulnerabilityDuration < 0)
-                {
-                    invulnerability = false;
-                    invulnerabilityDuration = invulnerabilityHolder;
-                    blinkTimer = 1;
-                    ChangePlayerAlpha();
-                    IgnoreCollider(false);
-                }
-            }
-        }
-    }
-
-    private void ChangePlayerAlpha()
-    {
-        Color playerColor = sr.color;
-        playerColor.a = blinkTimer;
-        gameObject.GetComponent<SpriteRenderer>().color = playerColor;
-    }
-
-    private void ChangeColorOnDash()
-    {
-        if (PlayerController.instance.currentState == PlayerController.CURRENT_STATE.DASHING)
-            sr.color = Color.white;
-        else
-            sr.color = originalColor;
-    }
-
-    private void IgnoreCollider(bool ignore)
-    {
-        int playerLayer = gameObject.layer;
-        int enemyLayer = LayerMask.NameToLayer("Enemy");
-        Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, ignore);
     }
 
     private void OnEnemyHit(IEventPacket packet)
     {
         EnemyHitPacket ehp = packet as EnemyHitPacket;
-        if(!invulnerability)
+        if(!PlayerController.instance.invulnerability)
         {
             currentHealth -= ehp.healthDeplete;
-            invulnerability = true;
+            PlayerController.instance.invulnerability = true;
         }
     }
     private void OnDestroy()
