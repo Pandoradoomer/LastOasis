@@ -62,7 +62,6 @@ public class ChestManager : MonoBehaviour
             ChestControl cc = go.GetComponent<ChestControl>();
             cc.roomIndex = csp.roomIndex;
             AddChestToDictionary(go, csp.roomIndex);
-            Debug.Log("Spawned chest");
             chestCounter++;
             /// <summary>
             ///Spawn a chest upon entering a room event, the given probability is 50% for now
