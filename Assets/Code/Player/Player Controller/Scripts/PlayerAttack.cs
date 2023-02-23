@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public float swingRadius;
     public float swingDuration;
     public float swingDelay;
     public float swingDamage;
@@ -12,12 +11,11 @@ public class PlayerAttack : MonoBehaviour
 
     private CircleCollider2D swordCollider;
     private bool isSwinging = false;
-    private SpriteRenderer sr;
+    public SpriteRenderer sr;
 
     private void Awake()
     {
         swordCollider = GetComponent<CircleCollider2D>();
-        sr = GetComponent<SpriteRenderer>();
         sr.enabled = false;
     }
 
@@ -35,7 +33,7 @@ public class PlayerAttack : MonoBehaviour
         // DISCUSSION: Do we want the player to be unable to move the sword once the swing has happened?
         PlayerController.instance.currentState = PlayerController.CURRENT_STATE.ATTACK;
         isSwinging = true;
-        sr.enabled = isSwinging;
+        sr.enabled = true;
 
         swordCollider.enabled = true;
         yield return new WaitForSeconds(swingDuration);
@@ -44,7 +42,7 @@ public class PlayerAttack : MonoBehaviour
         yield return new WaitForSeconds(swingDelay);
 
         isSwinging = false;
-        sr.enabled = isSwinging;
+        sr.enabled = false;
         PlayerController.instance.currentState = PlayerController.CURRENT_STATE.RUNNING;
     }
 
@@ -62,9 +60,17 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnTriggerStay2D(Collider2D other)
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, swingRadius);
+        // Compares the target layer to the object that was hit.
+        if (isSwinging && (targetLayer & 1 << other.gameObject.layer) != 0)
+        {
+            EventManager.TriggerEvent(Event.PlayerHitEnemy, new PlayerHitPacket()
+            {
+                damage = swingDamage,
+                enemy = other.gameObject
+            });
+            //other.gameObject.GetComponent<EnemyBase>().currentHealth -= swingDamage;
+        }
     }
 }
