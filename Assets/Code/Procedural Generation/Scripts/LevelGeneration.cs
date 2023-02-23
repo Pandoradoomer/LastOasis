@@ -53,6 +53,7 @@ public class LevelGeneration : MonoBehaviour
         CalculateDistanceFromCentre();
         DrawMap();
         CreateBossRoom();
+        EventManager.StartListening(Event.RoomExit, OnRoomExit);
     }
 
     void CreateRooms()
@@ -281,7 +282,7 @@ public class LevelGeneration : MonoBehaviour
     }
 
     //exists only so we can reset the map on spacebar
-    List<GameObject> spawnedRooms = new List<GameObject>();
+    List<SpawnedRoomData> spawnedRooms = new List<SpawnedRoomData>();
     void DrawMap()
     {
         for(int x = 0; x < gridSizeX * 2; x++)
@@ -294,6 +295,8 @@ public class LevelGeneration : MonoBehaviour
                 Vector2 drawPos = room.gridPos * roomSize;
 
                 var go = Instantiate(roomPrefab, drawPos, Quaternion.identity);
+                go.name = $"Room {spawnedRooms.Count}";
+                rooms[x, y].go = go;
                 RoomScript rs = go.GetComponent<RoomScript>();
                 rs.roomIndex = spawnedRooms.Count;
                 rs.isBoss = rs.roomIndex == bossRoomIndex;
@@ -301,7 +304,8 @@ public class LevelGeneration : MonoBehaviour
                 float difficulty = GenerateDifficulty(rs.distToCentre);
                 rs.roomDifficulty = difficulty;
                 rs.spawnPosition = enemySpawnPositions[Random.Range(0, 2)];
-                spawnedRooms.Add(go);
+
+                spawnedRooms.Add(new SpawnedRoomData(go, x, y));
                 DoorManager dm = go.GetComponent<DoorManager>();
 
                 //Purely debug variables, can be eliminated; allows you to see the non-intuitive grid placement at runtime
@@ -311,6 +315,50 @@ public class LevelGeneration : MonoBehaviour
                 dm.ReinitialiseDoors(room.doors);
             }
         }
+    }
+
+    public int GetNeighbourOfRoom(int roomIndex, Direction dir)
+    {
+        int x = spawnedRooms[roomIndex].x;
+        int y = spawnedRooms[roomIndex].y;
+
+        switch(dir)
+        {
+            case Direction.N:
+                y++; break;
+            case Direction.S:
+                y--; break;
+            case Direction.E:
+                x++; break;
+            case Direction.W:
+                x--; break;
+        }
+
+        return rooms[x, y].go.GetComponent<RoomScript>().roomIndex;
+    }
+
+    void OnRoomExit(IEventPacket packet)
+    {
+        RoomExitPacket rep = packet as RoomExitPacket;
+        SpawnedRoomData currentRoom = spawnedRooms[rep.roomIndex];
+        SpawnedRoomData nextRoom = spawnedRooms[rep.nextRoomIndex];
+
+        rooms[currentRoom.x, currentRoom.y].go.SetActive(false);
+        rooms[nextRoom.x, nextRoom.y].go.SetActive(true);
+        Vector2 newPlayerPos = rooms[nextRoom.x, nextRoom.y].go.transform.position;
+        float mult = (roomSize - 3.0f) / 2.0f;
+        switch (rep.direction)
+        {
+            case(Direction.N):
+                newPlayerPos += Vector2.down * mult; break;
+            case (Direction.S):
+                newPlayerPos += Vector2.up * mult; break;
+            case (Direction.W):
+                newPlayerPos += Vector2.right * mult; break;
+            case (Direction.E):
+                newPlayerPos += Vector2.left * mult; break;
+        }
+        Singleton.Instance.PlayerController.transform.position = newPlayerPos;
     }
 
     //TODO Andrei: don't assume that the player always starts in a room placed on the origin
@@ -346,17 +394,21 @@ public class LevelGeneration : MonoBehaviour
         int largestDistanceIndex = 0;
         for(int i = 0; i < spawnedRooms.Count; i++)
         {
-            RoomScript rs = spawnedRooms[i].GetComponent<RoomScript>();
+            spawnedRooms[i].go.SetActive(false);
+            RoomScript rs = spawnedRooms[i].go.GetComponent<RoomScript>();
             if (rs.distToCentre > largestDistance)
             {
                 largestDistance = rs.distToCentre;
                 largestDistanceIndex = i;
             }
             if (rs.distToCentre == 0)
-                spawnedRooms[i].name = "StartRoom";
+            {
+                spawnedRooms[i].go.name = "StartRoom";
+                spawnedRooms[i].go.SetActive(true);
+            }
 
         }
-        bossRoom = spawnedRooms[largestDistanceIndex];
+        bossRoom = spawnedRooms[largestDistanceIndex].go;
         bossRoom.GetComponent<RoomScript>().isBoss = true;
         bossRoom.name = "BossRoom";
 
@@ -375,8 +427,8 @@ public class LevelGeneration : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             BossManager.instance.bossHPSlider.SetActive(true);
-            foreach (GameObject go in spawnedRooms)
-                Destroy(go);
+            //foreach (GameObject go in spawnedRooms)
+            //    Destroy(go);
             spawnedRooms.Clear();
             takenPositions.Clear();
             CreateRooms(); 
@@ -387,5 +439,21 @@ public class LevelGeneration : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftControl))
             TeleportToBossRoom();
 
+    }
+}
+
+
+public class SpawnedRoomData
+{
+    //the actual gameobject with all the data
+    public GameObject go;
+    //the grid coordinates
+    public int x, y;
+
+    public SpawnedRoomData(GameObject go, int x, int y)
+    {
+        this.go = go;
+        this.x = x;
+        this.y = y;
     }
 }

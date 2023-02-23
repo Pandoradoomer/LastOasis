@@ -23,7 +23,7 @@ public class PlayerStats : MonoBehaviour
     {
         coinText.text = "Coins: " + 0;
         playerHealthSlider.maxValue = maxHealth;
-        EventManager.StartListening(Event.EnemyHit, OnEnemyHit);
+        EventManager.StartListening(Event.EnemyHitPlayer, OnEnemyHit);
     }
     private void Awake()
     {

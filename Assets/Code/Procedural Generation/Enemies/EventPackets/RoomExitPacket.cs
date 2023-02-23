@@ -6,4 +6,5 @@ public class RoomExitPacket : IEventPacket
 {
     public int roomIndex;
     public int nextRoomIndex;
+    public Direction direction;
 }

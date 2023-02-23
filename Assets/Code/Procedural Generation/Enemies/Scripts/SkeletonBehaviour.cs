@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -66,7 +67,8 @@ public class SkeletonBehaviour : MonoBehaviour, IEnemyBehaviour, IMovementBehavi
     public void Freeze()
     {
         rb.velocity = Vector2.zero;
-        this.enabled = false;
+        canMove = true;
+        StopAttack();
     }
     public void Attack()
     {
@@ -76,7 +78,6 @@ public class SkeletonBehaviour : MonoBehaviour, IEnemyBehaviour, IMovementBehavi
     private void Attack(float windUpTime, float strikeTime)
     {
         StartCoroutine(AttackFunctions.Swing(this, this, windUpTime, strikeTime));
-        
     }
 
     public void BeginAttack()

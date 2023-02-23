@@ -44,16 +44,16 @@ public class RoomScript : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-            EventManager.TriggerEvent(Event.RoomExit,
-                new RoomExitPacket
-                {
-                    roomIndex = roomIndex
-                }
-                );
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if(collision.gameObject.tag == "Player")
+    //    {
+    //        EventManager.TriggerEvent(Event.RoomExit,
+    //            new RoomExitPacket
+    //            {
+    //                roomIndex = roomIndex
+    //            }
+    //            );
+    //    }
+    //}
 }

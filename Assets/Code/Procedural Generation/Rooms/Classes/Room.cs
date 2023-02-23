@@ -9,6 +9,7 @@ public class Room
     public int type;
     public int doors = 0;
     public int x, y;
+    public GameObject go;
 
     public Room(Vector2 _gridPos, int _type)
     {

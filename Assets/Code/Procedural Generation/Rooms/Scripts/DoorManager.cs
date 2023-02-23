@@ -9,6 +9,8 @@ public class DoorManager : MonoBehaviour
     [SerializeField]
     List<GameObject> doors = new List<GameObject>();
     List<bool> doorOpen;
+    [SerializeField]
+    RoomScript roomScript;
 
     [SerializeField]
     List<Sprite> doorOpenSprites;
@@ -56,6 +58,10 @@ public class DoorManager : MonoBehaviour
             {
                 sr.sprite = wallSprites[i];
                 doors[i].layer = 8;
+                foreach(Transform child in doors[i].transform)
+                {
+                    child.gameObject.SetActive(false);
+                }
             }
         }
     }

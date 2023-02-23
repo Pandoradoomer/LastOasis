@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Linq;
-
-
+using Unity.VisualScripting;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -92,6 +91,7 @@ public class EnemyManager : MonoBehaviour
             return;
         foreach(var enemy in spawnedEnemies[index])
         {
+            enemy.go.SetActive(true);
             IEnemyBehaviour behaviourComponent = enemy.go.GetComponent<IEnemyBehaviour>();
                 if(behaviourComponent != null )
                 {
@@ -114,6 +114,7 @@ public class EnemyManager : MonoBehaviour
             {
                 behaviourComponent.Freeze();
             }
+            enemy.go.SetActive(false);
         }
     }
 
