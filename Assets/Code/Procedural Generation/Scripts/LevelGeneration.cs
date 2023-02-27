@@ -26,7 +26,7 @@ public class LevelGeneration : MonoBehaviour
 
     public GameObject roomPrefab;
     private GameObject bossRoom;
-    int bossRoomIndex;
+    int bossRoomIndex = -1;
     private  GameObject startRoom;
     float roomSize = 11.0f;
 
@@ -56,6 +56,7 @@ public class LevelGeneration : MonoBehaviour
         CalculateDistanceFromStart();
         DrawMap();
         CreateBossRoom();
+        SetRoomVariables();
         SetPlayerAtStart();
         EventManager.StartListening(Event.RoomExit, OnRoomExit);
     }
@@ -317,25 +318,49 @@ public class LevelGeneration : MonoBehaviour
                 var go = Instantiate(roomPrefab, drawPos, Quaternion.identity);
                 go.name = $"Room {spawnedRooms.Count}";
                 rooms[x, y].go = go;
-                RoomScript rs = go.GetComponent<RoomScript>();
-                rs.roomIndex = spawnedRooms.Count;
-                rs.isBoss = rs.roomIndex == bossRoomIndex;
-                rs.distToCentre = room.distToStart;
-                float difficulty = GenerateDifficulty(rs.distToCentre);
-                rs.roomDifficulty = difficulty;
-                rs.spawnPosition = enemySpawnPositions[Random.Range(0, 2)];
-                EventManager.TriggerEvent(Event.RoomSpawn, new RoomSpawnPacket()
-                {
-                    go = go,
-                    doors = room.doors
-                });
+                //RoomScript rs = go.GetComponent<RoomScript>();
+                //rs.roomIndex = spawnedRooms.Count;
+                //rs.isBoss = rs.roomIndex == bossRoomIndex;
+                //rs.distToStart = room.distToStart;
+                //float difficulty = GenerateDifficulty(rs.distToStart);
+                //rs.roomDifficulty = difficulty;
+                //rs.spawnPosition = enemySpawnPositions[Random.Range(0, 2)];
+                //EventManager.TriggerEvent(Event.RoomSpawn, new RoomSpawnPacket()
+                //{
+                //    go = go,
+                //    doors = room.doors
+                //});
                 spawnedRooms.Add(new SpawnedRoomData(go, x, y));
-                DoorManager dm = go.GetComponent<DoorManager>();
-                dm.doorsBits = room.doors;
-                dm.x = x;
-                dm.y = y;
-                dm.ReinitialiseDoors(room.doors);
+                //DoorManager dm = go.GetComponent<DoorManager>();
+                //dm.doorsBits = room.doors;
+                //dm.x = x;
+                //dm.y = y;
+                //dm.ReinitialiseDoors(room.doors);
             }
+        }
+    }
+
+    void SetRoomVariables()
+    {
+        foreach(var room in spawnedRooms)
+        {
+            RoomScript rs = room.go.GetComponent<RoomScript>();
+            rs.roomIndex = spawnedRooms.IndexOf(room);
+            rs.isBoss = rs.roomIndex == bossRoomIndex;
+            rs.distToStart = rooms[room.x, room.y].distToStart;
+            rs.roomDifficulty = GenerateDifficulty(rs.distToStart);
+            rs.spawnPosition = enemySpawnPositions[Random.Range(0, 2)];
+            EventManager.TriggerEvent(Event.RoomSpawn, new RoomSpawnPacket()
+            {
+                go = room.go,
+                doors = rooms[room.x, room.y].doors
+            });
+            DoorManager dm = room.go.GetComponent<DoorManager>();
+            dm.doorsBits = rooms[room.x,room.y].doors;
+            dm.x = room.x;
+            dm.y = room.y;
+            dm.ReinitialiseDoors(rooms[room.x, room.y].doors);
+            room.go.SetActive(false);
         }
     }
 
@@ -421,15 +446,17 @@ public class LevelGeneration : MonoBehaviour
         int largestDistanceIndex = 0;
         for(int i = 0; i < spawnedRooms.Count; i++)
         {
-            spawnedRooms[i].go.SetActive(false);
-            RoomScript rs = spawnedRooms[i].go.GetComponent<RoomScript>();
-            if (rs.distToCentre > largestDistance)
+            var srd = spawnedRooms[i];
+            Room room = rooms[srd.x, srd.y];
+            //RoomScript rs = spawnedRooms[i].go.GetComponent<RoomScript>();
+            if (room.distToStart > largestDistance)
             {
-                largestDistance = rs.distToCentre;
+                largestDistance = room.distToStart;
                 largestDistanceIndex = i;
             }
 
         }
+        bossRoomIndex = largestDistanceIndex;
         bossRoom = spawnedRooms[largestDistanceIndex].go;
         bossRoom.GetComponent<RoomScript>().isBoss = true;
         bossRoom.name = "BossRoom";
