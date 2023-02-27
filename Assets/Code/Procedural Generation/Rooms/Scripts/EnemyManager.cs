@@ -122,6 +122,8 @@ public class EnemyManager : MonoBehaviour
     {
         if (e.isBoss)
             return;
+        if (e.isStart)
+            return;
         //for the sake of the task, let's spawn enemies inside every room, at least 1
         float currentDifficulty = 0;
         List<Vector2> filledPositions = new List<Vector2>();

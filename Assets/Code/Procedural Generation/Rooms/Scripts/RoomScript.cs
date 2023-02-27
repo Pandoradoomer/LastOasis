@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoomScript : MonoBehaviour
 {
     public bool isBoss;
+    public bool isStart;
     public int roomIndex;
     public float roomDifficulty;
     public int distToStart;
@@ -29,6 +30,7 @@ public class RoomScript : MonoBehaviour
             {
                 roomCentre = transform.position,
                 isBoss = isBoss,
+                isStart = isStart,
                 roomIndex = roomIndex,
                 difficulty = roomDifficulty,
                 enemyPositions = spawnPosition

@@ -347,6 +347,7 @@ public class LevelGeneration : MonoBehaviour
             RoomScript rs = room.go.GetComponent<RoomScript>();
             rs.roomIndex = spawnedRooms.IndexOf(room);
             rs.isBoss = rs.roomIndex == bossRoomIndex;
+            rs.isStart = spawnedRooms.IndexOf(room) == 0;
             rs.distToStart = rooms[room.x, room.y].distToStart;
             rs.roomDifficulty = GenerateDifficulty(rs.distToStart);
             rs.spawnPosition = enemySpawnPositions[Random.Range(0, 2)];
