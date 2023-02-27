@@ -388,6 +388,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8464749436960201210}
   - component: {fileID: 7396682246892046343}
+  - component: {fileID: 1101291668571877213}
   m_Layer: 0
   m_Name: GoodCollider
   m_TagString: Untagged
@@ -436,6 +437,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1101291668571877213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603019617113331252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16dfd5373404e934fa6ecb40bc7069e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir: 1
+  room: {fileID: 2108988027199837622}
 --- !u!1 &2086470901161340781
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +461,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4300395605037126509}
   - component: {fileID: 8425609653952931991}
+  - component: {fileID: 7968503372368935677}
   m_Layer: 0
   m_Name: GoodCollider
   m_TagString: Untagged
@@ -494,6 +510,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.8}
   m_EdgeRadius: 0
+--- !u!114 &7968503372368935677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086470901161340781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16dfd5373404e934fa6ecb40bc7069e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir: 2
+  room: {fileID: 2108988027199837622}
 --- !u!1 &2087408084249684333
 GameObject:
   m_ObjectHideFlags: 0
@@ -1874,6 +1904,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5562778874299502146}
   - component: {fileID: 6317106991846960606}
+  - component: {fileID: 1852803810956362422}
   m_Layer: 0
   m_Name: GoodCollider
   m_TagString: Untagged
@@ -1922,6 +1953,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1852803810956362422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2922643013338482231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16dfd5373404e934fa6ecb40bc7069e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir: 3
+  room: {fileID: 2108988027199837622}
 --- !u!1 &6563393848992638725
 GameObject:
   m_ObjectHideFlags: 0
@@ -2436,6 +2481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7024335864173920421}
   - component: {fileID: 2811468950704920804}
+  - component: {fileID: 6083387033639523277}
   m_Layer: 0
   m_Name: GoodCollider
   m_TagString: Untagged
@@ -2484,3 +2530,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &6083387033639523277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7910361687827552865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16dfd5373404e934fa6ecb40bc7069e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir: 0
+  room: {fileID: 2108988027199837622}
