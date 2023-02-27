@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7349152455084223959}
   - component: {fileID: 2161859295384381795}
   - component: {fileID: 3875635054144623735}
+  - component: {fileID: 1931796976156778635}
   m_Layer: 8
   m_Name: Wall N - Right
   m_TagString: Untagged
@@ -111,6 +112,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1931796976156778635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112097629910790939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 00000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &1104781218983674490
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +137,7 @@ GameObject:
   - component: {fileID: 7924732840033975545}
   - component: {fileID: 5089586792336034500}
   - component: {fileID: 8431982478995144206}
+  - component: {fileID: 3082928404069748952}
   m_Layer: 8
   m_Name: Wall E - Top
   m_TagString: Untagged
@@ -222,6 +238,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3082928404069748952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104781218983674490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 01000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &1475735595010463317
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,6 +263,7 @@ GameObject:
   - component: {fileID: 2627485460357532756}
   - component: {fileID: 3407178995778440636}
   - component: {fileID: 3480275306545475138}
+  - component: {fileID: 6847381948024279203}
   m_Layer: 8
   m_Name: Wall E - Bot
   m_TagString: Untagged
@@ -333,6 +364,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6847381948024279203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475735595010463317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 01000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &1603019617113331252
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,7 +388,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8464749436960201210}
   - component: {fileID: 7396682246892046343}
-  - component: {fileID: 6281464754519358262}
   m_Layer: 0
   m_Name: GoodCollider
   m_TagString: Untagged
@@ -392,20 +436,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6281464754519358262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603019617113331252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16dfd5373404e934fa6ecb40bc7069e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dir: 1
-  room: {fileID: 2108988027199837622}
 --- !u!1 &2086470901161340781
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,7 +446,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4300395605037126509}
   - component: {fileID: 8425609653952931991}
-  - component: {fileID: 9205727736777676810}
   m_Layer: 0
   m_Name: GoodCollider
   m_TagString: Untagged
@@ -465,20 +494,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.8}
   m_EdgeRadius: 0
---- !u!114 &9205727736777676810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2086470901161340781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16dfd5373404e934fa6ecb40bc7069e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dir: 2
-  room: {fileID: 2108988027199837622}
 --- !u!1 &2087408084249684333
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,6 +505,7 @@ GameObject:
   - component: {fileID: 5049962115478674899}
   - component: {fileID: 7325466273097364826}
   - component: {fileID: 65154896760674306}
+  - component: {fileID: 5014268025789827570}
   m_Layer: 8
   m_Name: 'Wall S - Right '
   m_TagString: Untagged
@@ -590,6 +606,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5014268025789827570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087408084249684333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 02000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &2352875581301030917
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,6 +631,7 @@ GameObject:
   - component: {fileID: 2352875581301031162}
   - component: {fileID: 2352875581301031160}
   - component: {fileID: 2352875581301031163}
+  - component: {fileID: 8497444766041008223}
   m_Layer: 8
   m_Name: NE
   m_TagString: Untagged
@@ -701,6 +732,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8497444766041008223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2352875581301030917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 0000000001000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &2352875581409658213
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,6 +757,7 @@ GameObject:
   - component: {fileID: 2352875581409658202}
   - component: {fileID: 2352875581409658200}
   - component: {fileID: 2352875581409658203}
+  - component: {fileID: 7986200994712013354}
   m_Layer: 6
   m_Name: Door N
   m_TagString: Untagged
@@ -776,11 +822,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 707a4beae59ad9746b828b6d62992bb7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c827f577775287e469871adb4e789d45, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 2
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -807,12 +853,26 @@ BoxCollider2D:
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 2
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7986200994712013354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2352875581409658213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 00000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &2352875582036056030
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,6 +931,7 @@ GameObject:
   - component: {fileID: 2352875582184699626}
   - component: {fileID: 2352875582184699624}
   - component: {fileID: 2352875582184699627}
+  - component: {fileID: 1602017914671899395}
   m_Layer: 8
   m_Name: NW
   m_TagString: Untagged
@@ -971,6 +1032,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1602017914671899395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2352875582184699637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 0000000003000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &2352875582536811373
 GameObject:
   m_ObjectHideFlags: 0
@@ -982,6 +1057,7 @@ GameObject:
   - component: {fileID: 2352875582536811362}
   - component: {fileID: 2352875582536811360}
   - component: {fileID: 2352875582536811363}
+  - component: {fileID: 38208231244945799}
   m_Layer: 8
   m_Name: SW
   m_TagString: Untagged
@@ -1082,6 +1158,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &38208231244945799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2352875582536811373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 0200000003000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &2352875582546355515
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,6 +1183,7 @@ GameObject:
   - component: {fileID: 2352875582546355512}
   - component: {fileID: 2352875582546355518}
   - component: {fileID: 2352875582546355513}
+  - component: {fileID: 6533012909861705977}
   m_Layer: 6
   m_Name: Door E
   m_TagString: Untagged
@@ -1161,7 +1252,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 2
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -1188,12 +1279,26 @@ BoxCollider2D:
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 2
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6533012909861705977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2352875582546355515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 01000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &2352875582622572964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,6 +1495,7 @@ GameObject:
   - component: {fileID: 2352875582718905262}
   - component: {fileID: 2352875582718905260}
   - component: {fileID: 2352875582718905263}
+  - component: {fileID: 5028200242029800690}
   m_Layer: 6
   m_Name: Door S
   m_TagString: Untagged
@@ -1458,7 +1564,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 2
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -1485,12 +1591,26 @@ BoxCollider2D:
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 2
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5028200242029800690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2352875582718905257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 02000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &2352875582952031747
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,6 +1622,7 @@ GameObject:
   - component: {fileID: 2352875582952031744}
   - component: {fileID: 2352875582952031750}
   - component: {fileID: 2352875582952031745}
+  - component: {fileID: 54285286891024121}
   m_Layer: 8
   m_Name: SE
   m_TagString: Untagged
@@ -1602,6 +1723,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &54285286891024121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2352875582952031747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 0200000001000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &2352875583036457281
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,6 +1748,7 @@ GameObject:
   - component: {fileID: 2352875583036457286}
   - component: {fileID: 2352875583036457284}
   - component: {fileID: 2352875583036457287}
+  - component: {fileID: 4754621102207219860}
   m_Layer: 6
   m_Name: Door W
   m_TagString: Untagged
@@ -1681,7 +1817,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 2
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -1708,12 +1844,26 @@ BoxCollider2D:
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 2
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &4754621102207219860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2352875583036457281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 03000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &2922643013338482231
 GameObject:
   m_ObjectHideFlags: 0
@@ -1724,7 +1874,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5562778874299502146}
   - component: {fileID: 6317106991846960606}
-  - component: {fileID: 3550222839010409855}
   m_Layer: 0
   m_Name: GoodCollider
   m_TagString: Untagged
@@ -1773,20 +1922,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 1}
   m_EdgeRadius: 0
---- !u!114 &3550222839010409855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2922643013338482231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16dfd5373404e934fa6ecb40bc7069e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dir: 3
-  room: {fileID: 2108988027199837622}
 --- !u!1 &6563393848992638725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1798,6 +1933,7 @@ GameObject:
   - component: {fileID: 1928236842066677164}
   - component: {fileID: 8902469877037295060}
   - component: {fileID: 2120788163740641909}
+  - component: {fileID: 6036116407648376503}
   m_Layer: 8
   m_Name: Wall W - Bot
   m_TagString: Untagged
@@ -1898,6 +2034,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6036116407648376503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6563393848992638725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 03000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &6876813665038554169
 GameObject:
   m_ObjectHideFlags: 0
@@ -1909,6 +2059,7 @@ GameObject:
   - component: {fileID: 1546756284935167133}
   - component: {fileID: 4625076278199782270}
   - component: {fileID: 7025921599583249377}
+  - component: {fileID: 2358582384326317617}
   m_Layer: 8
   m_Name: Wall S - Left
   m_TagString: Untagged
@@ -2009,6 +2160,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2358582384326317617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6876813665038554169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 02000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &7050160604945495063
 GameObject:
   m_ObjectHideFlags: 0
@@ -2020,6 +2185,7 @@ GameObject:
   - component: {fileID: 3012910084082405400}
   - component: {fileID: 5681461538885997133}
   - component: {fileID: 2458045417032147614}
+  - component: {fileID: 2305052783091699355}
   m_Layer: 8
   m_Name: Wall W - Top
   m_TagString: Untagged
@@ -2120,6 +2286,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2305052783091699355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7050160604945495063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 03000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &7209948780550199355
 GameObject:
   m_ObjectHideFlags: 0
@@ -2131,6 +2311,7 @@ GameObject:
   - component: {fileID: 677334158385022650}
   - component: {fileID: 532202432759901084}
   - component: {fileID: 5122171807761873299}
+  - component: {fileID: 2475849867342543659}
   m_Layer: 8
   m_Name: Wall N - Left
   m_TagString: Untagged
@@ -2231,6 +2412,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2475849867342543659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7209948780550199355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce69ad2150acba418bf811c130086cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionsToListen: 00000000
+  waterSprite: {fileID: 1504903352, guid: 25f36ae0942033045b1331cc42484abe, type: 3}
 --- !u!1 &7910361687827552865
 GameObject:
   m_ObjectHideFlags: 0
@@ -2241,7 +2436,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7024335864173920421}
   - component: {fileID: 2811468950704920804}
-  - component: {fileID: 3953664862418202840}
   m_Layer: 0
   m_Name: GoodCollider
   m_TagString: Untagged
@@ -2290,17 +2484,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5}
   m_EdgeRadius: 0
---- !u!114 &3953664862418202840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7910361687827552865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16dfd5373404e934fa6ecb40bc7069e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dir: 0
-  room: {fileID: 2108988027199837622}

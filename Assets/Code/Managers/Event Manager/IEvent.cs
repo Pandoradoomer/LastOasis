@@ -4,13 +4,15 @@ using UnityEngine;
 
 public enum Event
 {
-    RoomEnter,
-    EnemyDestroyed,
-    BossTeleport,
-    ChestSpawn,
-    RoomExit,
-    EnemyHitboxEntered,
-    EnemyHitPlayer,
-    PlayerHitEnemy
+    RoomEnter, //when player enters the room
+    EnemyDestroyed, //when an enemy is destroyed
+    BossTeleport, //when the player teleports to the boss room
+    ChestSpawn, //when a chest spawns
+    RoomExit, //when player exits the room
+    EnemyHitboxEntered, //when player collides with enemy
+    EnemyHitPlayer, //when enemy hits player
+    PlayerHitEnemy, //when player hits enemy
+    RoomSpawn,
+
 
 }

@@ -50,13 +50,13 @@ public class DoorManager : MonoBehaviour
 
                 else
                 {
-                    sr.sprite = doorClosedSprites[i];
+                    //sr.sprite = doorClosedSprites[i];
                     doors[i].layer = 6;
                 }
             }
             else
             {
-                sr.sprite = wallSprites[i];
+                //sr.sprite = wallSprites[i];
                 doors[i].layer = 8;
                 foreach(Transform child in doors[i].transform)
                 {

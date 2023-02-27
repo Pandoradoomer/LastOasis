@@ -39,6 +39,8 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField]
     List<EnemySpawnPosition> enemySpawnPositions;
 
+    int startRoomX, startRoomY;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -50,9 +52,11 @@ public class LevelGeneration : MonoBehaviour
         gridSizeY = Mathf.RoundToInt(worldSize.y);
         CreateRooms();
         SetRoomDoors();
-        CalculateDistanceFromCentre();
+        SetStartRoom();
+        CalculateDistanceFromStart();
         DrawMap();
         CreateBossRoom();
+        SetPlayerAtStart();
         EventManager.StartListening(Event.RoomExit, OnRoomExit);
     }
 
@@ -228,27 +232,43 @@ public class LevelGeneration : MonoBehaviour
         }
     }
 
-    void CalculateDistanceFromCentre()
+    void SetStartRoom()
     {
-        rooms[gridSizeX, gridSizeY].distToCentre = 0;
+        for(int x = 0; x < gridSizeX * 2; x++)
+        {
+            for(int y = 0; y < gridSizeY * 2; y++)
+            {
+                if (rooms[x,y] != null)
+                {
+                    startRoomX = x;
+                    startRoomY = y;
+                    return;
+                }
+            }
+        }
+    }
+
+    void CalculateDistanceFromStart()
+    {
+        rooms[startRoomX, startRoomY].distToStart = 0;
         Queue<Room> roomQueue = new Queue<Room>();
-        roomQueue.Enqueue(rooms[gridSizeX, gridSizeY]);
+        roomQueue.Enqueue(rooms[startRoomX, startRoomY]);
         while(roomQueue.Count > 0)
         {
             Room room = roomQueue.Dequeue();
             List<Room> neighbours = GetCellNeighbours(room.x, room.y);
             foreach(Room neighbor in neighbours)
             {
-                if(neighbor.distToCentre == -1)
+                if(neighbor.distToStart == -1)
                 {
                     List<Room> neighbourNeighbours = GetCellNeighbours(neighbor.x, neighbor.y);
                     int minDist = 9999;
                     foreach(Room nb in neighbourNeighbours)
                     {
-                        if (nb.distToCentre != -1 && nb.distToCentre < minDist)
-                            minDist = nb.distToCentre;
+                        if (nb.distToStart != -1 && nb.distToStart < minDist)
+                            minDist = nb.distToStart;
                     }
-                    neighbor.distToCentre = minDist + 1;
+                    neighbor.distToStart = minDist + 1;
                     roomQueue.Enqueue(neighbor);
                 }
             }
@@ -300,21 +320,30 @@ public class LevelGeneration : MonoBehaviour
                 RoomScript rs = go.GetComponent<RoomScript>();
                 rs.roomIndex = spawnedRooms.Count;
                 rs.isBoss = rs.roomIndex == bossRoomIndex;
-                rs.distToCentre = room.distToCentre;
+                rs.distToCentre = room.distToStart;
                 float difficulty = GenerateDifficulty(rs.distToCentre);
                 rs.roomDifficulty = difficulty;
                 rs.spawnPosition = enemySpawnPositions[Random.Range(0, 2)];
-
+                EventManager.TriggerEvent(Event.RoomSpawn, new RoomSpawnPacket()
+                {
+                    go = go,
+                    doors = room.doors
+                });
                 spawnedRooms.Add(new SpawnedRoomData(go, x, y));
                 DoorManager dm = go.GetComponent<DoorManager>();
-
-                //Purely debug variables, can be eliminated; allows you to see the non-intuitive grid placement at runtime
                 dm.doorsBits = room.doors;
                 dm.x = x;
                 dm.y = y;
                 dm.ReinitialiseDoors(room.doors);
             }
         }
+    }
+
+    void SetPlayerAtStart()
+    {
+        Singleton.Instance.PlayerController.transform.position = rooms[startRoomX, startRoomY].gridPos * roomSize;
+        rooms[startRoomX, startRoomY].go.SetActive(true);
+        rooms[startRoomX, startRoomY].go.name = "StartRoom";
     }
 
     public int GetNeighbourOfRoom(int roomIndex, Direction dir)
@@ -361,8 +390,6 @@ public class LevelGeneration : MonoBehaviour
         Singleton.Instance.PlayerController.transform.position = newPlayerPos;
     }
 
-    //TODO Andrei: don't assume that the player always starts in a room placed on the origin
-    //TODO Andrei: explore DFS distance
     private float GenerateDifficulty(int distance)
     {
         float r;
@@ -400,11 +427,6 @@ public class LevelGeneration : MonoBehaviour
             {
                 largestDistance = rs.distToCentre;
                 largestDistanceIndex = i;
-            }
-            if (rs.distToCentre == 0)
-            {
-                spawnedRooms[i].go.name = "StartRoom";
-                spawnedRooms[i].go.SetActive(true);
             }
 
         }

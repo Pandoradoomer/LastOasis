@@ -5,7 +5,7 @@ using UnityEngine;
 public class Room 
 {
     public Vector2 gridPos;
-    public int distToCentre = -1;
+    public int distToStart = -1;
     public int type;
     public int doors = 0;
     public int x, y;
