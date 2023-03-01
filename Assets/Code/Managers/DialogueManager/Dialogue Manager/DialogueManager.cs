@@ -23,7 +23,7 @@ public class DialogueManager : MonoBehaviour
     private Canvas canvas;
 
     bool isMessageRunning = false;
-    int currIndex = 0;
+    private bool isSpeeding = false;
     DialogueSequenceData currSequence = null;
     bool waitingForInput = false;
 
@@ -55,7 +55,6 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator BeginDialogueSequence(DialogueSequenceData sequence)
     {
-        currIndex = 0;
         isMessageRunning = false;
         currSequence = sequence;
         characterImage.sprite = sequence.dialogueSequence[0].characterData.characterImage;
@@ -304,7 +303,7 @@ public class DialogueManager : MonoBehaviour
         {
             if(isMessageRunning)
             {
-
+                isMessageRunning = false;
             }
             else
             {
