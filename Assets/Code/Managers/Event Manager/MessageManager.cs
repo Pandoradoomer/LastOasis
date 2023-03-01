@@ -21,6 +21,15 @@ public class MessageManager : MonoBehaviour
 
     public TextMeshProUGUI openChestText;
     public TextMeshProUGUI interactChestText;
+    public TextMeshProUGUI captainText;
+    public TextMeshProUGUI chefText;
+    public TextMeshProUGUI carpenterText;
+    public TextMeshProUGUI shopkeeperText;
+    public TextMeshProUGUI cabinBoyText;
+    public TextMeshProUGUI gunnerText;
+    public TextMeshProUGUI surgeonText;
+    public TextMeshProUGUI qmText;
+    public TextMeshProUGUI saText;
     [SerializeField]
     private TextMeshProUGUI pickupHealthActivateText;
     public bool displayMessages;
@@ -65,5 +74,96 @@ public class MessageManager : MonoBehaviour
     public void DisableHealthConsumableText()
     {
         pickupHealthActivateText.gameObject.SetActive(false);
+    }
+
+    //************** NPC MESSAGES ********************//
+    public void DisplayCaptainText()
+    {
+        captainText.gameObject.SetActive(true);
+    }
+
+    public void DisableCaptainText()
+    {
+        captainText.gameObject.SetActive(false);
+    }
+
+    public void DisplayChefText()
+    {
+        chefText.gameObject.SetActive(true);
+    }
+
+    public void DisableChefText()
+    {
+        chefText.gameObject.SetActive(false); 
+    }
+    
+    public void DisplayCarpenterText()
+    {
+        carpenterText.gameObject.SetActive(true);
+    }
+
+    public void DisableCarpenterText()
+    {
+        carpenterText.gameObject.SetActive(false);
+    }
+
+    public void DisplayShopkeeperText()
+    {
+        shopkeeperText.gameObject.SetActive(true);
+    }
+
+    public void DisableShopkeeperText()
+    {
+        shopkeeperText.gameObject.SetActive(false);
+    }
+
+    public void DisplayCabinBoyText()
+    {
+        cabinBoyText.gameObject.SetActive(true);
+    }
+
+    public void DisableCabinBoyText()
+    {
+        cabinBoyText.gameObject.SetActive(false);
+    }
+
+    public void DisplayGunnerText()
+    {
+        gunnerText.gameObject.SetActive(true);
+    }
+
+    public void DisableGunnerText()
+    {
+        gunnerText.gameObject.SetActive(false);
+    }
+
+    public void DisplaySurgeonText()
+    {
+        surgeonText.gameObject.SetActive(true); 
+    }
+
+    public void DisableSurgeonText()
+    {
+        surgeonText.gameObject.SetActive(false);
+    }
+
+    public void DisplayQMText()
+    {
+        qmText.gameObject.SetActive(true);
+    }
+
+    public void DisableQMText()
+    {
+        qmText.gameObject.SetActive(false);
+    }
+
+    public void DisplaySAText()
+    {
+        saText.gameObject.SetActive(true);
+    }
+
+    public void DisableSAText()
+    {
+        saText.gameObject.SetActive(false);
     }
 }

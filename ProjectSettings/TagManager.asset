@@ -12,6 +12,16 @@ TagManager:
   - CoinPile
   - CoinBag
   - Boss
+  - Mast
+  - Captain
+  - Chef
+  - Carpenter
+  - Shopkeeper
+  - CabinBoy
+  - Gunner
+  - Surgeon
+  - QuarterMaster
+  - SeaArtist
   layers:
   - Default
   - TransparentFX

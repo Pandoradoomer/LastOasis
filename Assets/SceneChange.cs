@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class SceneChange : MonoBehaviour
 {
     private Vector2 move;
-    private float moveSpeed = 2.0f;
+    private float moveSpeed = 3.0f;
     public Rigidbody2D rb;
     void Start()
     {
@@ -24,9 +24,86 @@ public class SceneChange : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Mast"))
         {
             SceneManager.LoadScene("SampleScene");
+        } 
+        if (collision.gameObject.CompareTag("Captain"))
+        {
+            MessageManager.instance.DisplayCaptainText();
+        }   
+        if (collision.gameObject.CompareTag("Chef"))
+        {
+            MessageManager.instance.DisplayChefText();
+        }   
+        if (collision.gameObject.CompareTag("Carpenter"))
+        {
+            MessageManager.instance.DisplayCarpenterText();
+        }     
+        if (collision.gameObject.CompareTag("Shopkeeper"))
+        {
+            MessageManager.instance.DisplayShopkeeperText();
+        }     
+        if (collision.gameObject.CompareTag("CabinBoy"))
+        {
+            MessageManager.instance.DisplayCabinBoyText();
+        }      
+        if (collision.gameObject.CompareTag("Gunner"))
+        {
+            MessageManager.instance.DisplayGunnerText();
+        }       
+        if (collision.gameObject.CompareTag("Surgeon"))
+        {
+            MessageManager.instance.DisplaySurgeonText();
+        }    
+        if (collision.gameObject.CompareTag("QuarterMaster"))
+        {
+            MessageManager.instance.DisplayQMText();
+        }       
+        if (collision.gameObject.CompareTag("SeaArtist"))
+        {
+            MessageManager.instance.DisplaySAText();
+        }
+        
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Captain"))
+        {
+            MessageManager.instance.DisableCaptainText();
+        }      
+        if (collision.gameObject.CompareTag("Chef"))
+        {
+            MessageManager.instance.DisableChefText();
+        }      
+        if (collision.gameObject.CompareTag("Carpenter"))
+        {
+            MessageManager.instance.DisableCarpenterText();
+        }     
+        if (collision.gameObject.CompareTag("Shopkeeper"))
+        {
+            MessageManager.instance.DisableShopkeeperText();
+        }       
+        if (collision.gameObject.CompareTag("CabinBoy"))
+        {
+            MessageManager.instance.DisableCabinBoyText();
+        }       
+        if (collision.gameObject.CompareTag("Gunner"))
+        {
+            MessageManager.instance.DisableGunnerText();
+        }       
+        if (collision.gameObject.CompareTag("Surgeon"))
+        {
+            MessageManager.instance.DisableSurgeonText();
+        }       
+        if (collision.gameObject.CompareTag("QuarterMaster"))
+        {
+            MessageManager.instance.DisableQMText();
+        }        
+        if (collision.gameObject.CompareTag("SeaArtist"))
+        {
+            MessageManager.instance.DisableSAText();
         }
     }
+
 }
