@@ -31,8 +31,11 @@ public class DialogueManager : MonoBehaviour
     public float baseSpeed = 20.0f;
     public string currentText = "";
     public float tagWait = -1;
+
+    float boxColorAlpha = 0.0f;
     void Start()
     {
+        boxColorAlpha = textBox.GetComponent<Image>().color.a;
         EventManager.StartListening(Event.DialogueStart, StartDialogue);
     }
 
@@ -62,14 +65,13 @@ public class DialogueManager : MonoBehaviour
         yield return StartCoroutine(FadeAndSlideCharacter(false));
         yield return StartCoroutine(StartMessageSequence(sequence.dialogueSequence));
         StartCoroutine(BlurBackground(true));
-        StartCoroutine(FadeTextBoxAway());
+        StartCoroutine(FadeTextBoxAway(true));
         yield return StartCoroutine(FadeAndSlideCharacter(true));
         EventManager.TriggerEvent(Event.DialogueFinish, null);
         yield return null;
     }
     IEnumerator StartMessageSequence(List<DialogueData> sequence)
     {
-        textBox.SetActive(true);
         characterName.gameObject.SetActive(true);
         dialogueText.gameObject.SetActive(true);
         for(int i = 0; i < sequence.Count; i++)
@@ -83,26 +85,37 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    IEnumerator FadeTextBoxAway()
+    IEnumerator FadeTextBoxAway(bool isInverted)
     {
+        textBox.SetActive(true);
         Image textBoxImg = textBox.GetComponent<Image>();
         Color charColor = characterName.color;
         Color textColor = dialogueText.color;
         Color boxColor = textBoxImg.color;
-        float boxColorAlpha = boxColor.a;
         float dur = 0.75f;
         for (float i = 0; i <= dur; i+= Time.deltaTime)
         {
-            charColor.a = Mathf.Lerp(0, 1, (dur - i) / dur);
-            textColor.a = Mathf.Lerp(0, 1, (dur - i) / dur);
-            boxColor.a = Mathf.Lerp(0, boxColorAlpha, (dur - i) / dur);
+            if (isInverted)
+            {
+                charColor.a = Mathf.Lerp(0, 1, (dur - i) / dur);
+                textColor.a = Mathf.Lerp(0, 1, (dur - i) / dur);
+                boxColor.a = Mathf.Lerp(0, boxColorAlpha, (dur - i) / dur);
+            }
+            else
+            {
+
+                charColor.a = Mathf.Lerp(0, 1, i / dur);
+                textColor.a = Mathf.Lerp(0, 1, i / dur);
+                boxColor.a = Mathf.Lerp(0, boxColorAlpha, i / dur);
+            }
 
             characterName.color = charColor;
             dialogueText.color = textColor;
             textBoxImg.color = boxColor;
             yield return null;
         }
-        textBox.SetActive(false);
+        if (isInverted)
+            textBox.SetActive(false);
     }
     IEnumerator DisplayMessage(DialogueData dialogue)
     {
