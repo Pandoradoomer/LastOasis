@@ -30,7 +30,10 @@ public class WallSpriteAssigner : MonoBehaviour
                 if(!isDoor && directionsToListen.Contains((Direction)i))
                 {
                     GetComponent<SpriteRenderer>().sprite = waterSprite;
-                    break;
+                }
+                else if(isDoor && rsp.distToStart >= rsp.distToBoss / 2)
+                {
+                    GetComponent<SpriteRenderer>().color = Color.grey;
                 }
             }
         }

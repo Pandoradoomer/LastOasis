@@ -27,6 +27,7 @@ public class LevelGeneration : MonoBehaviour
     public GameObject roomPrefab;
     private GameObject bossRoom;
     int bossRoomIndex = -1;
+    int distToBoss = -1;
     private  GameObject startRoom;
     float roomSize = 11.0f;
 
@@ -354,7 +355,10 @@ public class LevelGeneration : MonoBehaviour
             EventManager.TriggerEvent(Event.RoomSpawn, new RoomSpawnPacket()
             {
                 go = room.go,
-                doors = rooms[room.x, room.y].doors
+                doors = rooms[room.x, room.y].doors,
+                distToStart = rs.distToStart,
+                distToBoss = distToBoss
+
             });
             DoorManager dm = room.go.GetComponent<DoorManager>();
             dm.doorsBits = rooms[room.x,room.y].doors;
@@ -458,6 +462,7 @@ public class LevelGeneration : MonoBehaviour
 
         }
         bossRoomIndex = largestDistanceIndex;
+        distToBoss = largestDistance;
         bossRoom = spawnedRooms[largestDistanceIndex].go;
         bossRoom.GetComponent<RoomScript>().isBoss = true;
         bossRoom.name = "BossRoom";

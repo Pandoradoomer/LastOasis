@@ -1459,9 +1459,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBoss: 0
+  isStart: 0
   roomIndex: 0
   roomDifficulty: 0
-  distToCentre: 0
+  distToStart: 0
   spawnPosition: {fileID: 0}
 --- !u!212 &4446781415311030366
 SpriteRenderer:

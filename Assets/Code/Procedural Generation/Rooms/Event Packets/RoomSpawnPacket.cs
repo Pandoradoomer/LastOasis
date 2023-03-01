@@ -6,4 +6,6 @@ public class RoomSpawnPacket : IEventPacket
 {
     public int doors;
     public GameObject go;
+    public int distToStart;
+    public int distToBoss;
 }
