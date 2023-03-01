@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47dfd1d8f360d5d429ef0e480c5ac4cd, type: 3}
   m_Name: TianaOpening #1
   m_EditorClassIdentifier: 
-  dialogueText: Hey. Hey! HEY!!!!<punch> Don't just barge in like a headless chicken!
+  dialogueText: Hey. Hey! <b>HEY!</b><punch> Don't just barge in like a headless
+    chicken!
   characterData: {fileID: 11400000, guid: 8a99de9ff759be34582c053e432b3109, type: 2}

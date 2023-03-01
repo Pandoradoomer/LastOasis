@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterImage: {fileID: 21300000, guid: 339d9b36a0bc1d249a33648fe448d668, type: 3}
   characterName: Tiana
-  nameColor: {r: 0.49898735, g: 1, b: 0.20188677, a: 0}
-  dialogueColor: {r: 0.96864873, g: 1, b: 0.76792455, a: 0}
+  nameColor: {r: 0.49898735, g: 1, b: 0.20188677, a: 1}
+  dialogueColor: {r: 0.96864873, g: 1, b: 0.76792455, a: 1}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartDialogueEvent : IEventPacket
+public class StartDialoguePacket : IEventPacket
 {
     public DialogueSequenceData dialogueSequence;
 }
