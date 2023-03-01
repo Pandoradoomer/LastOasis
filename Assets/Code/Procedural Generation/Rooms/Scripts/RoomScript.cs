@@ -13,9 +13,24 @@ public class RoomScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        EventManager.StartListening(Event.DoorsLockUnlock, LockUnlockDoors);
     }
 
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Event.DoorsLockUnlock, LockUnlockDoors);
+    }
+
+    void LockUnlockDoors(IEventPacket packet)
+    {
+        DoorLockUnlockPacket dlup = packet as DoorLockUnlockPacket;
+        if(dlup.roomIndex == roomIndex && !isStart)
+        {
+            DoorManager dm = GetComponent<DoorManager>();
+            dm.SetAllDoors(dlup.isUnlock);
+        }
+
+    }
     // Update is called once per frame
     void Update()
     {
@@ -38,24 +53,10 @@ public class RoomScript : MonoBehaviour
             EventManager.TriggerEvent(Event.ChestSpawn, new ChestSpawnPacket
             {
                 roomCentre = transform.position,
-                //chestPos = transform.position,
                 roomIndex = roomIndex,
                 difficulty = roomDifficulty,
                 canSpawnChest = true
             });
         }
     }
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if(collision.gameObject.tag == "Player")
-    //    {
-    //        EventManager.TriggerEvent(Event.RoomExit,
-    //            new RoomExitPacket
-    //            {
-    //                roomIndex = roomIndex
-    //            }
-    //            );
-    //    }
-    //}
 }

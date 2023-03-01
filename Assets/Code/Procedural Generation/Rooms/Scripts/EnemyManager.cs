@@ -46,15 +46,15 @@ public class EnemyManager : MonoBehaviour
     private void OnRoomEnter(IEventPacket packet)
     {
         EnemySpawnPacket e = packet as EnemySpawnPacket;
-        if(hasSpawned.Contains(e.roomIndex))
-        {
-            ActivateEnemies(e.roomIndex);
-        }
-        else
+        if(!hasSpawned.Contains(e.roomIndex))
         {
             hasSpawned.Add(e.roomIndex);
             SpawnEnemies(e);
-            //query dict and count number of enemies
+            EventManager.TriggerEvent(Event.DoorsLockUnlock, new DoorLockUnlockPacket()
+            {
+                roomIndex = e.roomIndex,
+                isUnlock = false
+            });
         }
     }
 
@@ -71,7 +71,14 @@ public class EnemyManager : MonoBehaviour
         int index = edp.go.GetComponent<EnemyBase>().roomIndex;
         spawnedEnemies[index].RemoveAll(x => x.go == edp.go);
         if (spawnedEnemies[index].Count == 0)
+        {
             spawnedEnemies.Remove(index);
+            EventManager.TriggerEvent(Event.DoorsLockUnlock, new DoorLockUnlockPacket()
+            {
+                roomIndex = index,
+                isUnlock = true
+            });
+        }
 
         //awarding the player the necessary items
         foreach(var kvp in edp.lootToDrop)

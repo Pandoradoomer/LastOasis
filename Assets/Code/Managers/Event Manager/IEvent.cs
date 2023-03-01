@@ -12,7 +12,8 @@ public enum Event
     EnemyHitboxEntered, //when player collides with enemy
     EnemyHitPlayer, //when enemy hits player
     PlayerHitEnemy, //when player hits enemy
-    RoomSpawn,
+    RoomSpawn, //when room spawns in (initialisation event)
+    DoorsLockUnlock, //lock or unlock the doors
 
 
 }

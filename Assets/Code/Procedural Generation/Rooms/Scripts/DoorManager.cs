@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -65,4 +66,26 @@ public class DoorManager : MonoBehaviour
             }
         }
     }
+
+    public void SetAllDoors(bool isOpen)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            bool isDoor = (doorsBits & (1 << i)) != 0;
+            if(isDoor)
+            {
+                if(!isOpen)
+                {
+                    doors[i].GetComponent<SpriteRenderer>().sprite = doorClosedSprites[i];
+                    doors[i].layer = 8;
+                }
+                else
+                {
+                    doors[i].GetComponent<SpriteRenderer>().sprite = doorOpenSprites[i];
+                    doors[i].layer = 6;
+                }
+            }
+        }
+    }
+
 }
