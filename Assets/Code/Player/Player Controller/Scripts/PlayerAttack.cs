@@ -13,14 +13,33 @@ public class PlayerAttack : MonoBehaviour
     private bool isSwinging = false;
     public SpriteRenderer sr;
 
+    private bool isInDialogue = false;
     private void Awake()
     {
         swordCollider = GetComponent<CircleCollider2D>();
         sr.enabled = false;
+        EventManager.StartListening(Event.DialogueStart, FreezePlayer);
+        EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
     }
 
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Event.DialogueStart, FreezePlayer);
+        EventManager.StopListening(Event.DialogueFinish, UnfreezePlayer);
+    }
+    void FreezePlayer(IEventPacket packet)
+    {
+        isInDialogue = true;
+    }
+
+    void UnfreezePlayer(IEventPacket packet)
+    {
+        isInDialogue = false;
+    }
     private void Update()
     {
+        if (isInDialogue)
+            return;
         if (Input.GetMouseButton(0) && !isSwinging && PlayerController.instance.currentState != PlayerController.CURRENT_STATE.DASHING)
         {
             StartCoroutine(SwingSword());

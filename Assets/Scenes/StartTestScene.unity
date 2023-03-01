@@ -2193,6 +2193,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515404b3b350c5848802ebaf655c459c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterName: {fileID: 494145232}
+  dialogueText: {fileID: 1195580470}
+  backgroundBlur: {fileID: 778979936}
+  characterImage: {fileID: 1905482470}
+  textBox: {fileID: 901120314}
 --- !u!114 &356321451
 MonoBehaviour:
   m_ObjectHideFlags: 0

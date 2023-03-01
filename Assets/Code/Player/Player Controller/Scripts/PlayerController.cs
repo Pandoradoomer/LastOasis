@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     private bool canDash = true;
     private bool isDashing = false;
 
+    private bool isInDialogue = false;
+
     [SerializeField] private float invulnerabilityDuration;
     [SerializeField] private float dashDistance, dashCooldown, dashLength;
 
@@ -45,15 +47,30 @@ public class PlayerController : MonoBehaviour
         originalColor = GetComponent<SpriteRenderer>().color;
 
         EventManager.StartListening(Event.BossTeleport, BossTeleport);
+        EventManager.StartListening(Event.DialogueStart, FreezePlayer);
+        EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
     }
 
     private void OnDestroy()
     {
         EventManager.StopListening(Event.BossTeleport, BossTeleport);
+        EventManager.StopListening(Event.DialogueStart, FreezePlayer);
+        EventManager.StopListening(Event.DialogueFinish, UnfreezePlayer);
     }
 
+    void FreezePlayer(IEventPacket packet)
+    {
+        isInDialogue = true;
+    }
+
+    void UnfreezePlayer(IEventPacket packet)
+    {
+        isInDialogue = false;
+    }
     private void Update()
     {
+        if (isInDialogue)
+            return;
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         movement.Normalize();

@@ -14,6 +14,7 @@ public enum Event
     PlayerHitEnemy, //when player hits enemy
     RoomSpawn, //when room spawns in (initialisation event)
     DoorsLockUnlock, //lock or unlock the doors
-
+    DialogueStart,
+    DialogueFinish
 
 }
