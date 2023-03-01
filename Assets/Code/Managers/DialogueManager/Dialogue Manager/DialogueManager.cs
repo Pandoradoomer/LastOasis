@@ -72,6 +72,7 @@ public class DialogueManager : MonoBehaviour
     }
     IEnumerator StartMessageSequence(List<DialogueData> sequence)
     {
+        textBox.SetActive(true);
         characterName.gameObject.SetActive(true);
         dialogueText.gameObject.SetActive(true);
         for(int i = 0; i < sequence.Count; i++)

@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
 
     void FreezePlayer(IEventPacket packet)
     {
+        rb.velocity = Vector2.zero;
         isInDialogue = true;
     }
 
