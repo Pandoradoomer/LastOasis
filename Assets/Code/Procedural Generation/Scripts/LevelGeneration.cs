@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 //reference: https://www.youtube.com/watch?v=nADIYwgKHv4
 public class LevelGeneration : MonoBehaviour
@@ -42,6 +43,7 @@ public class LevelGeneration : MonoBehaviour
 
     int startRoomX, startRoomY;
 
+    [SerializeField] private Image cameraTransition;
     // Start is called before the first frame update
     void Awake()
     {
@@ -398,6 +400,7 @@ public class LevelGeneration : MonoBehaviour
 
     void OnRoomExit(IEventPacket packet)
     {
+        StartCoroutine(CameraTransition());
         RoomExitPacket rep = packet as RoomExitPacket;
         SpawnedRoomData currentRoom = spawnedRooms[rep.roomIndex];
         SpawnedRoomData nextRoom = spawnedRooms[rep.nextRoomIndex];
@@ -494,6 +497,16 @@ public class LevelGeneration : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftControl))
             TeleportToBossRoom();
 
+    }
+
+    private IEnumerator CameraTransition()
+    {
+        var tempColor = cameraTransition.color;
+        tempColor.a = 1f;
+        cameraTransition.color = tempColor;
+        yield return new WaitForSeconds(0.15f);
+        tempColor.a = 0f;
+        cameraTransition.color = tempColor;
     }
 }
 
