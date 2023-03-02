@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlayerController;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -9,15 +10,15 @@ public class PlayerAttack : MonoBehaviour
     public float swingDamage;
     public LayerMask targetLayer;
 
-    private CircleCollider2D swordCollider;
-    private bool isSwinging = false;
+    public CircleCollider2D swordCollider;
+    public bool isSwinging = false;
     public SpriteRenderer sr;
 
     private bool isInDialogue = false;
     private void Awake()
     {
-        swordCollider = GetComponent<CircleCollider2D>();
-        sr.enabled = false;
+        //swordCollider = GetComponent<CircleCollider2D>();
+        //sr.enabled = false;
         EventManager.StartListening(Event.DialogueStart, FreezePlayer);
         EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
     }
@@ -40,9 +41,10 @@ public class PlayerAttack : MonoBehaviour
     {
         if (isInDialogue)
             return;
-        if (Input.GetMouseButton(0) && !isSwinging && PlayerController.instance.currentState != PlayerController.CURRENT_STATE.DASHING)
+            //StartCoroutine(SwingSword());
+        if (Input.GetMouseButton(0) && !isSwinging && instance.currentState != CURRENT_STATE.DASHING)
         {
-            StartCoroutine(SwingSword());
+            StartCoroutine(AttackEnum());
         }
     }
 
@@ -50,7 +52,7 @@ public class PlayerAttack : MonoBehaviour
     {
         // TODO: Add animation to make it look like a sword swing.
         // DISCUSSION: Do we want the player to be unable to move the sword once the swing has happened?
-        PlayerController.instance.currentState = PlayerController.CURRENT_STATE.ATTACK;
+        instance.currentState = CURRENT_STATE.ATTACK;
         isSwinging = true;
         sr.enabled = true;
 
@@ -62,34 +64,16 @@ public class PlayerAttack : MonoBehaviour
 
         isSwinging = false;
         sr.enabled = false;
-        PlayerController.instance.currentState = PlayerController.CURRENT_STATE.RUNNING;
+        instance.currentState = CURRENT_STATE.RUNNING;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private IEnumerator AttackEnum()
     {
-        // Compares the target layer to the object that was hit.
-        if (isSwinging && (targetLayer & 1 << other.gameObject.layer) != 0)
-        {
-            EventManager.TriggerEvent(Event.PlayerHitEnemy, new PlayerHitPacket()
-            {
-                damage = swingDamage,
-                enemy = other.gameObject
-            });
-            //other.gameObject.GetComponent<EnemyBase>().currentHealth -= swingDamage;
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        // Compares the target layer to the object that was hit.
-        if (isSwinging && (targetLayer & 1 << other.gameObject.layer) != 0)
-        {
-            EventManager.TriggerEvent(Event.PlayerHitEnemy, new PlayerHitPacket()
-            {
-                damage = swingDamage,
-                enemy = other.gameObject
-            });
-            //other.gameObject.GetComponent<EnemyBase>().currentHealth -= swingDamage;
-        }
+        instance.animator.SetBool("isAttacking", true);
+        instance.currentState = CURRENT_STATE.ATTACK;
+        yield return null;
+        instance.animator.SetBool("isAttacking", false);
+        yield return new WaitForSeconds(1f);
+        instance.currentState = CURRENT_STATE.RUNNING;
     }
 }

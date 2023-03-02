@@ -21,13 +21,13 @@ public class PlayerController : MonoBehaviour
     private Vector2 movement;
 
     private SpriteRenderer sr;
+    public Animator animator;
     private Color originalColor;
 
     public bool invulnerability;
     private float invulnerabilityHolder;
     private float blinkTimer;
     private bool canDash = true;
-    private bool isDashing = false;
 
     private bool isInDialogue = false;
 
@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        animator = GetComponent<Animator>();
     }
 
     void Start()
@@ -93,6 +94,8 @@ public class PlayerController : MonoBehaviour
         {
             case CURRENT_STATE.RUNNING:
                 rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
+                animator.SetFloat("moveX", movement.x);
+                animator.SetFloat("moveY", movement.y);
                 break;
             case CURRENT_STATE.ATTACK:
                 rb.velocity = Vector2.zero;
@@ -110,8 +113,6 @@ public class PlayerController : MonoBehaviour
     private void Dash()
     {
         currentState = CURRENT_STATE.DASHING;
-
-        isDashing = true;
 
         rb.velocity = Vector2.zero;
 
@@ -136,7 +137,6 @@ public class PlayerController : MonoBehaviour
     private void DisableIsDashing()
     {
         currentState = CURRENT_STATE.RUNNING;
-        isDashing = false;
         int playerLayer = gameObject.layer;
         int enemyLayer = LayerMask.NameToLayer("Enemy");
         Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
