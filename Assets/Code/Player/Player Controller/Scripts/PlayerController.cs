@@ -90,6 +90,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isInDialogue)
+            return;
         switch(currentState)
         {
             case CURRENT_STATE.RUNNING:
