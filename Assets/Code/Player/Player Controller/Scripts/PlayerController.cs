@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float invulnerabilityDuration;
     [SerializeField] private float dashDistance, dashCooldown, dashLength;
+    [SerializeField] private Vector2 lastPlayerDirection;
 
     public static PlayerController instance;
     private void Awake()
@@ -76,7 +77,7 @@ public class PlayerController : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         movement.Normalize();
-
+        
         if (canDash)
         {
             // DISCUSSION: Do we want to disable dash when not moving or dash in direction player is looking at?
@@ -84,6 +85,8 @@ public class PlayerController : MonoBehaviour
                 Dash();
         }
 
+        if (movement != Vector2.zero)
+            lastPlayerDirection = movement;
         ChangeColorOnDash();
         Invulnerability();
     }
@@ -96,8 +99,8 @@ public class PlayerController : MonoBehaviour
         {
             case CURRENT_STATE.RUNNING:
                 rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
-                animator.SetFloat("moveX", movement.x);
-                animator.SetFloat("moveY", movement.y);
+                animator.SetFloat("moveX", lastPlayerDirection.x);
+                animator.SetFloat("moveY", lastPlayerDirection.y);
                 break;
             case CURRENT_STATE.ATTACK:
                 rb.velocity = Vector2.zero;
