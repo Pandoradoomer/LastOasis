@@ -494,6 +494,11 @@ public class LevelGeneration : MonoBehaviour
         tempColor.a = 0f;
         cameraTransition.color = tempColor;
     }
+
+    public GameObject GetRoomFromIndex(int index)
+    {
+        return spawnedRooms[index].go;
+    }
 }
 
 

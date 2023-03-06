@@ -81,11 +81,13 @@ public class EnemyManager : MonoBehaviour
         }
 
         //awarding the player the necessary items
+        RoomScript rs = edp.go.transform.root.GetComponent<RoomScript>();
         foreach(var kvp in edp.lootToDrop)
         {
             if(kvp.Key is CollectableData)
             {
-                Singleton.Instance.ItemSpawnManager.Spawn(kvp.Key as CollectableData, edp.go.transform, kvp.Value);
+                var go = Singleton.Instance.ItemSpawnManager.SpawnItem(kvp.Key, edp.go.transform, kvp.Value);
+                rs.AddtoSpawnedList(go);
             }
         }
 
@@ -134,7 +136,8 @@ public class EnemyManager : MonoBehaviour
         //for the sake of the task, let's spawn enemies inside every room, at least 1
         float currentDifficulty = 0;
         List<Vector2> filledPositions = new List<Vector2>();
-        while(currentDifficulty < e.difficulty)
+        GameObject room = Singleton.Instance.LevelGeneration.GetRoomFromIndex(e.roomIndex);
+        while (currentDifficulty < e.difficulty)
         {
             Vector2 pos = Vector2.zero;
             pos = DecideEnemySpawnPosition(e.enemyPositions, filledPositions);
@@ -144,6 +147,7 @@ public class EnemyManager : MonoBehaviour
 
 
             var go = Instantiate(enemyData.prefabToSpawn, e.roomCentre + pos, Quaternion.identity);
+            go.transform.parent = room.transform;
 
             EnemyRuntimeData erd = new EnemyRuntimeData()
             {
