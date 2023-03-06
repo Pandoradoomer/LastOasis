@@ -6,9 +6,11 @@ using UnityEngine;
 public class Destructible : MonoBehaviour
 {
     public Dictionary<Item, int> lootToDrop;
+    private RoomScript rs;
 
     private void Awake()
     {
+        rs = transform.root.gameObject.GetComponent<RoomScript>();
         lootToDrop = new Dictionary<Item, int>();
     }
     void Start()
@@ -24,13 +26,13 @@ public class Destructible : MonoBehaviour
 
     public void AddHealth()
     {
-        Debug.Log($"Health added to {gameObject.name} in Room {transform.root.gameObject.name}");
+        //Debug.Log($"Health added to {gameObject.name} in Room {transform.root.gameObject.name}");
         lootToDrop.Add(Singleton.Instance.ItemSpawnManager.healthPotion, 1);
     }
 
     public void AddCoin(int value)
     {
-        Debug.Log($"Coin added to {gameObject.name} in Room {transform.root.gameObject.name}");
+        //Debug.Log($"Coin added to {gameObject.name} in Room {transform.root.gameObject.name}");
         lootToDrop.Add(Singleton.Instance.ItemSpawnManager.coinData, value);
     }
 
@@ -46,7 +48,8 @@ public class Destructible : MonoBehaviour
         {
             foreach (var kvp in lootToDrop)
             {
-                Singleton.Instance.ItemSpawnManager.SpawnItem(kvp.Key, this.transform, kvp.Value);
+                var go = Singleton.Instance.ItemSpawnManager.SpawnItem(kvp.Key, this.transform, kvp.Value);
+                rs.AddtoSpawnedList(go);
             }
         }
         EventManager.StopListening(Event.PlayerHitEnemy, OnHit);

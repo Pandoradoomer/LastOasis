@@ -27,10 +27,10 @@ public class ItemSpawnManager : MonoBehaviour
         coll.SetCollectableData(data);
     }
 
-    public void SpawnItem(Item item, Transform t, int amount)
+    public GameObject SpawnItem(Item item, Transform t, int amount)
     {
         Vector3 position = Random.insideUnitCircle;
-        var go = Instantiate(item.prefabToSpawn, t.position + position * 0.5f, Quaternion.identity);
+        var go = Instantiate(item.prefabToSpawn, t.position + position * 0.35f, Quaternion.identity);
         go.transform.parent = t.root.transform;
         SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
         sr.sprite = item.Sprite;
@@ -42,6 +42,7 @@ public class ItemSpawnManager : MonoBehaviour
         {
             SetConsumeableData(item as ConsumeableData, go);
         }
+        return go;
     }
 
     private void SetCollectableData(CollectableData data, GameObject gameObject, int amount)

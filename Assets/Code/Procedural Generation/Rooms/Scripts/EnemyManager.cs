@@ -154,10 +154,6 @@ public class EnemyManager : MonoBehaviour
             //Setting the colour
             go.GetComponent<SpriteRenderer>().color = enemyData.color;
 
-            //Add behaviour;
-            //var behaviour = enemyData.Behaviour;
-            //go.AddComponent(behaviour.GetClass());
-
             //setting the index;
             EnemyBase eb = go.GetComponent<EnemyBase>();
             eb.roomIndex = e.roomIndex;

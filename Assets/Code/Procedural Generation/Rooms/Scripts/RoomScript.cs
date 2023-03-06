@@ -12,15 +12,42 @@ public class RoomScript : MonoBehaviour
     public EnemySpawnPosition spawnPosition;
     [SerializeField]
     private List<Destructible> destructibles;
+    private List<GameObject> spawnedItems;
+
+    private void Awake()
+    {
+        spawnedItems = new List<GameObject>();
+    }
     // Start is called before the first frame update
     void Start()
     {
         EventManager.StartListening(Event.DoorsLockUnlock, LockUnlockDoors);
+        EventManager.StartListening(Event.RoomExit, OnRoomExit);
     }
 
     private void OnDestroy()
     {
         EventManager.StopListening(Event.DoorsLockUnlock, LockUnlockDoors);
+        EventManager.StopListening(Event.RoomExit, OnRoomExit);
+    }
+
+    private void OnRoomExit(IEventPacket packet)
+    {
+        RoomExitPacket rep = packet as RoomExitPacket;
+        if(rep.roomIndex == roomIndex)
+        {
+            foreach(GameObject go in spawnedItems)
+            {
+                if(go != null)
+                    Destroy(go);
+            }
+            spawnedItems.Clear();
+        }
+    }
+
+    public void AddtoSpawnedList(GameObject go)
+    {
+        spawnedItems.Add(go);
     }
 
     void LockUnlockDoors(IEventPacket packet)
@@ -52,7 +79,7 @@ public class RoomScript : MonoBehaviour
             r = Random.Range(0.0f, 1.0f);
             if(r < coinSpawnChance)
             {
-                d.AddCoin(5 * (distToStart + 1));
+                d.AddCoin((int)(5 * roomDifficulty));
             }
         }
     }
