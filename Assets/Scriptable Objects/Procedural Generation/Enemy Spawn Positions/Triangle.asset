@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67404b59f9df10f42a6ad54c95b846a8, type: 3}
   m_Name: Triangle
   m_EditorClassIdentifier: 
-  enemyPositions:
-  - {x: -2.5, y: -2.5}
-  - {x: 2.5, y: -2.5}
-  - {x: -0, y: 3.5}
+  enemySpawns:
+  - spawnPosition: {x: -4, y: -4}
+    difficultyRange: {x: 0.5, y: 2}
+  - spawnPosition: {x: 4, y: -4}
+    difficultyRange: {x: 2, y: 4}
+  - spawnPosition: {x: 0, y: 4}
+    difficultyRange: {x: 0.5, y: 2}
   isExpandable: 0

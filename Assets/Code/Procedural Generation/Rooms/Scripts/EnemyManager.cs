@@ -179,27 +179,26 @@ public class EnemyManager : MonoBehaviour
     
     Vector2 DecideEnemySpawnPosition(EnemySpawnPosition esp, List<Vector2> takenPositions)
     {
-        List<Vector2> buffer = new List<Vector2>(esp.enemyPositions);
-        buffer.RemoveAll(x => takenPositions.Contains(x));
+        List<EnemySpawn> buffer = new List<EnemySpawn>(esp.enemySpawns);
+        buffer.RemoveAll(x => takenPositions.Contains(x.spawnPosition));
         while(buffer.Count == 0)
         {
-            buffer = new List<Vector2>(esp.enemyPositions);
-            int mult = (takenPositions.Count / esp.enemyPositions.Count) % 2;
-            int inc = (takenPositions.Count / esp.enemyPositions.Count);
+            buffer = new List<EnemySpawn>(esp.enemySpawns);
+            int mult = (takenPositions.Count / esp.enemySpawns.Count) % 2;
+            int inc = (takenPositions.Count / esp.enemySpawns.Count);
             if (mult == 0)
                 mult--;
             for(int i = 0; i < buffer.Count; i++)
             {
-                buffer[i] += Vector2.left * mult * inc * 0.5f;
+                buffer[i].spawnPosition += Vector2.left * mult * inc * 0.5f;
             }
 
-            buffer.RemoveAll(x => takenPositions.Contains(x));
-            
+            buffer.RemoveAll(x => takenPositions.Contains(x.spawnPosition));
 
         }
         int index = Random.Range(0, buffer.Count);
-        takenPositions.Add(buffer[index]);
-        return buffer[index];
+        takenPositions.Add(buffer[index].spawnPosition);
+        return buffer[index].spawnPosition;
     }
 
     void AddEnemyToDictionary(EnemyRuntimeData erd, int index)
