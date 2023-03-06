@@ -3169,6 +3169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectablePrefab: {fileID: 6544740558085239819, guid: db857e1168378e2458d6c5e03bd38774, type: 3}
   consumablePrefab: {fileID: 4795170935815726585, guid: 5260a9f612d0c3b4ab6fbc8d9a982bdc, type: 3}
+  coinData: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
+  healthPotion: {fileID: 11400000, guid: e60e0828f7f717a42abfde00849991a4, type: 2}
 --- !u!1 &2138440733
 GameObject:
   m_ObjectHideFlags: 0
