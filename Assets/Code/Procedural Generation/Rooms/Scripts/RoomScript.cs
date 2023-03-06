@@ -10,6 +10,8 @@ public class RoomScript : MonoBehaviour
     public float roomDifficulty;
     public int distToStart;
     public EnemySpawnPosition spawnPosition;
+    [SerializeField]
+    private List<Destructible> destructibles;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,24 @@ public class RoomScript : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SetDestructible(float healthSpawnChance, float coinSpawnChance)
+    {
+        foreach(Destructible d in destructibles)
+        {
+            float r;
+            r = Random.Range(0.0f, 1.0f);
+            if(r < healthSpawnChance)
+            {
+                d.AddHealth();
+            }
+            r = Random.Range(0.0f, 1.0f);
+            if(r < coinSpawnChance)
+            {
+                d.AddCoin(5 * (distToStart + 1));
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

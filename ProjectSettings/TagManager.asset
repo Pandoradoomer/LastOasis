@@ -22,6 +22,7 @@ TagManager:
   - Surgeon
   - QuarterMaster
   - SeaArtist
+  - Destructible
   layers:
   - Default
   - TransparentFX

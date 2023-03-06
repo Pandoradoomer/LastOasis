@@ -2401,6 +2401,7 @@ MonoBehaviour:
   dashDistance: 6
   dashCooldown: 4
   dashLength: 0.75
+  lastPlayerDirection: {x: 0, y: 0}
 --- !u!114 &1703071646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2599,6 +2600,7 @@ MonoBehaviour:
   randomCompareStart: 0.2
   randomCompareEnd: 0.01
   roomPrefab: {fileID: 2352875582622572964, guid: a7838d9bb01fa264db4ea4adba0e3522, type: 3}
+  levelData: {fileID: 11400000, guid: baf825015cb48d1419e24d05fa1a49a9, type: 2}
   easyDifficultyRange: {x: 1, y: 3}
   mediumDifficultyRange: {x: 2, y: 4}
   highDifficultyRange: {x: 3, y: 5}

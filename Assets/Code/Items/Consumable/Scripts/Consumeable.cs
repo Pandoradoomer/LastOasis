@@ -13,9 +13,10 @@ public class Consumeable : MonoBehaviour
        // messages = GetComponent<MessageManager>();
 
     }
-    private void OnValidate()
+
+    public void SetConsumeableData(ConsumeableData data)
     {
-        GetComponent<SpriteRenderer>().sprite = data.Sprite;
+        this.data = data;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

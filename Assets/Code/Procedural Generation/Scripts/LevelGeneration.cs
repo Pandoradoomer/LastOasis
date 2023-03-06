@@ -31,6 +31,8 @@ public class LevelGeneration : MonoBehaviour
     int distToBoss = -1;
     private  GameObject startRoom;
     float roomSize = 11.0f;
+    [SerializeField]
+    LevelGenerationData levelData;
 
     [SerializeField]
     private Vector2 easyDifficultyRange;
@@ -321,24 +323,7 @@ public class LevelGeneration : MonoBehaviour
                 var go = Instantiate(roomPrefab, drawPos, Quaternion.identity);
                 go.name = $"Room {spawnedRooms.Count}";
                 rooms[x, y].go = go;
-                //RoomScript rs = go.GetComponent<RoomScript>();
-                //rs.roomIndex = spawnedRooms.Count;
-                //rs.isBoss = rs.roomIndex == bossRoomIndex;
-                //rs.distToStart = room.distToStart;
-                //float difficulty = GenerateDifficulty(rs.distToStart);
-                //rs.roomDifficulty = difficulty;
-                //rs.spawnPosition = enemySpawnPositions[Random.Range(0, 2)];
-                //EventManager.TriggerEvent(Event.RoomSpawn, new RoomSpawnPacket()
-                //{
-                //    go = go,
-                //    doors = room.doors
-                //});
                 spawnedRooms.Add(new SpawnedRoomData(go, x, y));
-                //DoorManager dm = go.GetComponent<DoorManager>();
-                //dm.doorsBits = room.doors;
-                //dm.x = x;
-                //dm.y = y;
-                //dm.ReinitialiseDoors(room.doors);
             }
         }
     }
@@ -354,6 +339,7 @@ public class LevelGeneration : MonoBehaviour
             rs.distToStart = rooms[room.x, room.y].distToStart;
             rs.roomDifficulty = GenerateDifficulty(rs.distToStart);
             rs.spawnPosition = enemySpawnPositions[Random.Range(0, 2)];
+            rs.SetDestructible(levelData.healthSpawnChanceDestructible, levelData.coinSpawnChanceDestructible);
             EventManager.TriggerEvent(Event.RoomSpawn, new RoomSpawnPacket()
             {
                 go = room.go,
@@ -426,17 +412,17 @@ public class LevelGeneration : MonoBehaviour
     private float GenerateDifficulty(int distance)
     {
         float r;
-        if(distance < 2)
+        if(distance < levelData.mediumThreshold * distToBoss)
         {
-            r = Random.Range(easyDifficultyRange.x, easyDifficultyRange.y);
+            r = Random.Range(levelData.easyDifficultyRange.x, levelData.easyDifficultyRange.y);
         }
-        else if (distance < 4) 
+        else if (distance < levelData.highThreshold * distToBoss)
         {
-            r = Random.Range(mediumDifficultyRange.x, mediumDifficultyRange.y);
+            r = Random.Range(levelData.mediumDifficultyRange.x, levelData.mediumDifficultyRange.y);
         }
         else
         {
-            r = Random.Range(highDifficultyRange.x, highDifficultyRange.y);
+            r = Random.Range(levelData.highDifficultyRange.x, levelData.highDifficultyRange.y);
         }
 
         return Mathf.Floor(r * 2 + 0.5f) / 2;

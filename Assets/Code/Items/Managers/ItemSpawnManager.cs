@@ -9,7 +9,10 @@ public class ItemSpawnManager : MonoBehaviour
     GameObject collectablePrefab;
     [SerializeField]
     GameObject consumablePrefab;
-
+    [SerializeField]
+    public CollectableData coinData;
+    [SerializeField]
+    public ConsumeableData healthPotion;
     //TODO: Add Spawn for ConsumableData as well
     public void Spawn(CollectableData data, Transform t, int amount)
     {
@@ -22,5 +25,35 @@ public class ItemSpawnManager : MonoBehaviour
         Collectable coll = go.GetComponent<Collectable>();
         coll.stackSize = amount;
         coll.SetCollectableData(data);
+    }
+
+    public void SpawnItem(Item item, Transform t, int amount)
+    {
+        Vector3 position = Random.insideUnitCircle;
+        var go = Instantiate(item.prefabToSpawn, t.position + position * 0.5f, Quaternion.identity);
+        go.transform.parent = t.root.transform;
+        SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+        sr.sprite = item.Sprite;
+        if(item is CollectableData)
+        {
+            SetCollectableData(item as CollectableData, go, amount);
+        }
+        else if(item is ConsumeableData)
+        {
+            SetConsumeableData(item as ConsumeableData, go);
+        }
+    }
+
+    private void SetCollectableData(CollectableData data, GameObject gameObject, int amount)
+    {
+        Collectable coll = gameObject.GetComponent<Collectable>();
+        coll.stackSize = amount;
+        coll.SetCollectableData(data);
+    }
+
+    private void SetConsumeableData(ConsumeableData data, GameObject gameObject)
+    {
+        Consumeable cons = gameObject.GetComponent<Consumeable>();
+        cons.SetConsumeableData(data);
     }
 }

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Health Potion
   Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  prefabToSpawn: {fileID: 8614166745243125314, guid: cd1cfacd56763794cb83b340b420b61e, type: 3}
