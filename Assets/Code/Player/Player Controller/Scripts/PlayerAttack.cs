@@ -11,7 +11,7 @@ public class PlayerAttack : MonoBehaviour
     public LayerMask targetLayer;
 
     public CircleCollider2D swordCollider;
-    public bool isSwinging = false;
+    public bool canAttack = true;
     public SpriteRenderer sr;
 
     private bool isInDialogue = false;
@@ -42,9 +42,10 @@ public class PlayerAttack : MonoBehaviour
         if (isInDialogue)
             return;
             //StartCoroutine(SwingSword());
-        if (Input.GetMouseButton(0) && !isSwinging && instance.currentState != CURRENT_STATE.DASHING)
+        if (Input.GetMouseButton(0) && canAttack && instance.currentState == CURRENT_STATE.RUNNING && !instance.invulnerability)
         {
             StartCoroutine(AttackEnum());
+            Invoke("ResetAttack", swingDelay + 0.35f);
         }
     }
 
@@ -53,7 +54,7 @@ public class PlayerAttack : MonoBehaviour
         // TODO: Add animation to make it look like a sword swing.
         // DISCUSSION: Do we want the player to be unable to move the sword once the swing has happened?
         instance.currentState = CURRENT_STATE.ATTACK;
-        isSwinging = true;
+        canAttack = true;
         sr.enabled = true;
 
         swordCollider.enabled = true;
@@ -62,18 +63,24 @@ public class PlayerAttack : MonoBehaviour
 
         yield return new WaitForSeconds(swingDelay);
 
-        isSwinging = false;
+        canAttack = false;
         sr.enabled = false;
         instance.currentState = CURRENT_STATE.RUNNING;
     }
 
     private IEnumerator AttackEnum()
     {
+        canAttack = false;
         instance.animator.SetBool("isAttacking", true);
         instance.currentState = CURRENT_STATE.ATTACK;
         yield return null;
         instance.animator.SetBool("isAttacking", false);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.35f);
         instance.currentState = CURRENT_STATE.RUNNING;
+    }
+
+    private void ResetAttack()
+    {
+        canAttack = true;
     }
 }
