@@ -338,7 +338,6 @@ public class LevelGeneration : MonoBehaviour
             rs.isStart = spawnedRooms.IndexOf(room) == 0;
             rs.distToStart = rooms[room.x, room.y].distToStart;
             rs.roomDifficulty = GenerateDifficulty(rs.distToStart);
-            rs.spawnPosition = enemySpawnPositions[Random.Range(0, 2)];
             rs.SetDestructible(levelData.healthSpawnChanceDestructible, levelData.coinSpawnChanceDestructible);
             EventManager.TriggerEvent(Event.RoomSpawn, new RoomSpawnPacket()
             {

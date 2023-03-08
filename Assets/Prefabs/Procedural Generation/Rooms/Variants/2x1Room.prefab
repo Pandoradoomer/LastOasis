@@ -1955,6 +1955,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &4153674282822327799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7094175868614008660}
+  - component: {fileID: 6258541299711126262}
+  m_Layer: 0
+  m_Name: Camera Boundary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7094175868614008660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4153674282822327799}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5306978490892935230}
+  m_RootOrder: 67
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &6258541299711126262
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4153674282822327799}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -10, y: 5.5}
+      - {x: -10, y: -5.5}
+      - {x: 10, y: -5.5}
+      - {x: 10, y: 5.5}
 --- !u!1 &4438655959075537533
 GameObject:
   m_ObjectHideFlags: 0
@@ -2470,7 +2531,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5306978490220430529}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -3091,6 +3152,7 @@ Transform:
   - {fileID: 1499130646872403351}
   - {fileID: 8369338927910315376}
   - {fileID: 3039954985504029258}
+  - {fileID: 7094175868614008660}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3106,30 +3168,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4ff74968fbf5d84abdc42c58ffb05d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorsBits: 0
+  x: 0
+  y: 0
+  roomScript: {fileID: 8378272412028572690}
   doors:
   - {fileID: 5306978490220430529}
   - {fileID: 5306978490837034143}
   - {fileID: 5306978491055589901}
   - {fileID: 5306978490773618917}
-  roomScript: {fileID: 8378272412028572690}
-  doorOpenSprites:
-  - {fileID: 21300000, guid: c827f577775287e469871adb4e789d45, type: 3}
-  - {fileID: 21300000, guid: 6231d2ea9b3fc6c4eb34b8e975d9f8cb, type: 3}
-  - {fileID: 21300000, guid: 3bb0bc3ecf5773e4c8b191d5b3b0bfb2, type: 3}
-  - {fileID: 21300000, guid: 336c816888ef5d44898cd1ba12ece835, type: 3}
-  doorClosedSprites:
-  - {fileID: 21300000, guid: 707a4beae59ad9746b828b6d62992bb7, type: 3}
-  - {fileID: 21300000, guid: 6e43640448cbb31449df411d0e117886, type: 3}
-  - {fileID: 21300000, guid: 70ef757144dcb0342b9cd2a7114a20ea, type: 3}
-  - {fileID: 21300000, guid: a6f7d90b9dc0a554994e7b050c5fe3cb, type: 3}
-  wallSprites:
-  - {fileID: 21300000, guid: 20cb7aadd186efc47b17c0502bd6c7cd, type: 3}
-  - {fileID: 21300000, guid: 2a7c8f8f89e512649a799e33a8012da5, type: 3}
-  - {fileID: 21300000, guid: c7dec329c5ab3454f95897e8bfeae63d, type: 3}
-  - {fileID: 21300000, guid: 753a64fff1f49454ea4d2bd244af70af, type: 3}
-  doorsBits: 0
-  x: 0
-  y: 0
+  doorActiveGrids:
+  - {fileID: 6351171213609828139}
+  - {fileID: 6078839472613010233}
+  - {fileID: 1307204016979672836}
+  - {fileID: 8574520910851271448}
+  doorInactiveGrids:
+  - {fileID: 1773272594553763678}
+  - {fileID: 8763574455540215524}
+  - {fileID: 164445476003764103}
+  - {fileID: 5857717973954706120}
+  doorLights:
+  - {fileID: 4747396637609200374}
+  - {fileID: 3428294022232945715}
+  - {fileID: 8713602925653288697}
+  - {fileID: 211342061395883676}
 --- !u!61 &1618550405670049380
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3190,7 +3252,7 @@ MonoBehaviour:
   roomIndex: 0
   roomDifficulty: 0
   distToStart: 0
-  spawnPosition: {fileID: 0}
+  spawnPosition: {fileID: 11400000, guid: 2d7fce9ca64e8644b8c0cb43999bd635, type: 2}
   destructibles: []
 --- !u!212 &6104381985043216890
 SpriteRenderer:

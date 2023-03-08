@@ -26,6 +26,8 @@ public class EnemySpawnPositionEditor : Editor
         List<Vector2> newTargetPos = new List<Vector2>();
         float max = -1;
         float min = 10000;
+        if (esp.enemySpawns == null)
+            return;
         foreach(EnemySpawn es in esp.enemySpawns)
         {
             if(es.difficultyRange.y > max)

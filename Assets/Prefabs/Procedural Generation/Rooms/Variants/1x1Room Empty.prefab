@@ -2992,7 +2992,7 @@ MonoBehaviour:
   roomIndex: 0
   roomDifficulty: 0
   distToStart: 0
-  spawnPosition: {fileID: 0}
+  spawnPosition: {fileID: 11400000, guid: b52aa165597fbcd4099c04bd38f7b5b1, type: 2}
   destructibles: []
 --- !u!212 &6104381985043216890
 SpriteRenderer:
