@@ -3068,7 +3068,7 @@ MonoBehaviour:
   distToStart: 0
   spawnPosition: {fileID: 11400000, guid: f371d5704125dee4cb86add3a747ee1c, type: 2}
   destructibles: []
-  Rocks: {fileID: 0}
+  Rocks: {fileID: 1775641182561365518}
 --- !u!212 &6104381985043216890
 SpriteRenderer:
   m_ObjectHideFlags: 0

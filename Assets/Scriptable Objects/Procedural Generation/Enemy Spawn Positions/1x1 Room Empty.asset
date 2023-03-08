@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 1x1 Room Empty
   m_EditorClassIdentifier: 
   enemySpawns:
-  - spawnPosition: {x: -2, y: -2}
-    difficultyRange: {x: 0, y: 5}
   - spawnPosition: {x: 2, y: -2}
+    difficultyRange: {x: 0, y: 5}
+  - spawnPosition: {x: -1, y: -2}
     difficultyRange: {x: 0, y: 2}
   isExpandable: 0
