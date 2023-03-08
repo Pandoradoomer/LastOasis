@@ -45,7 +45,7 @@ public class LevelGeneration : MonoBehaviour
 
     int startRoomX, startRoomY;
 
-    [SerializeField] private Image cameraTransition;
+    [SerializeField] private Animator cameraTransition;
     // Start is called before the first frame update
     void Awake()
     {
@@ -386,27 +386,7 @@ public class LevelGeneration : MonoBehaviour
 
     void OnRoomExit(IEventPacket packet)
     {
-        StartCoroutine(CameraTransition());
-        RoomExitPacket rep = packet as RoomExitPacket;
-        SpawnedRoomData currentRoom = spawnedRooms[rep.roomIndex];
-        SpawnedRoomData nextRoom = spawnedRooms[rep.nextRoomIndex];
-
-        rooms[currentRoom.x, currentRoom.y].go.SetActive(false);
-        rooms[nextRoom.x, nextRoom.y].go.SetActive(true);
-        Vector2 newPlayerPos = rooms[nextRoom.x, nextRoom.y].go.transform.position;
-        float mult = (roomSize - 3.0f) / 2.0f;
-        switch (rep.direction)
-        {
-            case(Direction.N):
-                newPlayerPos += Vector2.down * mult; break;
-            case (Direction.S):
-                newPlayerPos += Vector2.up * mult; break;
-            case (Direction.W):
-                newPlayerPos += Vector2.right * mult; break;
-            case (Direction.E):
-                newPlayerPos += Vector2.left * mult; break;
-        }
-        Singleton.Instance.PlayerController.transform.position = newPlayerPos;
+        StartCoroutine(CameraTransition(packet));
     }
 
     private float GenerateDifficulty(int distance)
@@ -485,14 +465,35 @@ public class LevelGeneration : MonoBehaviour
 
     }
 
-    private IEnumerator CameraTransition()
+    private IEnumerator CameraTransition(IEventPacket packet)
     {
-        var tempColor = cameraTransition.color;
-        tempColor.a = 1f;
-        cameraTransition.color = tempColor;
-        yield return new WaitForSeconds(0.15f);
-        tempColor.a = 0f;
-        cameraTransition.color = tempColor;
+        cameraTransition.SetTrigger("RoomChange");
+        PlayerController.instance.currentState = PlayerController.CURRENT_STATE.SCENE_CHANGE;
+        yield return new WaitForSeconds(1.4f);
+
+        RoomExitPacket rep = packet as RoomExitPacket;
+        SpawnedRoomData currentRoom = spawnedRooms[rep.roomIndex];
+        SpawnedRoomData nextRoom = spawnedRooms[rep.nextRoomIndex];
+
+        rooms[currentRoom.x, currentRoom.y].go.SetActive(false);
+        rooms[nextRoom.x, nextRoom.y].go.SetActive(true);
+        Vector2 newPlayerPos = rooms[nextRoom.x, nextRoom.y].go.transform.position;
+        float mult = (roomSize - 3.0f) / 2.0f;
+        switch (rep.direction)
+        {
+            case (Direction.N):
+                newPlayerPos += Vector2.down * mult; break;
+            case (Direction.S):
+                newPlayerPos += Vector2.up * mult; break;
+            case (Direction.W):
+                newPlayerPos += Vector2.right * mult; break;
+            case (Direction.E):
+                newPlayerPos += Vector2.left * mult; break;
+        }
+        Singleton.Instance.PlayerController.transform.position = newPlayerPos;
+
+        yield return new WaitForSeconds(0.4f);
+        PlayerController.instance.currentState = PlayerController.CURRENT_STATE.RUNNING;
     }
 
     public GameObject GetRoomFromIndex(int index)

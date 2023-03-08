@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
         RUNNING,
         IDLE,
         ATTACK,
-        DASHING
+        DASHING,
+        SCENE_CHANGE
     };
 
     public CURRENT_STATE currentState;
@@ -78,9 +79,8 @@ public class PlayerController : MonoBehaviour
         movement.y = Input.GetAxisRaw("Vertical");
         movement.Normalize();
         
-        if (canDash)
+        if (canDash && currentState != CURRENT_STATE.ATTACK)
         {
-            // DISCUSSION: Do we want to disable dash when not moving or dash in direction player is looking at?
             if (Input.GetKey(KeyCode.LeftShift) && movement != Vector2.zero)
                 Dash();
         }
@@ -181,8 +181,12 @@ public class PlayerController : MonoBehaviour
 
     private void ChangeColorOnDash()
     {
+        Color playerColor = Color.gray;
         if (currentState == CURRENT_STATE.DASHING)
-            sr.color = Color.white;
+        {
+            playerColor.a = 0.8f;
+            sr.color = playerColor;
+        }
         else
             sr.color = originalColor;
     }
