@@ -53,10 +53,15 @@ public class RoomScript : MonoBehaviour
     void LockUnlockDoors(IEventPacket packet)
     {
         DoorLockUnlockPacket dlup = packet as DoorLockUnlockPacket;
-        if(dlup.roomIndex == roomIndex && !isStart)
+        if(dlup.roomIndex == roomIndex)
         {
             DoorManager dm = GetComponent<DoorManager>();
-            dm.SetAllDoors(dlup.isUnlock);
+            if (!isStart)
+            {
+                dm.SetAllDoors(dlup.isUnlock);
+            }
+            else
+                dm.SetAllDoors(true);
         }
 
     }

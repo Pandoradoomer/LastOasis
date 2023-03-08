@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67404b59f9df10f42a6ad54c95b846a8, type: 3}
   m_Name: Cross
   m_EditorClassIdentifier: 
-  enemyPositions:
-  - {x: 0, y: 0}
-  - {x: 0, y: -3.5}
-  - {x: -3.5, y: -0}
-  - {x: 3.5, y: 0}
-  - {x: 0, y: 3.5}
+  enemySpawns:
+  - spawnPosition: {x: 3, y: -0}
+    difficultyRange: {x: 0.5, y: 2}
+  - spawnPosition: {x: 7, y: -0}
+    difficultyRange: {x: 0.5, y: 2}
+  - spawnPosition: {x: 5, y: 3}
+    difficultyRange: {x: 0.5, y: 2}
+  - spawnPosition: {x: 5, y: -2.5}
+    difficultyRange: {x: 0.5, y: 2}
   isExpandable: 0
