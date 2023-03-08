@@ -1,6 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+public struct GridCell
+{
+    //cell index
+    public int x, y;
+    //can be passed
+    public bool isObstacle;
+    //position of cell
+    public Vector2 pos;
+}
 
 public class RoomScript : MonoBehaviour
 {
@@ -12,11 +23,60 @@ public class RoomScript : MonoBehaviour
     public EnemySpawnPosition spawnPosition;
     [SerializeField]
     private List<Destructible> destructibles;
+    [SerializeField]
+    private GameObject Rocks;
     private List<GameObject> spawnedItems;
+    public GridCell[,] pathFindingGrid;
 
     private void Awake()
     {
         spawnedItems = new List<GameObject>();
+        GenerateGrid();
+        if(pathFindingGrid.GetLength(1) == 19)
+        {
+            ;
+        }
+    }
+
+    void GenerateGrid()
+    {
+        BoxCollider2D collider = this.GetComponent<BoxCollider2D>();
+        pathFindingGrid = new GridCell[(int)collider.size.y, (int)collider.size.x];
+        destructibles = transform.GetComponentsInChildren<Destructible>(true).ToList();
+        List<Transform> rocks = new List<Transform>();
+        if(Rocks != null)
+        foreach(Transform t in Rocks.transform)
+        {
+            rocks.Add(t);
+        }
+        int columns = pathFindingGrid.GetLength(1);
+        int rows = pathFindingGrid.GetLength(0);
+        if(columns == 19)
+        {
+            ;
+        }
+        Vector2 pos = (Vector2)transform.position - new Vector2(columns / 2, -rows / 2);
+        for(int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < columns; j++)
+            {
+                //GridCell cell = pathFindingGrid[i, j];
+                pathFindingGrid[i, j].pos = pos + new Vector2(j, -i);
+                pathFindingGrid[i, j].x = j;
+                pathFindingGrid[i, j].y = i;
+                if(destructibles.Any(x => (Vector2)x.transform.position == pathFindingGrid[i, j].pos) ||
+                    rocks.Any(x => (Vector2)x.transform.position == pathFindingGrid[i, j].pos))
+                {
+                    pathFindingGrid[i, j].isObstacle = true;
+                }
+                else
+                {
+                    pathFindingGrid[i, j].isObstacle = false;
+                }
+            }
+        }
+
+
     }
     // Start is called before the first frame update
     void Start()

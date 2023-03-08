@@ -2994,6 +2994,7 @@ MonoBehaviour:
   distToStart: 0
   spawnPosition: {fileID: 11400000, guid: b52aa165597fbcd4099c04bd38f7b5b1, type: 2}
   destructibles: []
+  Rocks: {fileID: 0}
 --- !u!212 &6104381985043216890
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6449,6 +6450,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5306978490892935230}
     m_Modifications:
+    - target: {fileID: 2490519892577136324, guid: add41e8f3d0d8c44990a42cee48ca610, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490519892577136324, guid: add41e8f3d0d8c44990a42cee48ca610, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7834425527721217042, guid: add41e8f3d0d8c44990a42cee48ca610, type: 3}
       propertyPath: m_Name
       value: Rock
@@ -6456,6 +6465,14 @@ PrefabInstance:
     - target: {fileID: 8914561676652924793, guid: add41e8f3d0d8c44990a42cee48ca610, type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914561676652924793, guid: add41e8f3d0d8c44990a42cee48ca610, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914561676652924793, guid: add41e8f3d0d8c44990a42cee48ca610, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8914561676652924793, guid: add41e8f3d0d8c44990a42cee48ca610, type: 3}
       propertyPath: m_LocalPosition.x
