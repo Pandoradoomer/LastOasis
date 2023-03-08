@@ -2810,7 +2810,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomCompareStart: 0.2
   randomCompareEnd: 0.01
-  roomPrefab: {fileID: 5306978490892935168, guid: 3017fa6a5b070c34db4ee75c781fd500, type: 3}
+  roomPrefabs:
+  - {fileID: 5306978490892935168, guid: 3017fa6a5b070c34db4ee75c781fd500, type: 3}
+  - {fileID: 5306978490892935168, guid: 4b06d36afe534da40a5b912e8f784c55, type: 3}
   levelData: {fileID: 11400000, guid: baf825015cb48d1419e24d05fa1a49a9, type: 2}
   easyDifficultyRange: {x: 1, y: 3}
   mediumDifficultyRange: {x: 2, y: 4}

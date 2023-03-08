@@ -91,4 +91,9 @@ public class DoorManager : MonoBehaviour
         }
     }
 
+    public GameObject GetDoor(int direction)
+    {
+        return doors[direction];
+    }
+
 }

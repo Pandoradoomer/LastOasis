@@ -23,9 +23,10 @@ public class LevelGeneration : MonoBehaviour
     /// Keep the numbers between 0 and 1 (non inclusive)
     /// </summary>
     [SerializeField]
-    float randomCompareStart = 0.2f, randomCompareEnd = 0.01f; 
+    float randomCompareStart = 0.2f, randomCompareEnd = 0.01f;
 
-    public GameObject roomPrefab;
+    [SerializeField]
+    private List<GameObject> roomPrefabs;
     private GameObject bossRoom;
     int bossRoomIndex = -1;
     int distToBoss = -1;
@@ -319,7 +320,15 @@ public class LevelGeneration : MonoBehaviour
                 if (room == null)
                     continue;
                 Vector2 drawPos = room.gridPos * roomSize;
-
+                GameObject roomPrefab;
+                if(x == startRoomX && y == startRoomY)
+                {
+                    roomPrefab = roomPrefabs[0];
+                }
+                else
+                {
+                    roomPrefab = roomPrefabs[Random.Range(0, 2)];
+                }
                 var go = Instantiate(roomPrefab, drawPos, Quaternion.identity);
                 go.name = $"Room {spawnedRooms.Count}";
                 rooms[x, y].go = go;
@@ -476,18 +485,19 @@ public class LevelGeneration : MonoBehaviour
 
         rooms[currentRoom.x, currentRoom.y].go.SetActive(false);
         rooms[nextRoom.x, nextRoom.y].go.SetActive(true);
-        Vector2 newPlayerPos = rooms[nextRoom.x, nextRoom.y].go.transform.position;
-        float mult = (roomSize - 3.0f) / 2.0f;
+        DoorManager dm = nextRoom.go.GetComponent<DoorManager>();
+        Vector2 newPlayerPos = dm.GetDoor(((int)rep.direction + 2)%4).transform.position;
+        float mult = 1.0f;
         switch (rep.direction)
         {
             case (Direction.N):
-                newPlayerPos += Vector2.down * mult; break;
-            case (Direction.S):
                 newPlayerPos += Vector2.up * mult; break;
+            case (Direction.S):
+                newPlayerPos += Vector2.down * mult; break;
             case (Direction.W):
-                newPlayerPos += Vector2.right * mult; break;
-            case (Direction.E):
                 newPlayerPos += Vector2.left * mult; break;
+            case (Direction.E):
+                newPlayerPos += Vector2.right * mult; break;
         }
         Singleton.Instance.PlayerController.transform.position = newPlayerPos;
 
