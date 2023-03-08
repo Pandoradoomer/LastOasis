@@ -2648,14 +2648,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swingDuration: 0.5
-  swingDelay: 0.7
+  swingDelay: 1
   swingDamage: 5
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
   swordCollider: {fileID: 0}
   canAttack: 1
+  animationLength: 0.35
   sr: {fileID: 0}
+  combo: 0
+  comboTimer: 0.5
+  comboTimerHolder: 0
+  comboDelay: 0.5
+  damageMultiplier: 1.5
+  isComboAttack: 0
 --- !u!95 &1703071648
 Animator:
   serializedVersion: 4

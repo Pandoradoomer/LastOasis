@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
         IDLE,
         ATTACK,
         DASHING,
-        SCENE_CHANGE
+        SCENE_CHANGE,
+        COMBO
     };
 
     public CURRENT_STATE currentState;
@@ -86,7 +87,9 @@ public class PlayerController : MonoBehaviour
         }
 
         if (movement != Vector2.zero)
+        {
             lastPlayerDirection = movement;
+        }
         ChangeColorOnDash();
         Invulnerability();
     }
@@ -104,6 +107,11 @@ public class PlayerController : MonoBehaviour
                 break;
             case CURRENT_STATE.ATTACK:
                 rb.velocity = Vector2.zero;
+                break;
+            case CURRENT_STATE.COMBO:
+                rb.velocity = Vector2.zero;
+                animator.SetFloat("moveX", lastPlayerDirection.x);
+                animator.SetFloat("moveY", lastPlayerDirection.y);
                 break;
         }
             

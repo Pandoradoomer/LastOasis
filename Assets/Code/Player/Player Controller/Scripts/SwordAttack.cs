@@ -40,6 +40,7 @@ public class SwordAttack : MonoBehaviour
         }
     }
 
+    // Debugging purposes to slay enemies faster. Can be removed once we are happy with the combat system.
     private void OnTriggerStay2D(Collider2D other)
     {
         // Compares the target layer to the object that was hit.
