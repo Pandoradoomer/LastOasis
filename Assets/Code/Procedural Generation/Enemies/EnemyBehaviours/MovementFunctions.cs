@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public static class MovementFunctions
 {
@@ -257,5 +258,34 @@ public static class MovementFunctions
             dampening += pos - (Vector2)enemy.transform.position;
         }
         return dampening.normalized * avoidanceFactor;
+    }
+
+    public static Vector2 FollowPlayer(float speed, Vector2 pos, RoomScript room, List<GridCell> path, ref GridCell nextCell)
+    {
+
+        path = MovementFunctions.FollowPlayer(pos, room.pathFindingGrid);
+        int degOfFreedom = MovementFunctions.GetDegreesOfFreedom(pos,
+            Singleton.Instance.PlayerController.transform.position,
+            room.pathFindingGrid);
+        Vector2 boidDampening = MovementFunctions.GetBoidAvoidanceFactor(pos, room);
+        if (degOfFreedom == 3)
+        {
+            return MovementFunctions.FollowPlayer(speed, pos) + boidDampening;
+        }
+        else if (path != null && path.Count > 0)
+        {
+            if (nextCell == null || !MovementFunctions.IsAtDestination(nextCell, path[0].pos))
+            {
+                nextCell = path[0];
+                path.RemoveAt(0);
+            }
+            if (MovementFunctions.IsAtDestination(nextCell, pos))
+            {
+                nextCell = path[0];
+                path.RemoveAt(0);
+            }
+            return MovementFunctions.MoveTowards(nextCell, speed, pos) + boidDampening;
+        }
+        return MovementFunctions.FollowPlayer(speed, pos) + boidDampening;
     }
 }
