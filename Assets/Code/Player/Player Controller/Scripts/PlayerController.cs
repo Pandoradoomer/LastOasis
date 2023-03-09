@@ -88,7 +88,6 @@ public class PlayerController : MonoBehaviour
         var key = GetLastKeyPressed();
         if (key != KeyCode.None)
             lastKeyPressed = key;
-        Debug.Log(lastKeyPressed);
         
         if (canDash && currentState == CURRENT_STATE.RUNNING)
         {
@@ -99,7 +98,8 @@ public class PlayerController : MonoBehaviour
         if (movement != Vector2.zero)
         {
             lastPlayerDirection = movement;
-            animator.SetBool("isMoving", true);
+            if(currentState == CURRENT_STATE.RUNNING)
+                animator.SetBool("isMoving", true);
         }
         else
         {

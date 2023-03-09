@@ -2331,7 +2331,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 1162623089, guid: 448926dda8bcab244a24d73ae2eb30ba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2449,13 +2449,13 @@ MonoBehaviour:
     m_Bits: 128
   swordCollider: {fileID: 0}
   canAttack: 1
-  animationLength: 0
+  animationLength: 0.3
   sr: {fileID: 0}
   combo: 0
-  comboTimer: 0
-  comboTimerHolder: 0
-  comboDelay: 0
-  damageMultiplier: 0
+  comboTimer: 0.5
+  comboTimerHolder: 0.25
+  comboDelay: 0.2
+  damageMultiplier: 1.1
   isComboAttack: 0
 --- !u!95 &1703071648
 Animator:
