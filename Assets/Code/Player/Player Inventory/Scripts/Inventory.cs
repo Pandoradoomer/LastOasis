@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour
     private void Awake()
     {
         if(coinEntry != null)
-            itemDictionary.Add(coinEntry, 10);
+            itemDictionary.Add(coinEntry, 0);
     }
 
 
