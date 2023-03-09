@@ -23,6 +23,7 @@ TagManager:
   - QuarterMaster
   - SeaArtist
   - Destructible
+  - Wheel
   layers:
   - Default
   - TransparentFX
