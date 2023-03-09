@@ -3,7 +3,27 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Coin
+  - Chest
+  - HealthPotion
+  - BossRoom
+  - CoinPile
+  - CoinBag
+  - Boss
+  - Mast
+  - Captain
+  - Chef
+  - Carpenter
+  - Shopkeeper
+  - CabinBoy
+  - Gunner
+  - Surgeon
+  - QuarterMaster
+  - SeaArtist
+  - Destructible
+  - Wheel
   layers:
   - Default
   - TransparentFX
@@ -11,11 +31,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Door
+  - Enemy
+  - Wall
+  - Player
+  - SelfEnemy
   - 
   - 
   - 
