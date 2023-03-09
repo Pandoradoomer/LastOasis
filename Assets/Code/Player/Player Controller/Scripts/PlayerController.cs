@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class PlayerController : MonoBehaviour
 {
@@ -36,6 +37,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float invulnerabilityDuration;
     [SerializeField] private float dashDistance, dashCooldown, dashLength;
     [SerializeField] private Vector2 lastPlayerDirection;
+
+    public Transform doorWayPoint;
 
     public static PlayerController instance;
     private void Awake()
@@ -80,7 +83,7 @@ public class PlayerController : MonoBehaviour
         movement.y = Input.GetAxisRaw("Vertical");
         movement.Normalize();
         
-        if (canDash && currentState != CURRENT_STATE.ATTACK)
+        if (canDash && currentState == CURRENT_STATE.RUNNING)
         {
             if (Input.GetKey(KeyCode.LeftShift) && movement != Vector2.zero)
                 Dash();
@@ -113,6 +116,11 @@ public class PlayerController : MonoBehaviour
                 animator.SetFloat("moveX", lastPlayerDirection.x);
                 animator.SetFloat("moveY", lastPlayerDirection.y);
                 break;
+            case CURRENT_STATE.SCENE_CHANGE:
+                var movePos = Vector2.MoveTowards(transform.position, doorWayPoint.position, 2 * Time.deltaTime);
+                rb.MovePosition(movePos);
+                break;
+
         }
             
     }
@@ -204,5 +212,22 @@ public class PlayerController : MonoBehaviour
         int playerLayer = gameObject.layer;
         int enemyLayer = LayerMask.NameToLayer("Enemy");
         Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, ignore);
+    }
+
+    public Transform FindWayPoint()
+    {
+        GameObject[] wayPoints = GameObject.FindGameObjectsWithTag("DoorWaypoint");
+        Transform tempTrans = null;
+        float tempDist = 3;
+        for (int i = 0; i < wayPoints.Length; i++)
+        {
+            float distance = Vector2.Distance(PlayerController.instance.transform.position, wayPoints[i].transform.position);
+            if (distance < tempDist)
+            {
+                tempTrans = wayPoints[i].transform;
+                tempDist = distance;
+            }
+        }
+        return tempTrans;
     }
 }

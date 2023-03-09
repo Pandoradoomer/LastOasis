@@ -47,10 +47,11 @@ public class LevelGeneration : MonoBehaviour
     int startRoomX, startRoomY;
 
     [SerializeField] private Animator cameraTransition;
+    //GameObject[] gos = GameObject.FindGameObjectsWithTag("DoorWaypoint");
     // Start is called before the first frame update
     void Awake()
     {
-        if(numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
+        if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
         {
             numberOfRooms = Mathf.RoundToInt((worldSize.x * 2) * (worldSize.y * 2));
         }
@@ -396,7 +397,6 @@ public class LevelGeneration : MonoBehaviour
     {
         StartCoroutine(CameraTransition(packet));
     }
-
     private float GenerateDifficulty(int distance)
     {
         float r;
@@ -475,9 +475,12 @@ public class LevelGeneration : MonoBehaviour
 
     private IEnumerator CameraTransition(IEventPacket packet)
     {
-        cameraTransition.SetTrigger("RoomChange");
+        PlayerController.instance.doorWayPoint = PlayerController.instance.FindWayPoint();
         PlayerController.instance.currentState = PlayerController.CURRENT_STATE.SCENE_CHANGE;
+        yield return new WaitForSeconds(0.5f);
+        cameraTransition.SetTrigger("RoomChange");
         yield return new WaitForSeconds(1.4f);
+        PlayerController.instance.currentState = PlayerController.CURRENT_STATE.RUNNING;
 
         RoomExitPacket rep = packet as RoomExitPacket;
         SpawnedRoomData currentRoom = spawnedRooms[rep.roomIndex];

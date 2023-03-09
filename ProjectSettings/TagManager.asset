@@ -23,6 +23,7 @@ TagManager:
   - QuarterMaster
   - SeaArtist
   - Destructible
+  - DoorWaypoint
   layers:
   - Default
   - TransparentFX
