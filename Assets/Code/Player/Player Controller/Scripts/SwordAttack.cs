@@ -40,10 +40,11 @@ public class SwordAttack : MonoBehaviour
         }
     }
 
+    // Debugging purposes to slay enemies faster. Can be removed once we are happy with the combat system.
     private void OnTriggerStay2D(Collider2D other)
     {
         // Compares the target layer to the object that was hit.
-        if (instance.isSwinging && (instance.targetLayer & 1 << other.gameObject.layer) != 0)
+        if (instance.canAttack && (instance.targetLayer & 1 << other.gameObject.layer) != 0)
         {
             EventManager.TriggerEvent(Event.PlayerHitEnemy, new PlayerHitPacket()
             {

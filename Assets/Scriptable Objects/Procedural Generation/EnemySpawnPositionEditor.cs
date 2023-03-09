@@ -26,6 +26,8 @@ public class EnemySpawnPositionEditor : Editor
         List<Vector2> newTargetPos = new List<Vector2>();
         float max = -1;
         float min = 10000;
+        if (esp.enemySpawns == null)
+            return;
         foreach(EnemySpawn es in esp.enemySpawns)
         {
             if(es.difficultyRange.y > max)
@@ -38,7 +40,10 @@ public class EnemySpawnPositionEditor : Editor
         {
             Handles.Label(es.spawnPosition + Vector2.up * 0.5f, $"Pos {posIndex}");
             newTargetPos.Add(Handles.PositionHandle(es.spawnPosition, Quaternion.identity));
-            Handles.DrawWireDisc(es.spawnPosition, Vector3.forward, 0.5f * Mathf.Lerp(1.0f, 4.0f, (es.difficultyRange.y - min)/(max-min)));
+            if(max == min)
+                Handles.DrawWireDisc(es.spawnPosition, Vector3.forward, 0.5f);
+            else
+                Handles.DrawWireDisc(es.spawnPosition, Vector3.forward, 0.5f * Mathf.Lerp(1.0f, 3.0f, (es.difficultyRange.y - min)/(max-min)));
             posIndex++;
         }
         if(EditorGUI.EndChangeCheck())

@@ -51,6 +51,7 @@ public class Destructible : MonoBehaviour
                 var go = Singleton.Instance.ItemSpawnManager.SpawnItem(kvp.Key, this.transform, kvp.Value);
                 rs.AddtoSpawnedList(go);
             }
+            rs.RemoveDestructibleFromList(this);
         }
         EventManager.StopListening(Event.PlayerHitEnemy, OnHit);
     }

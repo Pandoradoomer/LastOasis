@@ -10,6 +10,7 @@ public class EnemyBase : MonoBehaviour
     public float onCollisionDamage;
     public float attackDamage;
     public Dictionary<Item, int> lootToDrop;
+    public RoomScript rs;
     private void Awake()
     {
         lootToDrop = new Dictionary<Item, int>();
@@ -39,6 +40,8 @@ public class EnemyBase : MonoBehaviour
 
     private void OnDestroy()
     {
+        if(gameObject.scene.isLoaded)
+            rs.enemies.Remove(this);
         EventManager.StopListening(Event.PlayerHitEnemy, OnHit);
     }
 }

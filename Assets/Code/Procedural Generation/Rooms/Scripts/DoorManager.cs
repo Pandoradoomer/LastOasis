@@ -6,21 +6,25 @@ using UnityEngine;
 
 public class DoorManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    [SerializeField]
-    List<GameObject> doors = new List<GameObject>();
-    List<bool> doorOpen;
-    [SerializeField]
-    RoomScript roomScript;
+    const int doorLayer = 6;
+    const int wallLayer = 8;
 
-    [SerializeField]
-    List<Sprite> doorOpenSprites;
-    [SerializeField]
-    List<Sprite> doorClosedSprites;
-    [SerializeField]
-    List<Sprite> wallSprites;
+    List<bool> doorOpen;
     public int doorsBits;
     public int x, y;
+    [SerializeField]
+    RoomScript roomScript;
+    //ALL door objects in order N->E->S->W
+    //
+    [SerializeField]
+    List<GameObject> doors = new List<GameObject>();
+    [SerializeField]
+    List<GameObject> doorActiveGrids = new List<GameObject>();
+    [SerializeField]
+    List<GameObject> doorInactiveGrids = new List<GameObject>();
+    [SerializeField]
+    List<GameObject> doorLights = new List<GameObject>();
+
     void Awake()
     {
         doorOpen = new List<bool>();
@@ -39,30 +43,26 @@ public class DoorManager : MonoBehaviour
         for(int i =0; i < 4; i++)
         {
             bool isDoor = (doorsBits & (1 << i)) != 0;
-            bool isOpen = doorOpen[i];
-            SpriteRenderer sr = doors[i].GetComponent<SpriteRenderer>();
-            if(isDoor)
+            var doorLockedSprite = doors[i].GetComponent<SpriteRenderer>();
+            if (isDoor)
             {
-                if (isOpen)
-                {
-                    sr.sprite = doorOpenSprites[i];
-                    doors[i].layer = 6;
-                }
-
-                else
-                {
-                    //sr.sprite = doorClosedSprites[i];
-                    doors[i].layer = 6;
-                }
+                doors[i].layer = doorLayer;
+                doorInactiveGrids[i].SetActive(false);
+                doorActiveGrids[i].SetActive(true);
+                doorLockedSprite.enabled = true;
+                doorLights[i].SetActive(false);
             }
             else
             {
-                //sr.sprite = wallSprites[i];
-                doors[i].layer = 8;
-                foreach(Transform child in doors[i].transform)
-                {
-                    child.gameObject.SetActive(false);
-                }
+                //there is no door;
+                //toggle collision on:
+                doors[i].layer = wallLayer;
+                //toggle inactive tileMap on;
+                doorInactiveGrids[i].SetActive(true);
+                //toggle active tileMap off;
+                doorActiveGrids[i].SetActive(false);
+                doorLockedSprite.enabled = false;
+                doorLights[i].SetActive(false);
             }
         }
     }
@@ -74,18 +74,26 @@ public class DoorManager : MonoBehaviour
             bool isDoor = (doorsBits & (1 << i)) != 0;
             if(isDoor)
             {
+                var doorLockedSprite = doors[i].GetComponent<SpriteRenderer>();
                 if(!isOpen)
                 {
-                    doors[i].GetComponent<SpriteRenderer>().sprite = doorClosedSprites[i];
+                    doorLockedSprite.enabled = true;
+                    doorLights[i].SetActive(false);
                     doors[i].layer = 8;
                 }
                 else
                 {
-                    doors[i].GetComponent<SpriteRenderer>().sprite = doorOpenSprites[i];
+                    doorLockedSprite.enabled = false;
+                    doorLights[i].SetActive(true);
                     doors[i].layer = 6;
                 }
             }
         }
+    }
+
+    public GameObject GetDoor(int direction)
+    {
+        return doors[direction];
     }
 
 }
