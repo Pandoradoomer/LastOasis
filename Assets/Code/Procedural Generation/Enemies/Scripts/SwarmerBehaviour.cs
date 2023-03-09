@@ -4,10 +4,24 @@ using UnityEngine;
 
 public class SwarmerBehaviour : BaseMovementBehaviour
 {
-    public float speed = 1f;
+    public float speed = 1.2f;
     public float stunDuration = 0.4f;
+    public float chillOutTimer = 0.0f;
+    private float maxChillOutTimer = 0.0f;
+    public float chillOutDuration = 0.0f;
+    private float maxChillOutDuration = 0.0f;
+    public List<GridCell> path = new List<GridCell>();
+    GridCell nextCell = null;
+    public EnemyBase eb;
+    public bool isChillOut = true;
 
-
+    protected void Start()
+    {
+        base.Start();
+        eb = GetComponent<EnemyBase>();
+        chillOutTimer = Random.Range(4.0f, 5.0f);
+        chillOutDuration = Random.Range(0.5f, 1.0f);
+    }
     protected override void OnHitAction()
     {
         StartCoroutine(Stun(stunDuration));
@@ -15,7 +29,48 @@ public class SwarmerBehaviour : BaseMovementBehaviour
 
     protected override Vector2 GetMovement()
     {
-        return MovementFunctions.FollowPlayer(speed, transform.position);
+        if(isChillOut)
+        {
+            chillOutTimer -= Time.deltaTime;
+            if (chillOutTimer <= 0.0f)
+            {
+                chillOutDuration -= Time.deltaTime;
+                if(chillOutDuration <= 0.0f)
+                {
+                    chillOutTimer = Random.Range(4.0f, 5.0f);
+                    chillOutDuration = Random.Range(0.5f, 1.0f);
+                }
+                return Vector2.zero;
+            }
+        }
+        else
+        {
+
+        }
+        path = MovementFunctions.FollowPlayer(transform.position, eb.rs.pathFindingGrid);
+        int degOfFreedom = MovementFunctions.GetDegreesOfFreedom(transform.position,
+            Singleton.Instance.PlayerController.transform.position,
+            eb.rs.pathFindingGrid);
+        Vector2 boidDampening = MovementFunctions.GetBoidAvoidanceFactor(transform.position, eb.rs);
+        if(degOfFreedom == 3)
+        {
+            return MovementFunctions.FollowPlayer(speed, transform.position) + boidDampening;
+        }
+        else if(path != null && path.Count > 0)
+        {
+            if(nextCell == null || !MovementFunctions.IsAtDestination(nextCell, path[0].pos))
+            {
+                nextCell = path[0];
+                path.RemoveAt(0);
+            }
+            if(MovementFunctions.IsAtDestination(nextCell, transform.position))
+            {
+                nextCell = path[0];
+                path.RemoveAt(0);
+            }
+            return MovementFunctions.MoveTowards(nextCell, speed, transform.position) + boidDampening;
+        }
+        return MovementFunctions.FollowPlayer(speed, transform.position) + boidDampening;
     }
 
     private IEnumerator Stun(float duration)

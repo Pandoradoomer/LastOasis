@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public struct GridCell
+public class GridCell
 {
     //cell index
     public int x, y;
     //can be passed
     public bool isObstacle;
+    public float f, g, h;
+    public GridCell parent = null;
     //position of cell
     public Vector2 pos;
 }
@@ -27,15 +29,12 @@ public class RoomScript : MonoBehaviour
     private GameObject Rocks;
     private List<GameObject> spawnedItems;
     public GridCell[,] pathFindingGrid;
+    public List<EnemyBase> enemies;
 
     private void Awake()
     {
         spawnedItems = new List<GameObject>();
         GenerateGrid();
-        if(pathFindingGrid.GetLength(1) == 19)
-        {
-            ;
-        }
     }
 
     void GenerateGrid()
@@ -51,16 +50,13 @@ public class RoomScript : MonoBehaviour
         }
         int columns = pathFindingGrid.GetLength(1);
         int rows = pathFindingGrid.GetLength(0);
-        if(columns == 19)
-        {
-            ;
-        }
         Vector2 pos = (Vector2)transform.position - new Vector2(columns / 2, -rows / 2);
         for(int i = 0; i < rows; i++)
         {
             for(int j = 0; j < columns; j++)
             {
                 //GridCell cell = pathFindingGrid[i, j];
+                pathFindingGrid[i, j] = new GridCell();
                 pathFindingGrid[i, j].pos = pos + new Vector2(j, -i);
                 pathFindingGrid[i, j].x = j;
                 pathFindingGrid[i, j].y = i;
@@ -108,6 +104,24 @@ public class RoomScript : MonoBehaviour
     public void AddtoSpawnedList(GameObject go)
     {
         spawnedItems.Add(go);
+    }
+    
+    public void RemoveDestructibleFromList(Destructible d)
+    {
+        destructibles.Remove(d); 
+        int columns = pathFindingGrid.GetLength(1);
+        int rows = pathFindingGrid.GetLength(0);
+        for (int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < columns; j++)
+            {
+                if (pathFindingGrid[i,j].pos == (Vector2)d.transform.position)
+                {
+                    pathFindingGrid[i, j].isObstacle = true;
+                    break;
+                }
+            }
+        }
     }
 
     void LockUnlockDoors(IEventPacket packet)

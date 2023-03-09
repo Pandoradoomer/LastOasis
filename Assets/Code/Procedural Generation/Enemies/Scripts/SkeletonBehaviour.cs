@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -18,6 +19,14 @@ public class SkeletonBehaviour : BaseMoveAndAttackBehaviour
     private float initialYScale;
 
     public int xDir, yDir;
+    public float chillOutTimer = 0.0f;
+    private float maxChillOutTimer = 0.0f;
+    public float chillOutDuration = 0.0f;
+    private float maxChillOutDuration = 0.0f;
+    public List<GridCell> path = new List<GridCell>();
+    GridCell nextCell = null;
+    public EnemyBase eb;
+    public bool isChillOut = true;
 
     new void Start()
     {
@@ -25,7 +34,10 @@ public class SkeletonBehaviour : BaseMoveAndAttackBehaviour
         initialXScale = attackHitbox.transform.localScale.x;
         initialYScale = attackHitbox.transform.localScale.y;
         initialXPos = attackHitbox.transform.localPosition.x;
-        initialYPos = attackHitbox.transform.localPosition.y;
+        initialYPos = attackHitbox.transform.localPosition.y; 
+        eb = GetComponent<EnemyBase>();
+        chillOutTimer = Random.Range(4.0f, 5.0f);
+        chillOutDuration = Random.Range(0.5f, 1.0f);
 
     }    
     private IEnumerator Stun(float duration)
@@ -97,7 +109,48 @@ public class SkeletonBehaviour : BaseMoveAndAttackBehaviour
 
     protected override Vector2 GetMovement()
     {
-        return MovementFunctions.FollowPlayer(speed, transform.position);
+        if (isChillOut)
+        {
+            chillOutTimer -= Time.deltaTime;
+            if (chillOutTimer <= 0.0f)
+            {
+                chillOutDuration -= Time.deltaTime;
+                if (chillOutDuration <= 0.0f)
+                {
+                    chillOutTimer = Random.Range(4.0f, 5.0f);
+                    chillOutDuration = Random.Range(0.5f, 1.0f);
+                }
+                return Vector2.zero;
+            }
+        }
+        else
+        {
+
+        }
+        path = MovementFunctions.FollowPlayer(transform.position, eb.rs.pathFindingGrid);
+        int degOfFreedom = MovementFunctions.GetDegreesOfFreedom(transform.position,
+            Singleton.Instance.PlayerController.transform.position,
+            eb.rs.pathFindingGrid);
+        Vector2 boidDampening = MovementFunctions.GetBoidAvoidanceFactor(transform.position, eb.rs);
+        if (degOfFreedom == 3)
+        {
+            return MovementFunctions.FollowPlayer(speed, transform.position) + boidDampening;
+        }
+        else if (path != null && path.Count > 0)
+        {
+            if (nextCell == null || !MovementFunctions.IsAtDestination(nextCell, path[0].pos))
+            {
+                nextCell = path[0];
+                path.RemoveAt(0);
+            }
+            if (MovementFunctions.IsAtDestination(nextCell, transform.position))
+            {
+                nextCell = path[0];
+                path.RemoveAt(0);
+            }
+            return MovementFunctions.MoveTowards(nextCell, speed, transform.position) + boidDampening;
+        }
+        return MovementFunctions.FollowPlayer(speed, transform.position) + boidDampening;
     }
 
     public void OnHitboxEntered(IEventPacket packet)

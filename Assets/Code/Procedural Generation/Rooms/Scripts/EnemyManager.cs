@@ -165,6 +165,8 @@ public class EnemyManager : MonoBehaviour
             eb.roomIndex = e.roomIndex;
             eb.currentHealth = enemyData.MaxHealth;
             eb.attackDamage = enemyData.Damage;
+            eb.rs = room.GetComponent<RoomScript>();
+            eb.rs.enemies.Add(eb);
             foreach (ItemDrop id in enemyData.itemDrops)
             {
                 float random = Random.Range(0.0f, 1.0f);

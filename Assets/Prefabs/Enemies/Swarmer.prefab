@@ -121,6 +121,7 @@ MonoBehaviour:
   currentHealth: 10
   onCollisionDamage: 2
   attackDamage: 0
+  rs: {fileID: 0}
 --- !u!50 &2902856258695615456
 Rigidbody2D:
   serializedVersion: 4
@@ -157,6 +158,10 @@ MonoBehaviour:
   rb: {fileID: 2902856258695615456}
   speed: 2
   stunDuration: 0.4
+  chillOutTimer: 0
+  chillOutDuration: 0
+  eb: {fileID: 0}
+  isChillOut: 0
 --- !u!1 &8154968649168154550
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8337370856299978103
 Transform:
   m_ObjectHideFlags: 0

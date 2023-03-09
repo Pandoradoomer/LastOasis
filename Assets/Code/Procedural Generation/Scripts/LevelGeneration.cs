@@ -24,7 +24,8 @@ public class LevelGeneration : MonoBehaviour
     /// </summary>
     [SerializeField]
     float randomCompareStart = 0.2f, randomCompareEnd = 0.01f;
-
+    [SerializeField]
+    private GameObject startRoomPrefab;
     [SerializeField]
     private List<GameObject> roomPrefabs;
     private GameObject bossRoom;
@@ -324,7 +325,7 @@ public class LevelGeneration : MonoBehaviour
                 GameObject roomPrefab;
                 if(x == startRoomX && y == startRoomY)
                 {
-                    roomPrefab = roomPrefabs[0];
+                    roomPrefab = startRoomPrefab;
                 }
                 else
                 {
