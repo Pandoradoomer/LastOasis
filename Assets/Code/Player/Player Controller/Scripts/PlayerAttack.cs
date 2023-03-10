@@ -99,11 +99,11 @@ public class PlayerAttack : MonoBehaviour
         instance.animator.SetBool("isAttacking", true);
         instance.currentState = CURRENT_STATE.ATTACK;
         yield return null;
-        instance.animator.SetBool("isAttacking", false);
         yield return new WaitForSeconds(animationLength);
         instance.currentState = CURRENT_STATE.COMBO;
         yield return new WaitForSeconds(comboDelay);
 
+        instance.animator.SetBool("isAttacking", false);
         if (combo < 2)
         {
             comboTimer = comboTimerHolder;

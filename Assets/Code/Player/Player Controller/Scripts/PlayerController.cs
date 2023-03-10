@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
     public Transform doorWayPoint;
 
+    public KeyCode lastKeyPressed;
+
     public static PlayerController instance;
     private void Awake()
     {
@@ -82,6 +84,11 @@ public class PlayerController : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         movement.Normalize();
+
+        var key = GetLastKeyPressed();
+        if (key != KeyCode.None)
+            lastKeyPressed = key;
+        Debug.Log(lastKeyPressed);
         
         if (canDash && currentState == CURRENT_STATE.RUNNING)
         {
@@ -92,29 +99,76 @@ public class PlayerController : MonoBehaviour
         if (movement != Vector2.zero)
         {
             lastPlayerDirection = movement;
+            animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            animator.SetBool("isMoving", false);
         }
         ChangeColorOnDash();
         Invulnerability();
     }
 
+    KeyCode GetLastKeyPressed()
+    {
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            return KeyCode.W;
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            return KeyCode.S;
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            return KeyCode.D;
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            return KeyCode.A;
+        return KeyCode.None;
+
+    }
+
+    private Dictionary<KeyCode, Vector2> keyMapping = new Dictionary<KeyCode, Vector2>()
+    {
+        {KeyCode.W, Vector2.up },
+        {KeyCode.S, Vector2.down},
+        {KeyCode.D, Vector2.right},
+        {KeyCode.A, Vector2.left }
+    };
+
     void FixedUpdate()
     {
         if (isInDialogue)
             return;
-        switch(currentState)
+        Vector2 lastDir = Vector2.zero;
+        if(lastKeyPressed != KeyCode.None)
+            lastDir = keyMapping[lastKeyPressed];
+        switch (currentState)
         {
             case CURRENT_STATE.RUNNING:
                 rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
-                animator.SetFloat("moveX", lastPlayerDirection.x);
-                animator.SetFloat("moveY", lastPlayerDirection.y);
+                if(Mathf.Abs(lastPlayerDirection.y) == Mathf.Abs(lastPlayerDirection.x) && lastPlayerDirection.x != 0)
+                {
+                    animator.SetFloat("moveX", lastDir.x);
+                    animator.SetFloat("moveY", lastDir.y);
+                }
+                else
+                {
+                    animator.SetFloat("moveX", lastPlayerDirection.x);
+                    animator.SetFloat("moveY", lastPlayerDirection.y);
+                }
                 break;
             case CURRENT_STATE.ATTACK:
                 rb.velocity = Vector2.zero;
                 break;
             case CURRENT_STATE.COMBO:
                 rb.velocity = Vector2.zero;
-                animator.SetFloat("moveX", lastPlayerDirection.x);
-                animator.SetFloat("moveY", lastPlayerDirection.y);
+                lastDir = keyMapping[lastKeyPressed];
+                //if(lastPlayerDirection.y == lastPlayerDirection.x && lastPlayerDirection.x != 0)
+                //{
+                //    animator.SetFloat("moveX", lastDir.x);
+                //    animator.SetFloat("moveY", lastDir.y);
+                //}
+                //else
+                {
+                    animator.SetFloat("moveX", lastPlayerDirection.x);
+                    animator.SetFloat("moveY", lastPlayerDirection.y);
+                }
                 break;
             case CURRENT_STATE.SCENE_CHANGE:
                 var movePos = Vector2.MoveTowards(transform.position, doorWayPoint.position, 2 * Time.deltaTime);
