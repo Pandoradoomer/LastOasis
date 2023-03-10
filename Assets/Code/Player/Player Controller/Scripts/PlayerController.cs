@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case CURRENT_STATE.COMBO:
                 rb.velocity = Vector2.zero;
-                lastDir = keyMapping[lastKeyPressed];
+                //lastDir = keyMapping[lastKeyPressed];
                 //if(lastPlayerDirection.y == lastPlayerDirection.x && lastPlayerDirection.x != 0)
                 //{
                 //    animator.SetFloat("moveX", lastDir.x);
