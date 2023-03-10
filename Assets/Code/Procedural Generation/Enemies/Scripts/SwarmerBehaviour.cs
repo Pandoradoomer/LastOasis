@@ -44,6 +44,30 @@ public class SwarmerBehaviour : BaseMovementBehaviour
             }
         }
         return MovementFunctions.FollowPlayer(speed, transform.position,eb.rs, path, ref nextCell);
+        //path = MovementFunctions.FollowPlayer(transform.position, eb.rs.pathFindingGrid);
+        //int degOfFreedom = MovementFunctions.GetDegreesOfFreedom(transform.position,
+        //    Singleton.Instance.PlayerController.transform.position,
+        //    eb.rs.pathFindingGrid);
+        //Vector2 boidDampening = MovementFunctions.GetBoidAvoidanceFactor(transform.position, eb.rs);
+        //if(degOfFreedom == 3)
+        //{
+        //    return MovementFunctions.FollowPlayer(speed, transform.position) + boidDampening;
+        //}
+        //else if(path != null && path.Count > 0)
+        //{
+        //    if(nextCell == null || !MovementFunctions.IsAtDestination(nextCell, path[0].pos))
+        //    {
+        //        nextCell = path[0];
+        //        path.RemoveAt(0);
+        //    }
+        //    if(MovementFunctions.IsAtDestination(nextCell, transform.position))
+        //    {
+        //        nextCell = path[0];
+        //        path.RemoveAt(0);
+        //    }
+        //    return MovementFunctions.MoveTowards(nextCell, speed, transform.position) + boidDampening;
+        //}
+        //return MovementFunctions.FollowPlayer(speed, transform.position) + boidDampening;
     }
 
     private IEnumerator Stun(float duration)
