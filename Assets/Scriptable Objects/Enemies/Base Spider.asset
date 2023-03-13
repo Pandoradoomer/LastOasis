@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67ed594a628394c468c33617460cb506, type: 3}
   m_Name: Base Spider
   m_EditorClassIdentifier: 
-  Name: 
-  MaxHealth: 0
+  Name: Spider
+  MaxHealth: 10
   Sprite: {fileID: 0}
   Type: 0
-  Damage: 0
-  difficulty: 0
+  Damage: 8
+  difficulty: 2
   Behaviour: {fileID: 0}
-  prefabToSpawn: {fileID: 0}
-  itemDrops: []
-  color: {r: 0, g: 0, b: 0, a: 0}
+  prefabToSpawn: {fileID: 9218272971871820839, guid: 185ac2cdfa5544f4f843f1b92f8106b9, type: 3}
+  itemDrops:
+  - itemType: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
+    minItemQuantity: 10
+    maxItemQuantity: 15
+    dropProbability: 1
+  color: {r: 0.29411766, g: 0.29411766, b: 0.29411766, a: 1}

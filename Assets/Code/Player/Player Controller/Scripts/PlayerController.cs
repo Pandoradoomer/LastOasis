@@ -88,7 +88,6 @@ public class PlayerController : MonoBehaviour
         var key = GetLastKeyPressed();
         if (key != KeyCode.None)
             lastKeyPressed = key;
-        Debug.Log(lastKeyPressed);
         
         if (canDash && currentState == CURRENT_STATE.RUNNING)
         {
