@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67ed594a628394c468c33617460cb506, type: 3}
-  m_Name: Enemy2
+  m_Name: Weeping Tree
   m_EditorClassIdentifier: 
-  Name: Dude
-  MaxHealth: 10
+  Name: Weeping Tree
+  MaxHealth: 50
   Sprite: {fileID: 0}
   Type: 0
-  Damage: 5
-  difficulty: 2
-  Behaviour: {fileID: 11500000, guid: 71ecb0def39e00242b5c4b0c88112998, type: 3}
-  prefabToSpawn: {fileID: 2714170247650124136, guid: 812149e56edf8644baef156d9fbd0dd3, type: 3}
+  Damage: 25
+  difficulty: 4.5
+  Behaviour: {fileID: 0}
+  prefabToSpawn: {fileID: 3085993033142280383, guid: 2efa6a9da909b8342b5b9ce271406d80, type: 3}
   itemDrops:
   - itemType: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
-    minItemQuantity: 7
-    maxItemQuantity: 12
+    minItemQuantity: 20
+    maxItemQuantity: 30
     dropProbability: 1
-  color: {r: 0, g: 1, b: 0.080822706, a: 1}
+  color: {r: 0, g: 0, b: 0, a: 0}

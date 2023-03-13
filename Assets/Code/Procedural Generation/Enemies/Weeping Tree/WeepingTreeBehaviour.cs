@@ -19,24 +19,26 @@ public class WeepingTreeBehaviour : BaseAttackBehaviour
     {
         if (timer > 0)
             timer -= Time.deltaTime;
-        else
+        else if(!isAttacking)
             DoAttack();
     }
 
     protected override void DoAttack()
     {
+        isAttacking = true;
         StartCoroutine(AttackFunctions.Smash(this, windUpTime, strikeTime));
     }
 
     protected override void DoBeginAttack()
     {
-        isAttacking = true;
+        attackHitbox.GetComponent<SpriteRenderer>().enabled = true;
     }
 
     protected override void DoStopAttack()
     {
-        isAttacking = false;
+        attackHitbox.GetComponent<SpriteRenderer>().enabled = false;
         timer = maxTimer;
+        isAttacking = false;
     }
 
     protected override void DoSetAnimatorVariables()
@@ -48,15 +50,9 @@ public class WeepingTreeBehaviour : BaseAttackBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
         maxTimer = timer;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
     protected override void RemoveAdditionalEventListeners()
     {

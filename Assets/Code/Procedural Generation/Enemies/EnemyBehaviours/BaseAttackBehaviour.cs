@@ -14,7 +14,7 @@ public abstract class BaseAttackBehaviour : MonoBehaviour, IEnemyBehaviour, IAtt
     // Update is called once per frame
     void Update()
     {
-
+        Act();
     }
 
     void OnDestroy()
@@ -24,7 +24,7 @@ public abstract class BaseAttackBehaviour : MonoBehaviour, IEnemyBehaviour, IAtt
     }
     public void Act()
     {
-        throw new System.NotImplementedException();
+        DoAct();
     }
 
     public void Attack()
@@ -70,4 +70,3 @@ public abstract class BaseAttackBehaviour : MonoBehaviour, IEnemyBehaviour, IAtt
     protected abstract void RemoveAdditionalEventListeners();
 }
 
-}
