@@ -2672,7 +2672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomCompareStart: 0.2
   randomCompareEnd: 0.01
-  startRoomPrefab: {fileID: 5306978490892935168, guid: 3017fa6a5b070c34db4ee75c781fd500, type: 3}
+  startRoomPrefab: {fileID: 5306978490892935168, guid: 9e40ebdd026985e4d9ecd3083352644c, type: 3}
   roomPrefabs:
   - {fileID: 5306978490892935168, guid: 7988f190c725f314d9ceccc00e2995cc, type: 3}
   - {fileID: 5306978490892935168, guid: 9e40ebdd026985e4d9ecd3083352644c, type: 3}
@@ -3025,6 +3025,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 11400000, guid: a2a12f4079843f24892a6113a2d37b97, type: 2}
   - {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
+  - {fileID: 11400000, guid: a22c6f107e73ddb43b97b3a5243fbdd6, type: 2}
 --- !u!1 &1906047035
 GameObject:
   m_ObjectHideFlags: 0

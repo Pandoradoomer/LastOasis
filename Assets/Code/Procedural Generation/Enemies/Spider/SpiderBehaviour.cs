@@ -31,6 +31,9 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
     public List<GridCell> path = new List<GridCell>();
     GridCell nextCell = null;
     public EnemyBase eb;
+
+    [SerializeField]
+    SpriteRenderer spotSpriteRenderer;
     
     new void Start()
     {
@@ -40,8 +43,15 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
         initialXPos = attackHitbox.transform.localPosition.x;
         initialYPos = attackHitbox.transform.localPosition.y;
         eb = GetComponent<EnemyBase>();
+        SetMultipliers();
+        spotSpriteRenderer.color = eb.enemyData.color;
         chillOutTimer = Random.Range(4.0f, 5.0f);
         chillOutDuration = Random.Range(0.5f, 1.0f);
+
+    }
+
+    void SetMultipliers()
+    {
 
     }
     private IEnumerator Stun(float duration)
