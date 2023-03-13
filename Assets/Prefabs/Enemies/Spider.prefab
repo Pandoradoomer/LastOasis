@@ -269,7 +269,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &4597732120380776306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,11 +283,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: -4088637690268722203}
-  speed: 4
+  speed: 2.5
   attackHitbox: {fileID: 574839598120419654}
-  stunTime: 0
-  windUpTime: 0
-  strikeTime: 0
+  stunTime: 0.1
+  windUpTime: 0.2
+  strikeTime: 0.2
   xDir: 0
   yDir: 0
   isChillOut: 1

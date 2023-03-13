@@ -26,6 +26,7 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
     public float chillOutDuration = 0.0f;
     private float maxChillOutDuration = 0.0f;
 
+    private Coroutine AttackCoroutine;
     //Pathfinding Variables
     public List<GridCell> path = new List<GridCell>();
     GridCell nextCell = null;
@@ -46,6 +47,8 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
     private IEnumerator Stun(float duration)
     {
         canMove = false;
+        StopCoroutine(AttackCoroutine);
+        DoStopAttack();
         for (float i = 0; i <= duration; i += Time.deltaTime)
         {
             yield return null;
@@ -125,7 +128,7 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
     }
     protected override void DoAttack()
     {
-        StartCoroutine(AttackFunctions.Swing(this, this, windUpTime, strikeTime));
+        AttackCoroutine = StartCoroutine(AttackFunctions.Swing(this, this, windUpTime, strikeTime));
     }
 
     protected override void AddAdditionalEventListeners()
