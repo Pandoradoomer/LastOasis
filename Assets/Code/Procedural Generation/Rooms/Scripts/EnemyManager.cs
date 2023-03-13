@@ -158,13 +158,14 @@ public class EnemyManager : MonoBehaviour
                 maxHealth = enemyData.MaxHealth
             }; 
             
-            go.GetComponent<SpriteRenderer>().color = enemyData.color;
 
             //setting the index;
             EnemyBase eb = go.GetComponent<EnemyBase>();
             eb.roomIndex = e.roomIndex;
             eb.currentHealth = enemyData.MaxHealth;
             eb.attackDamage = enemyData.Damage;
+            eb.multiplier = enemyData.multiplier;
+            eb.enemyData = enemyData;
             eb.rs = room.GetComponent<RoomScript>();
             eb.rs.enemies.Add(eb);
             foreach (ItemDrop id in enemyData.itemDrops)
@@ -177,44 +178,6 @@ public class EnemyManager : MonoBehaviour
             }
             AddEnemyToDictionary(erd, e.roomIndex);
         }
-        //while (currentDifficulty < e.difficulty)
-        //{
-        //    Vector2 pos = Vector2.zero;
-        //    pos = DecideEnemySpawnPosition(e.enemyPositions, filledPositions);
-        //
-        //    int index = Random.Range(0, enemies.Count);
-        //    Enemy enemyData = enemies[index];
-        //
-        //
-        //    var go = Instantiate(enemyData.prefabToSpawn, e.roomCentre + pos, Quaternion.identity);
-        //    go.transform.parent = room.transform;
-        //
-        //    EnemyRuntimeData erd = new EnemyRuntimeData()
-        //    {
-        //        go = go,
-        //        SpawnPos = e.roomCentre + pos,
-        //        maxHealth = enemyData.MaxHealth
-        //    };
-        //    //Setting the colour
-        //    go.GetComponent<SpriteRenderer>().color = enemyData.color;
-        //
-        //    //setting the index;
-        //    EnemyBase eb = go.GetComponent<EnemyBase>();
-        //    eb.roomIndex = e.roomIndex;
-        //    eb.currentHealth = enemyData.MaxHealth;
-        //    eb.attackDamage = enemyData.Damage;
-        //    foreach(ItemDrop id in enemyData.itemDrops)
-        //    {
-        //        float random = Random.Range(0.0f, 1.0f);
-        //        if(random <= id.dropProbability)
-        //        {
-        //            eb.lootToDrop.Add(id.itemType, Random.Range(id.minItemQuantity, id.maxItemQuantity + 1));
-        //        }
-        //    }
-        //    AddEnemyToDictionary(erd, e.roomIndex);
-        //    //increasing the difficulty
-        //    currentDifficulty += enemies[index].difficulty;
-        //}
     }
     
     Vector2 DecideEnemySpawnPosition(EnemySpawnPosition esp, List<Vector2> takenPositions)
