@@ -132,8 +132,8 @@ public class EnemyManager : MonoBehaviour
     {
         if (e.isBoss)
             return;
-        if (e.isStart)
-            return;
+        //if (e.isStart)
+        //    return;
         //for the sake of the task, let's spawn enemies inside every room, at least 1
         float currentDifficulty = 0;
         List<Vector2> filledPositions = new List<Vector2>();
@@ -158,7 +158,7 @@ public class EnemyManager : MonoBehaviour
                 maxHealth = enemyData.MaxHealth
             }; 
             
-            go.GetComponent<SpriteRenderer>().color = enemyData.color;
+            //go.GetComponent<SpriteRenderer>().color = enemyData.color;
 
             //setting the index;
             EnemyBase eb = go.GetComponent<EnemyBase>();
