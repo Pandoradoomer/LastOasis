@@ -7,7 +7,7 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
 {
     [Header("Attack Variables")]
     [SerializeField]
-    AttackBase attackHitbox;
+    FungusAttack attackHitbox;
     public float stunTime;
     public float windUpTime;
     public float strikeTime;
@@ -26,6 +26,7 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
         base.Start();
         maxTimer = timer;
         eb = GetComponent<EnemyBase>();
+        attackHitbox.GetComponent<Collider2D>().enabled = false;
     }
 
 
@@ -49,6 +50,8 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
 
     protected override void DoBeginAttack()
     {
+        attackHitbox.GetComponent<Collider2D>().enabled = true;
+        attackHitbox.IsAttacking = true;
         attackHitbox.GetComponent<SpriteRenderer>().enabled = true;
     }
 
@@ -56,7 +59,11 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
     protected override void DoStopAttack()
     {
         attackHitbox.GetComponent<SpriteRenderer>().enabled = false;
+        attackHitbox.GetComponent<Collider2D>().enabled = false;
+        attackHitbox.AddStacks();
         isAttacking = false;
+        attackHitbox.IsAttacking = false;
+        timer = maxTimer;
     }
 
     protected override Vector2 GetMovement()

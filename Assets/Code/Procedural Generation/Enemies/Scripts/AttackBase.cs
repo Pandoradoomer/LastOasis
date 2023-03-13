@@ -6,12 +6,9 @@ public class AttackBase : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    private EnemyBase enemyBase;
+    protected EnemyBase enemyBase;
     public bool IsAttacking = false;
 
-    //Debug only; delete on commit
-    [SerializeField]
-    GameObject hitboxSprite;
     void Start()
     {
     }
@@ -35,19 +32,6 @@ public class AttackBase : MonoBehaviour
                 EventManager.TriggerEvent(Event.EnemyHitboxEntered, new EnemyHitboxEnteredPacket()
                 {
                     Hitbox = this.gameObject
-                });
-            }
-        }
-    }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-            if(IsAttacking)
-            {
-                EventManager.TriggerEvent(Event.EnemyHitPlayer, new EnemyHitPacket()
-                {
-                    healthDeplete = enemyBase.attackDamage
                 });
             }
         }
