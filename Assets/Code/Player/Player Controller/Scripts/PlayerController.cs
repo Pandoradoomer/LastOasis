@@ -98,8 +98,17 @@ public class PlayerController : MonoBehaviour
         if (movement != Vector2.zero)
         {
             lastPlayerDirection = movement;
+
+            if(currentState == CURRENT_STATE.IDLE)
+                currentState = CURRENT_STATE.RUNNING;
+
             //if (currentState == CURRENT_STATE.RUNNING)
             //    animator.SetBool("isMoving", true);
+        } 
+        else
+        {
+            if(currentState == CURRENT_STATE.RUNNING)
+                currentState = CURRENT_STATE.IDLE;
         }
         //else
         //{
@@ -135,13 +144,19 @@ public class PlayerController : MonoBehaviour
     {
         if (isInDialogue)
             return;
-        Vector2 lastDir = Vector2.zero;
-        if (lastKeyPressed != KeyCode.None)
-            lastDir = keyMapping[lastKeyPressed];
+        //Vector2 lastDir = Vector2.zero;
+        //if (lastKeyPressed != KeyCode.None)
+        //    lastDir = keyMapping[lastKeyPressed];
+
         switch (currentState)
         {
+            case CURRENT_STATE.IDLE:
+                rb.velocity = Vector2.zero;
+                animator.SetBool("isMoving", false);
+                break;
             case CURRENT_STATE.RUNNING:
                 rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
+                animator.SetBool("isMoving", true);
                 animator.SetFloat("moveX", lastPlayerDirection.x);
                 animator.SetFloat("moveY", lastPlayerDirection.y);
                 //rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
@@ -165,7 +180,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetFloat("moveY", lastPlayerDirection.y);
                 break;
             case CURRENT_STATE.SCENE_CHANGE:
-                var movePos = Vector2.MoveTowards(transform.position, doorWayPoint.position, 2 * Time.deltaTime);
+                Vector2 movePos = Vector2.MoveTowards(transform.position, doorWayPoint.position, 2 * Time.deltaTime);
                 rb.MovePosition(movePos);
                 break;
 
