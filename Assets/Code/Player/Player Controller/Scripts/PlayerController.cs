@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
@@ -81,14 +80,15 @@ public class PlayerController : MonoBehaviour
     {
         if (isInDialogue)
             return;
+
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         movement.Normalize();
 
-        var key = GetLastKeyPressed();
-        if (key != KeyCode.None)
-            lastKeyPressed = key;
-        
+        //var key = GetLastKeyPressed();
+        //if (key != KeyCode.None)
+        //    lastKeyPressed = key;
+
         if (canDash && currentState == CURRENT_STATE.RUNNING)
         {
             if (Input.GetKey(KeyCode.LeftShift) && movement != Vector2.zero)
@@ -98,13 +98,13 @@ public class PlayerController : MonoBehaviour
         if (movement != Vector2.zero)
         {
             lastPlayerDirection = movement;
-            if(currentState == CURRENT_STATE.RUNNING)
-                animator.SetBool("isMoving", true);
+            //if (currentState == CURRENT_STATE.RUNNING)
+            //    animator.SetBool("isMoving", true);
         }
-        else
-        {
-            animator.SetBool("isMoving", false);
-        }
+        //else
+        //{
+        //    animator.SetBool("isMoving", false);
+        //}
         ChangeColorOnDash();
         Invulnerability();
     }
@@ -136,39 +136,33 @@ public class PlayerController : MonoBehaviour
         if (isInDialogue)
             return;
         Vector2 lastDir = Vector2.zero;
-        if(lastKeyPressed != KeyCode.None)
+        if (lastKeyPressed != KeyCode.None)
             lastDir = keyMapping[lastKeyPressed];
         switch (currentState)
         {
             case CURRENT_STATE.RUNNING:
                 rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
-                if(Mathf.Abs(lastPlayerDirection.y) == Mathf.Abs(lastPlayerDirection.x) && lastPlayerDirection.x != 0)
-                {
-                    animator.SetFloat("moveX", lastDir.x);
-                    animator.SetFloat("moveY", lastDir.y);
-                }
-                else
-                {
-                    animator.SetFloat("moveX", lastPlayerDirection.x);
-                    animator.SetFloat("moveY", lastPlayerDirection.y);
-                }
+                animator.SetFloat("moveX", lastPlayerDirection.x);
+                animator.SetFloat("moveY", lastPlayerDirection.y);
+                //rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
+                //if (Mathf.Abs(lastPlayerDirection.y) == Mathf.Abs(lastPlayerDirection.x) && lastPlayerDirection.x != 0)
+                //{
+                //    animator.SetFloat("moveX", lastDir.x);
+                //    animator.SetFloat("moveY", lastDir.y);
+                //}
+                //else
+                //{
+                //    animator.SetFloat("moveX", lastPlayerDirection.x);
+                //    animator.SetFloat("moveY", lastPlayerDirection.y);
+                //}
                 break;
             case CURRENT_STATE.ATTACK:
                 rb.velocity = Vector2.zero;
                 break;
             case CURRENT_STATE.COMBO:
                 rb.velocity = Vector2.zero;
-                //lastDir = keyMapping[lastKeyPressed];
-                //if(lastPlayerDirection.y == lastPlayerDirection.x && lastPlayerDirection.x != 0)
-                //{
-                //    animator.SetFloat("moveX", lastDir.x);
-                //    animator.SetFloat("moveY", lastDir.y);
-                //}
-                //else
-                {
-                    animator.SetFloat("moveX", lastPlayerDirection.x);
-                    animator.SetFloat("moveY", lastPlayerDirection.y);
-                }
+                animator.SetFloat("moveX", lastPlayerDirection.x);
+                animator.SetFloat("moveY", lastPlayerDirection.y);
                 break;
             case CURRENT_STATE.SCENE_CHANGE:
                 var movePos = Vector2.MoveTowards(transform.position, doorWayPoint.position, 2 * Time.deltaTime);
@@ -176,7 +170,7 @@ public class PlayerController : MonoBehaviour
                 break;
 
         }
-            
+
     }
 
     void BossTeleport(IEventPacket packet)

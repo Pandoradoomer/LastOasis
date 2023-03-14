@@ -132,7 +132,7 @@ public class PlayerStats : MonoBehaviour
     private void OnEnemyHit(IEventPacket packet)
     {
         EnemyHitPacket ehp = packet as EnemyHitPacket;
-        if(!PlayerController.instance.invulnerability)
+        if (!PlayerController.instance.invulnerability)
         {
             currentHealth -= ehp.healthDeplete;
             PlayerController.instance.invulnerability = true;

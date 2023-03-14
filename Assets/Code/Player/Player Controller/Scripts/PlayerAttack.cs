@@ -96,7 +96,7 @@ public class PlayerAttack : MonoBehaviour
     {
         canAttack = false;
         isComboAttack = false;
-        instance.animator.SetBool("isAttacking", true);
+        instance.animator.SetTrigger("isAttackingTrigger");
         instance.animator.SetBool("isMoving", false);
         instance.currentState = CURRENT_STATE.ATTACK;
         yield return new WaitForSeconds(animationLength);
@@ -111,7 +111,6 @@ public class PlayerAttack : MonoBehaviour
         {
             ResetCombo();
         }
-        instance.animator.SetBool("isAttacking", false);
     }
 
     private void ResetAttack()
