@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
         var key = GetLastKeyPressed();
         if (key != KeyCode.None)
             lastKeyPressed = key;
+        Debug.Log(lastKeyPressed);
         
         if (canDash && currentState == CURRENT_STATE.RUNNING)
         {
@@ -98,8 +99,7 @@ public class PlayerController : MonoBehaviour
         if (movement != Vector2.zero)
         {
             lastPlayerDirection = movement;
-            if(currentState == CURRENT_STATE.RUNNING)
-                animator.SetBool("isMoving", true);
+            animator.SetBool("isMoving", true);
         }
         else
         {
@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case CURRENT_STATE.COMBO:
                 rb.velocity = Vector2.zero;
-                //lastDir = keyMapping[lastKeyPressed];
+                lastDir = keyMapping[lastKeyPressed];
                 //if(lastPlayerDirection.y == lastPlayerDirection.x && lastPlayerDirection.x != 0)
                 //{
                 //    animator.SetFloat("moveX", lastDir.x);

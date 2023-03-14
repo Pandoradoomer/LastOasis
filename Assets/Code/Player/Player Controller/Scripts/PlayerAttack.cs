@@ -97,11 +97,13 @@ public class PlayerAttack : MonoBehaviour
         canAttack = false;
         isComboAttack = false;
         instance.animator.SetBool("isAttacking", true);
-        instance.animator.SetBool("isMoving", false);
         instance.currentState = CURRENT_STATE.ATTACK;
+        yield return null;
         yield return new WaitForSeconds(animationLength);
         instance.currentState = CURRENT_STATE.COMBO;
         yield return new WaitForSeconds(comboDelay);
+
+        instance.animator.SetBool("isAttacking", false);
         if (combo < 2)
         {
             comboTimer = comboTimerHolder;
@@ -111,7 +113,6 @@ public class PlayerAttack : MonoBehaviour
         {
             ResetCombo();
         }
-        instance.animator.SetBool("isAttacking", false);
     }
 
     private void ResetAttack()
