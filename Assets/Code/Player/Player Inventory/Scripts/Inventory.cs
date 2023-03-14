@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    
     //Dictionary handles item stacking from List
     private Dictionary<CollectableData, int> itemDictionary = new Dictionary<CollectableData, int>();
     [SerializeField]
