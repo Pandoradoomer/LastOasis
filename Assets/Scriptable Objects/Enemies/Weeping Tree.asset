@@ -17,7 +17,9 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Type: 0
   Damage: 25
+  DamageOnCollision: 5
   difficulty: 4.5
+  multiplier: 1
   Behaviour: {fileID: 0}
   prefabToSpawn: {fileID: 3085993033142280383, guid: 2efa6a9da909b8342b5b9ce271406d80, type: 3}
   itemDrops:

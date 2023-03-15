@@ -17,6 +17,7 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Type: 0
   Damage: 8
+  DamageOnCollision: 8
   difficulty: 2.5
   multiplier: 1
   Behaviour: {fileID: 0}
