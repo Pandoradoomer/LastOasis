@@ -19,6 +19,7 @@ public class Enemy : ScriptableObject
     public EnemyType Type;
     public int Damage;
     public float difficulty;
+    public float multiplier = 1.0f;
     public MonoScript Behaviour;
     public GameObject prefabToSpawn;
     public List<ItemDrop> itemDrops;

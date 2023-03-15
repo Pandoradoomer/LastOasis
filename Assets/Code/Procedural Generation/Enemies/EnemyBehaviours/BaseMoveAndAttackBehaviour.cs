@@ -11,7 +11,8 @@ public abstract class BaseMoveAndAttackBehaviour : MonoBehaviour, IMovementBehav
     [SerializeField]
     protected Rigidbody2D rb;
 
-    public float speed;
+    [SerializeField]
+    protected float speed;
     // Start is called before the first frame update
 
     protected bool canMove = true;

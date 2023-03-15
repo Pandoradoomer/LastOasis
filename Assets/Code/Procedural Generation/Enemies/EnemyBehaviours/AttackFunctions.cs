@@ -16,4 +16,13 @@ public static class AttackFunctions
         atk.StopAttack();
         move.ResumeMovement();
     }
+    public static IEnumerator Smash(IAttackBehaviour atk, float windUpTime, float strikeTime)
+    {
+        for (float i = 0; i < windUpTime; i += Time.deltaTime)
+            yield return null;
+        atk.BeginAttack();
+        for (float i = 0; i < strikeTime; i += Time.deltaTime)
+            yield return null;
+        atk.StopAttack();
+    }
 }
