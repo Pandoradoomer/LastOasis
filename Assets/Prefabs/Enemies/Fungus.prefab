@@ -142,7 +142,9 @@ MonoBehaviour:
   currentHealth: 10
   onCollisionDamage: 0
   attackDamage: 0
+  multiplier: 0
   rs: {fileID: 0}
+  enemyData: {fileID: 0}
 --- !u!114 &9194599716662391718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,3 +281,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyBase: {fileID: -5141217683223057693}
   IsAttacking: 0
+  timeToDepleteStacks: 0.75
+  stackDamage: 2

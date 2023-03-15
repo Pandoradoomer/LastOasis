@@ -7,12 +7,16 @@ public class FungusAttack : AttackBase
 
     float timer = 0;
     float timeToAddStacks = 0.5f;
+    [SerializeField]
+    float timeToDepleteStacks;
+    [SerializeField]
+    int stackDamage;
     bool isInMist = false;
     private FungusPoisonStack stack;
 
     private void Start()
     {
-        stack = new FungusPoisonStack((int)enemyBase.attackDamage / 2, 0.75f);
+        stack = new FungusPoisonStack(stackDamage, timeToDepleteStacks);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
