@@ -38,6 +38,23 @@ public class SceneChange : MonoBehaviour
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             ShopManager.Instance.Show();
         }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            DisplayStats.Instance.Show();
+        }
+
+        if ( Input.GetKeyDown(KeyCode.O))
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            displayContract.Instance.Show();
+        }
+
+    }
+
+    public void ResetDisplay()
+    {
+        rb.constraints = RigidbodyConstraints2D.None;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

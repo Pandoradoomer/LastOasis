@@ -21,8 +21,8 @@ public class PlayerStats : MonoBehaviour
     public static PlayerStats instance { get; private set; }
     void Start()
     {
-        coinText.text = "Coins: " + 0;
-        playerHealthSlider.maxValue = maxHealth;
+        //coinText.text = "Coins: " + 0;
+        //playerHealthSlider.maxValue = maxHealth;
         EventManager.StartListening(Event.EnemyHitPlayer, OnEnemyHit);
     }
     private void Awake()
@@ -51,7 +51,7 @@ public class PlayerStats : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-        playerHealthSlider.value = currentHealth;
+        //playerHealthSlider.value = currentHealth;
 
         //if (Input.GetKeyDown(KeyCode.C) && Inventory.instance.HasCoin(item_coin))
         //{
@@ -66,7 +66,7 @@ public class PlayerStats : MonoBehaviour
         //}
         //Fix bug of removing coins after its reached 0
         //Key press to spend all coins
-        coinText.text = $"Coins: {Singleton.Instance.Inventory.GetCoins()}";
+        coinText.text = $"{Singleton.Instance.Inventory.GetCoins()}";
     }
 
 

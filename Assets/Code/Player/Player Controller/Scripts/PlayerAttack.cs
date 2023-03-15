@@ -24,10 +24,13 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float comboDelay;
     [SerializeField] private float damageMultiplier;
     [SerializeField] private bool isComboAttack;
+
     private void Awake()
     {
         //swordCollider = GetComponent<CircleCollider2D>();
         //sr.enabled = false;
+        Debug.Log("Started");
+        Debug.Log(swingDelay);
         EventManager.StartListening(Event.DialogueStart, FreezePlayer);
         EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
         comboTimerHolder = comboTimer;
