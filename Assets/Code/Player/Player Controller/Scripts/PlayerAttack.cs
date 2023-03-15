@@ -32,6 +32,7 @@ public class PlayerAttack : MonoBehaviour
         EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
         comboTimerHolder = comboTimer;
         swingDamageHolder = swingDamage;
+        targetLayer = LayerMask.GetMask("Enemy", "Destructible");
     }
 
     private void OnDestroy()
