@@ -30,6 +30,12 @@ public class FungusAttack : AttackBase
                 {
                     healthDeplete = enemyBase.attackDamage
                 });
+                EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
+                {
+                    damage = (int)enemyBase.attackDamage,
+                    position = Singleton.Instance.PlayerController.transform.position,
+                    textColor = Color.red
+                });
                 isInMist = true;
             }
         }

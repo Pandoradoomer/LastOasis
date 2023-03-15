@@ -17,5 +17,6 @@ public enum Event
     DialogueStart,
     DialogueFinish,
     StackAdded,
+    DamageDealt,
 
 }

@@ -100,16 +100,31 @@ public class PlayerStats : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Enemy"))
             {
-                currentHealth -= collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
+                int healthDeplete = (int)collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
+                currentHealth -= healthDeplete;
                 PlayerController.instance.invulnerability = true;
+                EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
+                {
+                    textColor = Color.red,
+                    position = transform.position,
+                    damage = healthDeplete
+                });
             }
             if (collision.gameObject.CompareTag("Boss"))
             {
-                currentHealth -= collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
+                int healthDeplete = (int)collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
+                currentHealth -= healthDeplete;
                 PlayerController.instance.invulnerability = true;
+                EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
+                {
+                    textColor = Color.red,
+                    position = transform.position,
+                    damage = healthDeplete
+                });
             }
         }
     }
+
 
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -118,13 +133,27 @@ public class PlayerStats : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Enemy"))
             {
-                currentHealth -= collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
+                int healthDeplete = (int)collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
+                currentHealth -= healthDeplete;
                 PlayerController.instance.invulnerability = true;
+                EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
+                {
+                    textColor = Color.red,
+                    position = transform.position,
+                    damage = healthDeplete
+                });
             }
             if (collision.gameObject.CompareTag("Boss"))
             {
-                currentHealth -= collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
+                int healthDeplete = (int)collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
+                currentHealth -= healthDeplete;
                 PlayerController.instance.invulnerability = true;
+                EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
+                {
+                    textColor = Color.red,
+                    position = transform.position,
+                    damage = healthDeplete
+                });
             }
         }
     }
@@ -137,6 +166,12 @@ public class PlayerStats : MonoBehaviour
             currentHealth -= ehp.healthDeplete;
             PlayerController.instance.invulnerability = true;
         }
+        EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
+        {
+            textColor = Color.red,
+            position = transform.position,
+            damage = (int)ehp.healthDeplete
+        });
     }
     private void OnDestroy()
     {
