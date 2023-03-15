@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class FungusAttack : AttackBase
 {
-    int stacks = 0;
+
     float timer = 0;
     float timeToAddStacks = 0.5f;
     bool isInMist = false;
-    bool hasAddedStacks = false;
+    private FungusPoisonStack stack;
+
+    private void Start()
+    {
+        stack = new FungusPoisonStack((int)enemyBase.attackDamage / 2);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,7 +27,6 @@ public class FungusAttack : AttackBase
                     healthDeplete = enemyBase.attackDamage
                 });
                 isInMist = true;
-                hasAddedStacks = false;
             }
         }
     }
@@ -30,19 +34,13 @@ public class FungusAttack : AttackBase
     {
         if (collision.gameObject.tag == "Player")
         {
-            AddStacks();
+            isInMist = false;
         }
     }
 
-    public void AddStacks()
+    public void StopAttack()
     {
-        if(!hasAddedStacks)
-        {
-            isInMist = false;
-            Debug.Log(stacks);
-            stacks = 0;
-            hasAddedStacks = true;
-        }
+        isInMist = false;
     }
 
     private void Update()
@@ -52,7 +50,10 @@ public class FungusAttack : AttackBase
             timer += Time.deltaTime;
             if(timer > timeToAddStacks)
             {
-                stacks++;
+                EventManager.TriggerEvent(Event.StackAdded, new StackAddedPacket()
+                {
+                    stackToAdd = stack
+                });
                 timer = 0;
             }
         }

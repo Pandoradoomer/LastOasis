@@ -17,7 +17,7 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Type: 0
   Damage: 12
-  difficulty: 3.5
+  difficulty: 1
   multiplier: 0
   Behaviour: {fileID: 0}
   prefabToSpawn: {fileID: 9218272971871820839, guid: 185ac2cdfa5544f4f843f1b92f8106b9, type: 3}

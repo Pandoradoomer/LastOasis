@@ -60,7 +60,7 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
     {
         attackHitbox.GetComponent<SpriteRenderer>().enabled = false;
         attackHitbox.GetComponent<Collider2D>().enabled = false;
-        attackHitbox.AddStacks();
+        attackHitbox.StopAttack();
         isAttacking = false;
         attackHitbox.IsAttacking = false;
         timer = maxTimer;
