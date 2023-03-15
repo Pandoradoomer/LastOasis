@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
-public class SwarmerBehaviour : B
+
+public class SwarmerBehaviour : BaseMovementBehaviour
 {
     public float speed = 1.2f;
     public float stunDuration = 0.4f;
@@ -57,4 +57,4 @@ public class SwarmerBehaviour : B
         canMove = true;
     }
 }
-*/
+
