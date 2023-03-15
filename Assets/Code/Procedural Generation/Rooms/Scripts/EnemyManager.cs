@@ -167,6 +167,7 @@ public class EnemyManager : MonoBehaviour
             eb.attackDamage = enemyData.Damage;
             eb.multiplier = enemyData.multiplier;
             eb.enemyData = enemyData;
+            eb.onCollisionDamage = enemyData.Damage;
             eb.rs = room.GetComponent<RoomScript>();
             eb.rs.enemies.Add(eb);
             foreach (ItemDrop id in enemyData.itemDrops)
