@@ -10,7 +10,9 @@ public class EnemyBase : MonoBehaviour
     public float onCollisionDamage;
     public float attackDamage;
     public Dictionary<Item, int> lootToDrop;
+    public float multiplier;
     public RoomScript rs;
+    public Enemy enemyData;
     private void Awake()
     {
         lootToDrop = new Dictionary<Item, int>();
