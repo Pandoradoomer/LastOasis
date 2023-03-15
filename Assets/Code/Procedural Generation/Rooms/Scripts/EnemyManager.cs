@@ -158,7 +158,7 @@ public class EnemyManager : MonoBehaviour
                 maxHealth = enemyData.MaxHealth
             }; 
             
-            go.GetComponent<SpriteRenderer>().color = enemyData.color;
+            //go.GetComponent<SpriteRenderer>().color = enemyData.color;
 
             //setting the index;
             EnemyBase eb = go.GetComponent<EnemyBase>();
