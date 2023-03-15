@@ -9,6 +9,7 @@ public class SceneChange : MonoBehaviour
     private float moveSpeed = 3.0f;
     public Rigidbody2D rb;
     bool wheelprompt = false;
+    bool shopprompt = false;
     [SerializeField] CollectableData item_coin;
 
     void Update()
@@ -32,19 +33,10 @@ public class SceneChange : MonoBehaviour
                 //Debug.Log("No");
             });
         }
-        if (wheelprompt && Input.GetKeyDown(KeyCode.E))
+        if (shopprompt && Input.GetKeyDown(KeyCode.E))
         {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
-            //Debug.Log("Key pressed while colliding with object!");
-            PopupManager.Instance.Confirm("Are you sure you want to embark?", () =>
-            {
-                //Debug.Log("Yes");
-                teleport();
-            }, () =>
-            {
-                stay();
-                //Debug.Log("No");
-            });
+            ShopManager.Instance.Show();
         }
     }
 
@@ -69,6 +61,7 @@ public class SceneChange : MonoBehaviour
         if (collision.gameObject.CompareTag("Shopkeeper"))
         {
             MessageManager.instance.DisplayShopkeeperText();
+            shopprompt = true;
         }     
         if (collision.gameObject.CompareTag("CabinBoy"))
         {
@@ -146,7 +139,7 @@ public class SceneChange : MonoBehaviour
     {
         int coins = Singleton.Instance.Inventory.GetCoins();
         Singleton.Instance.Inventory.Remove(item_coin, coins);
-        SceneManager.LoadScene("StartTestScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("StartTestScene");
     }
 
     void stay()

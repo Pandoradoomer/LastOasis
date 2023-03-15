@@ -41,7 +41,6 @@ public class PopupManager : MonoBehaviour
     public void Confirm(string question, Action yes, Action no)
     {
         gameObject.SetActive(true);
-        Debug.Log(yesBtn.transform.localPosition);
         text.text = question;
         yesBtn.onClick.AddListener(()=>
         {

@@ -8,11 +8,14 @@ public class Inventory : MonoBehaviour
     private Dictionary<CollectableData, int> itemDictionary = new Dictionary<CollectableData, int>();
     [SerializeField]
     private CollectableData coinEntry;
+    private CollectableData health_pot;
 
     private void Awake()
     {
         if(coinEntry != null)
             itemDictionary.Add(coinEntry, 0);
+        if (health_pot != null)
+            itemDictionary.Add(health_pot, 0);
     }
 
 
