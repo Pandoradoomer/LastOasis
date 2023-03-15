@@ -12,7 +12,7 @@ public class FungusAttack : AttackBase
 
     private void Start()
     {
-        stack = new FungusPoisonStack((int)enemyBase.attackDamage / 2);
+        stack = new FungusPoisonStack((int)enemyBase.attackDamage / 2, 0.75f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

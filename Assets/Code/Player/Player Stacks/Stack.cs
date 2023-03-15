@@ -9,8 +9,8 @@ public abstract class Stack
 
 public abstract class DepletableStack : Stack
 {
-    float timeToDeplete;
-    protected abstract void OnDeplete();
+    public float timeToDeplete;
+    public abstract void OnDeplete();
 }
 
 public abstract class NonDepletableStack : Stack

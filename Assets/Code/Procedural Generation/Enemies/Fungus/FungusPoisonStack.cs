@@ -6,11 +6,12 @@ public class FungusPoisonStack : DepletableStack
 {
     [SerializeField]
     private int damagePerStack;
-    public FungusPoisonStack(int damagePerStack)
+    public FungusPoisonStack(int damagePerStack, float timeToDeplete)
     {
         this.damagePerStack = damagePerStack;
+        this.timeToDeplete = timeToDeplete;
     }
-    protected override void OnDeplete()
+    public override void OnDeplete()
     {
         Singleton.Instance.PlayerStats.currentHealth -= damagePerStack;
     }
