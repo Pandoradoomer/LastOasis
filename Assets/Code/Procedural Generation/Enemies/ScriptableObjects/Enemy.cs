@@ -18,6 +18,7 @@ public class Enemy : ScriptableObject
     public Sprite Sprite;
     public EnemyType Type;
     public int Damage;
+    public int DamageOnCollision;
     public float difficulty;
     public float multiplier = 1.0f;
     public MonoScript Behaviour;
