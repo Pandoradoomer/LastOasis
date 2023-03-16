@@ -57,7 +57,8 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
     private IEnumerator Stun(float duration)
     {
         canMove = false;
-        StopCoroutine(AttackCoroutine);
+        if(AttackCoroutine != null)
+            StopCoroutine(AttackCoroutine);
         DoStopAttack();
         for (float i = 0; i <= duration; i += Time.deltaTime)
         {
