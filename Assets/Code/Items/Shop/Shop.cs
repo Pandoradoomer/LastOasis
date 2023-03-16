@@ -15,6 +15,7 @@ public class Shop : MonoBehaviour
     GameObject Item;
     [SerializeField] Transform shopList;
     [SerializeField] CollectableData item_health;
+    [SerializeField] CollectableData item_coin;
     private TextMeshProUGUI cost;
     private TextMeshProUGUI ItemName;
     private Sprite itemImage;
@@ -23,6 +24,7 @@ public class Shop : MonoBehaviour
     void Start()
     {
         ItemTemplate = shopList.GetChild(0).gameObject;
+        Singleton.Instance.Inventory.Add(item_coin, 20);
         ListItems();
     }
 
@@ -53,17 +55,29 @@ public class Shop : MonoBehaviour
         item.transform.Find("ItemPic").GetComponent<Image>().sprite = pic;
         Buy = item.transform.Find("Buy").GetComponent<Button>();
         Buy.onClick.AddListener(() => {
-            buyItem(item);
+            checkPrice(item);
         });
 
 
-
-        void buyItem(GameObject item)
+        void checkPrice(GameObject item)
+        {
+            int coins = Singleton.Instance.Inventory.GetCoins();
+            cost = item.transform.Find("Cost").GetComponent<TextMeshProUGUI>();
+            int price = int.Parse(cost.text);
+            if (coins >= price)
+            {
+                Debug.Log("Can buy");
+                buyItem(item, price);
+            }
+            Debug.Log("Can't afford");
+        }
+        void buyItem(GameObject item, int price)
         {
             PopupManager.Instance.Confirm("Are you sure you want to buy this?", () =>
             {
                 //Debug.Log("Yes");
                 AddItem(GetItem(item));
+                Singleton.Instance.Inventory.Remove(item_coin, price);
                 Buy = item.transform.Find("Buy").GetComponent<Button>();
                 Buy.interactable = false;
                 Buy.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "Purchased";

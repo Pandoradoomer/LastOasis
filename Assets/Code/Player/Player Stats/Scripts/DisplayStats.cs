@@ -44,7 +44,7 @@ public class DisplayStats : MonoBehaviour
     {
         playerAttack = player.GetComponent<PlayerAttack>();
         float delay = playerAttack.swingDelay;
-        return delay;
+        return delay*50;
     }
 
     float caldmg()
@@ -62,7 +62,7 @@ public class DisplayStats : MonoBehaviour
     }
     int caldhp()
     {
-        int hp = 0;
+        int hp = 100;
         //calculate based on contract
         return hp;
     }

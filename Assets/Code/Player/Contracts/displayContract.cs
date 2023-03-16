@@ -45,15 +45,15 @@ public class displayContract : MonoBehaviour
     //display contract info
     void contractlist()
     {
-        contractName.text = "Name";
-        contractDesc.text = "Description of contract";
+        contractName.text = "Kill Contract";
+        contractDesc.text = "Kill 20 skeletons";
     }
 
     void calbonus()
     {
         {
             //calculate bonus stats
-            bonusText.text = "Bonus Stats";
+            bonusText.text = "Bonus 3 Defense";
         }
     }
 
