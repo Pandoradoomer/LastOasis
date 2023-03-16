@@ -469,8 +469,8 @@ public class LevelGeneration : MonoBehaviour
             DrawMap();
             CreateBossRoom();
         }
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-            TeleportToBossRoom();
+        //if (Input.GetKeyDown(KeyCode.LeftControl))
+        //    TeleportToBossRoom();
 
     }
 

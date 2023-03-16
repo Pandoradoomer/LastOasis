@@ -39,6 +39,7 @@ public class WeepingTreeBehaviour : BaseAttackBehaviour
     {
         attackHitbox.GetComponent<SpriteRenderer>().enabled = false;
         timer = maxTimer;
+        isAttacking = false;
         attackHitbox.IsAttacking = false;
         attackHitbox.hasAttacked = false;
     }
