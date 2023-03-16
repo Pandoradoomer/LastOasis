@@ -8,6 +8,7 @@ public class AttackBase : MonoBehaviour
     [SerializeField]
     protected EnemyBase enemyBase;
     public bool IsAttacking = false;
+    public bool hasAttacked = false;
 
     void Start()
     {
@@ -33,6 +34,20 @@ public class AttackBase : MonoBehaviour
                 {
                     Hitbox = this.gameObject
                 });
+            }
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            if (IsAttacking && !hasAttacked)
+            {
+                EventManager.TriggerEvent(Event.EnemyHitPlayer, new EnemyHitPacket()
+                {
+                    healthDeplete = enemyBase.attackDamage
+                });
+                hasAttacked = true;
             }
         }
     }

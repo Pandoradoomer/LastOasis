@@ -161,6 +161,7 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
     protected override void DoStopAttack()
     {
         attackHitbox.IsAttacking = false;
+        attackHitbox.hasAttacked = false;
         attackHitbox.gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
 }

@@ -165,13 +165,13 @@ public class PlayerStats : MonoBehaviour
         {
             currentHealth -= ehp.healthDeplete;
             PlayerController.instance.invulnerability = true;
+            EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
+            {
+                textColor = Color.red,
+                position = transform.position,
+                damage = (int)ehp.healthDeplete
+            });
         }
-        EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
-        {
-            textColor = Color.red,
-            position = transform.position,
-            damage = (int)ehp.healthDeplete
-        });
     }
     private void OnDestroy()
     {
