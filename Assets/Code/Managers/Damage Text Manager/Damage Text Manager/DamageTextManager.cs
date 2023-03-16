@@ -87,7 +87,25 @@ public class DamageTextManager : MonoBehaviour
             {
                 textColor = Color.yellow,
                 damage = 5,
-                position = Singleton.Instance.PlayerController.transform.position
+                position = Singleton.Instance.PlayerController.transform.position + (Vector3)Random.insideUnitCircle
+            });
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
+            {
+                textColor = Color.red,
+                damage = 5,
+                position = Singleton.Instance.PlayerController.transform.position + (Vector3)Random.insideUnitCircle
+            });
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
+            {
+                textColor = Color.green,
+                damage = 5,
+                position = Singleton.Instance.PlayerController.transform.position + (Vector3)Random.insideUnitCircle
             });
         }
     }

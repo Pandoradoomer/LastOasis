@@ -329,7 +329,7 @@ public class LevelGeneration : MonoBehaviour
                 }
                 else
                 {
-                    roomPrefab = roomPrefabs[Random.Range(0, 2)];
+                    roomPrefab = roomPrefabs[Random.Range(0,roomPrefabs.Count)];
                 }
                 var go = Instantiate(roomPrefab, drawPos, Quaternion.identity);
                 go.name = $"Room {spawnedRooms.Count}";
