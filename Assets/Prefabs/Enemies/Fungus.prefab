@@ -160,10 +160,17 @@ MonoBehaviour:
   rb: {fileID: 2883471299118405730}
   speed: 2
   attackHitbox: {fileID: 4092553047194163884}
-  stunTime: 0.2
   windUpTime: 0.75
   strikeTime: 3
   timer: 5
+  maxDistanceCap: 5
+  maxDistanceDeplete: 0.5
+  minDistanceCap: 2
+  minDistanceDeplete: 1
+  time: 0.2
+  magnitude: 5
+  stunTime: 0.25
+  knockBackTime: 0.25
   eb: {fileID: -5141217683223057693}
 --- !u!1 &4436752161916268480
 GameObject:
@@ -282,5 +289,6 @@ MonoBehaviour:
   enemyBase: {fileID: -5141217683223057693}
   IsAttacking: 0
   hasAttacked: 0
+  hitboxRenderer: {fileID: 0}
   timeToDepleteStacks: 0.75
   stackDamage: 2
