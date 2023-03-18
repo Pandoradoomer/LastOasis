@@ -2,14 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SpiderState
+{
+    MOVE,
+    IDLE,
+    ATTACK,
+    STUN
+}
 public class SpiderBehaviour : BaseMoveAndAttackBehaviour
 {
+    public float DetectionRadius;
+
     [Header("Attack Properties")]
     [SerializeField]
     AttackBase attackHitbox;
-    public float stunTime;
+    private BoxCollider2D hitboxCollider;
     public float windUpTime;
     public float strikeTime;
+    [Tooltip("Time after attack when enemy doesn't move")]
+    public float attackCooldown;
+
+    [Header("Push back properties")]
+    public float time;
+    public float magnitude;
+    public float stunTime;
+    public float knockBackTime;
+
     
 
     //Base positions for the hitbox to use for reset/rescale
@@ -20,33 +38,24 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
     //Enemy Direction Facing
     public int xDir, yDir;
 
-    public bool isChillOut = true;
-    public float chillOutTimer = 0.0f;
-    private float maxChillOutTimer = 0.0f;
-    public float chillOutDuration = 0.0f;
-    private float maxChillOutDuration = 0.0f;
-
     private Coroutine AttackCoroutine;
     //Pathfinding Variables
     public List<GridCell> path = new List<GridCell>();
     GridCell nextCell = null;
+    GridCell destcell = null;
     public EnemyBase eb;
-
-    [SerializeField]
-    SpriteRenderer spotSpriteRenderer;
+    public SpiderState currState = SpiderState.MOVE;
     
     new void Start()
     {
         base.Start();
-        initialXScale = attackHitbox.transform.localScale.x;
-        initialYScale = attackHitbox.transform.localScale.y;
-        initialXPos = attackHitbox.transform.localPosition.x;
-        initialYPos = attackHitbox.transform.localPosition.y;
+        hitboxCollider = attackHitbox.GetComponent<BoxCollider2D>();
+        initialXScale = hitboxCollider.size.x;
+        initialYScale = hitboxCollider.size.y;
+        initialXPos = hitboxCollider.offset.x;
+        initialYPos = hitboxCollider.offset.y;
         eb = GetComponent<EnemyBase>();
         SetMultipliers();
-        spotSpriteRenderer.color = eb.enemyData.color;
-        chillOutTimer = Random.Range(4.0f, 5.0f);
-        chillOutDuration = Random.Range(0.5f, 1.0f);
 
     }
 
@@ -54,45 +63,45 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
     {
 
     }
-    private IEnumerator Stun(float duration)
-    {
-        canMove = false;
-        if(AttackCoroutine != null)
-            StopCoroutine(AttackCoroutine);
-        DoStopAttack();
-        for (float i = 0; i <= duration; i += Time.deltaTime)
-        {
-            yield return null;
-        }
-        canMove = true;
-    }
     protected override void DoAct()
     {
-        if (!isAttacking && canMove)
-            TurnAttackHitbox(rb.velocity);
-        if (canMove)
-            rb.velocity = GetNextMovement();
-        else
-            rb.velocity = Vector2.zero;
+        if(GetDistanceToPlayer() < DetectionRadius * DetectionRadius && currState == SpiderState.IDLE)
+        {
+            currState = SpiderState.MOVE;
+        }
+        if(GetDistanceToPlayer() > DetectionRadius * DetectionRadius && currState == SpiderState.MOVE)
+        {
+            if(nextCell != null)
+                nextCell = null;
+            currState = SpiderState.IDLE;
+        }
+        rb.velocity = GetNextMovement();
+        if (currState != SpiderState.ATTACK)
+            TurnAttackHitbox();
     }
 
-    void TurnAttackHitbox(Vector2 dir)
+    private float GetDistanceToPlayer()
     {
+        return (transform.position - Singleton.Instance.PlayerController.transform.position).sqrMagnitude;
+    }
+    void TurnAttackHitbox()
+    {
+        Vector2 dir = Singleton.Instance.PlayerController.transform.position - transform.position;
         dir = dir.normalized;
 
         //it is closer on the x axis
         if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
         {
             yDir = 0;
-            attackHitbox.transform.localScale = new Vector3(initialXScale, initialYScale, 1);
+            hitboxCollider.size = new Vector2(initialXScale, initialYScale);
             if (dir.x < 0)
             {
-                attackHitbox.transform.localPosition = new Vector3(-initialXPos, initialYPos, 0);
+                hitboxCollider.offset = new Vector2(-initialXPos, initialYPos);
                 xDir = -1;
             }
             else
             {
-                attackHitbox.transform.localPosition = new Vector3(initialXPos, initialYPos, 0);
+                hitboxCollider.offset = new Vector2(initialXPos, initialYPos);
                 xDir = 1;
             }
         }
@@ -100,46 +109,117 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
         else
         {
             xDir = 0;
-            attackHitbox.transform.localScale = new Vector3(initialYScale, initialXScale, 1);
+            hitboxCollider.size = new Vector2(initialYScale, initialXScale);
             if (dir.y < 0)
             {
-                attackHitbox.transform.localPosition = new Vector3(initialYPos, -initialXPos, 0);
+                hitboxCollider.offset = new Vector2(initialYPos, -initialXPos);
                 yDir = -1;
             }
             else
             {
-                attackHitbox.transform.localPosition = new Vector3(initialYPos, initialXPos, 0);
+                hitboxCollider.offset = new Vector2(initialYPos, initialXPos);
                 yDir = -1;
             }
 
         }
+        SetHitboxSprite();
     }
 
+    private void SetHitboxSprite()
+    {
+        attackHitbox.hitboxRenderer.transform.localPosition = hitboxCollider.offset;
+        attackHitbox.hitboxRenderer.transform.localScale = hitboxCollider.size;
+    }
     protected override void DoSetAnimatorVariables()
     {
 
     }
     protected override void OnHitAction()
     {
-        StartCoroutine(Stun(stunTime));
+        StartCoroutine(PushBack());
+    }
+    private IEnumerator PushBack()
+    {
+        currState = SpiderState.STUN;
+        canMove = false;
+        if (AttackCoroutine != null)
+            StopCoroutine(AttackCoroutine);
+        DoStopAttack();
+        Vector2 spiderPos = transform.position;
+        Vector2 playerPos = Singleton.Instance.PlayerController.transform.position;
+        Vector2 dir = (spiderPos - playerPos).normalized;
+
+        rb.velocity = Vector2.zero;
+        rb.AddForce(dir * magnitude, ForceMode2D.Impulse);
+        for(float i  = 0; i <= knockBackTime; i+= Time.deltaTime)
+        {
+            yield return null;
+        }
+        rb.velocity = Vector2.zero;
+        for (float i = 0; i <= stunTime; i+= Time.deltaTime)
+        {
+            yield return null;
+        }
+        canMove = true;
+        currState = SpiderState.MOVE;
+
     }
 
     protected override Vector2 GetMovement()
     {
-        return MovementFunctions.FollowPlayer(speed, transform.position, eb.rs, path, ref nextCell);
+        switch(currState)
+        {
+            case SpiderState.MOVE:
+                return MovementFunctions.FollowPlayer(speed, transform.position, eb.rs, path, ref nextCell);
+            case SpiderState.ATTACK:
+                return Vector2.zero;
+            case SpiderState.IDLE:
+                return MovementFunctions.Skitter(speed/2.0f, transform.position, eb.rs, path, ref nextCell, ref destcell);
+            case SpiderState.STUN:
+                return rb.velocity;
+        }
+        return rb.velocity;
     }
 
     public void OnHitboxEntered(IEventPacket packet)
     {
         EnemyHitboxEnteredPacket ehep = packet as EnemyHitboxEnteredPacket;
-        if (ehep.Hitbox == attackHitbox.gameObject && !isAttacking)
+        if(ReferenceEquals(ehep.Hitbox, attackHitbox.gameObject) && currState != SpiderState.ATTACK && currState != SpiderState.STUN)
         {
-            Attack();
+            currState = SpiderState.ATTACK;
+            if(!attackHitbox.IsAttacking)
+                Attack();
         }
     }
     protected override void DoAttack()
     {
         AttackCoroutine = StartCoroutine(AttackFunctions.Swing(this, this, windUpTime, strikeTime));
+    }
+
+    protected override void DoBeginAttack()
+    {
+        attackHitbox.IsAttacking = true;
+        attackHitbox.hitboxRenderer.enabled = true;
+    }
+
+    protected override void DoStopAttack()
+    {
+        attackHitbox.IsAttacking = false;
+        attackHitbox.hasAttacked = false;
+        attackHitbox.hitboxRenderer.enabled = false;
+        if (currState != SpiderState.STUN)
+        {
+            StartCoroutine(AttackCooldown());
+        }
+    }
+
+    private IEnumerator AttackCooldown()
+    {
+        for(float i = 0; i < attackCooldown; i += Time.deltaTime)
+        {
+            yield return null;
+        }
+        currState = SpiderState.MOVE;
     }
 
     protected override void AddAdditionalEventListeners()
@@ -151,18 +231,5 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
     {
 
         EventManager.StopListening(Event.EnemyHitboxEntered, OnHitboxEntered);
-    }
-
-    protected override void DoBeginAttack()
-    {
-        attackHitbox.IsAttacking = true;
-        attackHitbox.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-    }
-
-    protected override void DoStopAttack()
-    {
-        attackHitbox.IsAttacking = false;
-        attackHitbox.hasAttacked = false;
-        attackHitbox.gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
 }
