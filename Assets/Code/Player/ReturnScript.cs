@@ -14,7 +14,7 @@ public class ReturnScript : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             //Debug.Log("Key pressed while colliding with object!");
-            PopupManager.Instance.Confirm("Are you sure you want to return to the ship?", () =>
+            PopupManager.Instance.SpawnPopup(() =>
             {
                 //Debug.Log("Yes");
                 ship();
