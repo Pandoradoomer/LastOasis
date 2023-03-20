@@ -10,7 +10,19 @@ public class DoorTrigger : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+            StartCoroutine(DoTransition());
         }
+    }
+
+    IEnumerator DoTransition()
+    {
+        EventManager.TriggerEvent(Event.DialogueStart, null);
+        yield return StartCoroutine(GameObject.FindObjectOfType<TransitionManager>().FadeIn());
+        AsyncOperation sceneLoad = SceneManager.LoadSceneAsync("SampleScene");
+        while(!sceneLoad.isDone)
+        {
+            yield return null;
+        }
+
     }
 }
