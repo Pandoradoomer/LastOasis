@@ -69,21 +69,13 @@ public class Inventory : MonoBehaviour
         }
         ///}
     }
-    public void ClearInventory(CollectableData collectableData)
+    public void ClearInventory()
     {   //Clear inv when player dies in dungeon, keep items at save points
         //NEEDS MAKING MORE ROBUST, CLEAR MORE THAN ONE TYPE OF COLLECTABLE
 
-        if(itemDictionary.ContainsKey(collectableData))
-        {
-            // do we want to remove the item altogether and therefore not have the possibility
-            // to ever display it with UI, or do we want to set it to 0?
-            itemDictionary.Remove(collectableData);
-        }
-        else
-        {
-            Debug.LogError($"Could not find item of type {typeof(CollectableData)} in the inventory!");
-            return;
-        }
+
+        itemDictionary.Clear();
+        itemDictionary.Add(coinEntry, 0);
 
 
     }

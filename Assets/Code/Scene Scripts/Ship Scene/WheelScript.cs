@@ -38,7 +38,8 @@ public class WheelScript : MonoBehaviour
     }
     IEnumerator DoSceneChange()
     {
-        yield return StartCoroutine(transitionManager.FadeIn());
+        Singleton.Instance.Inventory.ClearInventory();
+        yield return StartCoroutine(Singleton.Instance.TransitionManager.FadeIn());
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("StartTestScene");
         while(!asyncLoad.isDone)
         {
