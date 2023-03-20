@@ -220,6 +220,7 @@ public class PlayerController : MonoBehaviour
 
     private void DisableIsDashing()
     {
+        rb.velocity = Vector2.zero;
         currentState = CURRENT_STATE.RUNNING;
         int playerLayer = gameObject.layer;
         int enemyLayer = LayerMask.NameToLayer("Enemy");
