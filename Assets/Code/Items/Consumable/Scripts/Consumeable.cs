@@ -25,7 +25,7 @@ public class Consumeable : MonoBehaviour
         {
             Destroy(gameObject);
             //PlayerStats.instance.currentHealth += health;
-            PlayerStats.currentHealth -= health;
+            //PlayerStats.currentHealth -= health;
         }
     }
 

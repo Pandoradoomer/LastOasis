@@ -45,8 +45,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        //speed = Singleton.Instance.PlayerStats.baseMovementSpeed;
-        speed = PlayerStats.moveSpeed;
         animator = GetComponent<Animator>();
     }
 
@@ -55,7 +53,7 @@ public class PlayerController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         invulnerabilityHolder = invulnerabilityDuration;
         originalColor = GetComponent<SpriteRenderer>().color;
-
+        speed = Singleton.Instance.PlayerStats.currentSpeed;
         EventManager.StartListening(Event.BossTeleport, BossTeleport);
         EventManager.StartListening(Event.DialogueStart, FreezePlayer);
         EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
@@ -83,7 +81,6 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        speed = PlayerStats.moveSpeed;
 
         if (isInDialogue)
             return;

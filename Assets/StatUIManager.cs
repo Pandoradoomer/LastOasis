@@ -35,20 +35,20 @@ public class StatUIManager : MonoBehaviour
 
     private void Awake()
     {
-        PlayerStats.health = PlayerPrefs.GetFloat("health");
-        Debug.Log(PlayerPrefs.GetFloat("health"));
-
-        PlayerStats.damage = PlayerPrefs.GetFloat("damage");
-        Debug.Log(PlayerPrefs.GetFloat("damage"));
-
-        PlayerStats.moveSpeed = PlayerPrefs.GetFloat("moveSpeed");
-        Debug.Log(PlayerPrefs.GetFloat("moveSpeed"));
-
-        PlayerStats.dexterity = PlayerPrefs.GetFloat("dexterity");
-        Debug.Log(PlayerPrefs.GetFloat("dexterity"));
-
-        PlayerStats.dexterity = PlayerPrefs.GetFloat("defence");
-        Debug.Log(PlayerPrefs.GetFloat("defence"));
+        //PlayerStats.health = PlayerPrefs.GetFloat("health");
+        //Debug.Log(PlayerPrefs.GetFloat("health"));
+        //
+        //PlayerStats.damage = PlayerPrefs.GetFloat("damage");
+        //Debug.Log(PlayerPrefs.GetFloat("damage"));
+        //
+        //PlayerStats.moveSpeed = PlayerPrefs.GetFloat("moveSpeed");
+        //Debug.Log(PlayerPrefs.GetFloat("moveSpeed"));
+        //
+        //PlayerStats.dexterity = PlayerPrefs.GetFloat("dexterity");
+        //Debug.Log(PlayerPrefs.GetFloat("dexterity"));
+        //
+        //PlayerStats.dexterity = PlayerPrefs.GetFloat("defence");
+        //Debug.Log(PlayerPrefs.GetFloat("defence"));
     }
     void Update()
     {
@@ -67,11 +67,11 @@ public class StatUIManager : MonoBehaviour
                 isInStatPage = true;
             }
         }
-        healthValue.text = PlayerStats.health.ToString();
-        damageValue.text = PlayerStats.damage.ToString();
-        movementSpeedValue.text = PlayerStats.moveSpeed.ToString();
-        dexterityValue.text = PlayerStats.dexterity.ToString();
-        defenceValue.text = PlayerStats.defence.ToString();
+       // healthValue.text = PlayerStats.health.ToString();
+       // damageValue.text = PlayerStats.damage.ToString();
+       // movementSpeedValue.text = PlayerStats.moveSpeed.ToString();
+       // dexterityValue.text = PlayerStats.dexterity.ToString();
+       // defenceValue.text = PlayerStats.defence.ToString();
     }
 
     void CheckForSave()
@@ -87,20 +87,21 @@ public class StatUIManager : MonoBehaviour
 
     public void SaveStats()
     {
-        PlayerPrefs.SetFloat("health", PlayerStats.health);
-        Debug.Log("Your health is: " + PlayerPrefs.GetFloat("health"));
-
-        PlayerPrefs.SetFloat("damage", PlayerStats.damage);
-        Debug.Log("Your damage is: " + PlayerPrefs.GetFloat("damage"));
-
-        PlayerPrefs.SetFloat("moveSpeed", PlayerStats.moveSpeed);
-        Debug.Log("Your move speed is: " + PlayerPrefs.GetFloat("moveSpeed"));
-
-        PlayerPrefs.SetFloat("dexterity", PlayerStats.dexterity);
-        Debug.Log("Your dexterity is: " + PlayerPrefs.GetFloat("dexterity"));
-
-        PlayerPrefs.SetFloat("defence", PlayerStats.defence);
-        Debug.Log("Your defence is: " + PlayerPrefs.GetFloat("defence"));
+        
+        //PlayerPrefs.SetInt("health", Singleton.Instance.PlayerStats.health);
+        //Debug.Log("Your health is: " + PlayerPrefs.GetFloat("health"));
+        //
+        //PlayerPrefs.SetFloat("damage", PlayerStats.damage);
+        //Debug.Log("Your damage is: " + PlayerPrefs.GetFloat("damage"));
+        //
+        //PlayerPrefs.SetFloat("moveSpeed", PlayerStats.moveSpeed);
+        //Debug.Log("Your move speed is: " + PlayerPrefs.GetFloat("moveSpeed"));
+        //
+        //PlayerPrefs.SetFloat("dexterity", PlayerStats.dexterity);
+        //Debug.Log("Your dexterity is: " + PlayerPrefs.GetFloat("dexterity"));
+        //
+        //PlayerPrefs.SetFloat("defence", PlayerStats.defence);
+        //Debug.Log("Your defence is: " + PlayerPrefs.GetFloat("defence"));
     }
 
     public void ResetSavedStats()
@@ -117,19 +118,19 @@ public class StatUIManager : MonoBehaviour
 
     public void LoadStats()
     {
-        PlayerStats.health = PlayerPrefs.GetFloat("health");
-        Debug.Log(PlayerPrefs.GetFloat("health"));
-
-        PlayerStats.damage = PlayerPrefs.GetFloat("damage");
-        Debug.Log(PlayerPrefs.GetFloat("damage"));
-
-        PlayerStats.moveSpeed = PlayerPrefs.GetFloat("moveSpeed");
-        Debug.Log(PlayerPrefs.GetFloat("moveSpeed"));
-
-        PlayerStats.dexterity = PlayerPrefs.GetFloat("dexterity");
-        Debug.Log(PlayerPrefs.GetFloat("dexterity"));
-
-        PlayerStats.dexterity = PlayerPrefs.GetFloat("defence");
-        Debug.Log(PlayerPrefs.GetFloat("defence"));
+        //PlayerStats.health = PlayerPrefs.GetFloat("health");
+        //Debug.Log(PlayerPrefs.GetFloat("health"));
+        //
+        //PlayerStats.damage = PlayerPrefs.GetFloat("damage");
+        //Debug.Log(PlayerPrefs.GetFloat("damage"));
+        //
+        //PlayerStats.moveSpeed = PlayerPrefs.GetFloat("moveSpeed");
+        //Debug.Log(PlayerPrefs.GetFloat("moveSpeed"));
+        //
+        //PlayerStats.dexterity = PlayerPrefs.GetFloat("dexterity");
+        //Debug.Log(PlayerPrefs.GetFloat("dexterity"));
+        //
+        //PlayerStats.dexterity = PlayerPrefs.GetFloat("defence");
+        //Debug.Log(PlayerPrefs.GetFloat("defence"));
     }
 }

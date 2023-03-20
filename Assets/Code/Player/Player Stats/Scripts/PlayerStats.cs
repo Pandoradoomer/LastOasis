@@ -4,9 +4,30 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
+using Unity.VisualScripting;
+
+public enum Stats
+{
+    Health,
+    Speed,
+    Defence,
+    Dexterity,
+    Damage
+}
+
+public enum MaxStats
+{
+    MaxHealth,
+    MaxSpeed,
+    MaxDefence,
+    MaxDexterity,
+    MaxDamage
+}
 
 public class PlayerStats : MonoBehaviour
 {
+    /*
     public static float health
     {
         get
@@ -132,25 +153,53 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField] public static float baseDefence = 1f;
     [SerializeField] public static float currentDefence = baseDefence;
-    [SerializeField] private static float cappedDefence = 55.0f;
+    [SerializeField] private static float cappedDefence = 55.0f;*/
 
-    [SerializeField] public int coinCounter = 0;
-    [SerializeField] CollectableData item_coin;
-    [SerializeField] CollectableData item_coin_pile;
-    [SerializeField] CollectableData item_coin_bag;
-    [SerializeField] ConsumeableData item_health;
-    [SerializeField] private Slider playerHealthSlider;
-    //Current stat values are calculations added on top of base value
-    //Capped value is used as a condition for: when the current value is >= capped value, then set currentValue = cappedValue
-    //Invoke event to open UI panel when interacting with E on Npcs and mast. Create InteractManager with invoke methods 
-    public TextMeshProUGUI coinText;
-    public TextMeshProUGUI healthText;
+    //Values that the player is currently holding
+    [Header("Current Values")]
+    public int currentHealth = -1;
+    public float currentSpeed = -1;
+    public float currentDexterity = -1;
+    public int currentDamage = -1;
+    public float currentDefence = -1;
+
+    private bool hasBeenInit = false;
+    //Values used for INITIALISATION ONLY
+    [Header("Base values")]
+    public int baseHealth = 100;
+    public float baseSpeed = 2.0f;
+    public float baseDexterity = 0.0f;
+    public int baseDamage = 5;
+    public float baseDefence = 1.0f;
+
+    //Values used to define the maximum value of a stat
+    //Useful for when we temporarily increase/decrease a stat, so we can then reset them to this value
+    [Header("Max values")]
+    public int maxHealth = -1;
+    public float maxSpeed = -1;
+    public float maxDexterity = -1;
+    public int maxDamage = -1;
+    public float maxDefence = -1;
     public static PlayerStats instance { get; private set; }
     void Start()
     {
-        coinText.text = "Coins: " + 0;
-        playerHealthSlider.maxValue = baseHealth;
+        if (PlayerPrefs.HasKey("isSet"))
+            hasBeenInit = Convert.ToBoolean(PlayerPrefs.GetString("isSet"));
+        if(!hasBeenInit)
+        {
+            hasBeenInit = true;
+            currentHealth = maxHealth = baseHealth;
+            currentSpeed = maxSpeed = baseSpeed;
+            currentDexterity = maxDexterity = baseDexterity;
+            currentDefence = maxDefence = baseDefence;
+            currentDamage = maxDamage = baseDamage;
+        }
+        else
+        {
+            LoadValues();
+        }
         EventManager.StartListening(Event.EnemyHitPlayer, OnEnemyHit);
+        DontDestroyOnLoad(this.gameObject);
     }
     private void Awake()
     {
@@ -162,118 +211,114 @@ public class PlayerStats : MonoBehaviour
         {
             instance = this;
         }
-        //currentHealth = baseHealth;
-        //health = PlayerPrefs.GetFloat(health);
     }
 
     void Update()
-    {
-        healthText.text = "Health: " + currentHealth.ToString("#.00");      //Round to 2 d.p
+    {   
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            ResetStatValues();
+        }
         if (currentHealth <= 0)
         {
             //Reload scene
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             Debug.Log("Player died");
         }
         //if (currentHealth >= baseHealth)
         //{
         //    currentHealth = baseHealth;
         //}
-        playerHealthSlider.value = currentHealth;
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            health += 5.0f;
+            maxHealth += 5;
+            currentHealth = maxHealth;
 
-            Debug.Log("Current health: " + health);
-            Debug.Log("Base health: " + baseHealth);
+            Debug.Log("Current health: " + currentHealth);
+            Debug.Log("Base health: " + maxHealth);
         }
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            health -= 5.0f;
+            maxHealth -= 5;
+            currentHealth = maxHealth;
 
-            Debug.Log("Current health: " + health);
-            Debug.Log("Base health: " + baseHealth);
+            Debug.Log("Current health: " + currentHealth);
+            Debug.Log("Base health: " + maxHealth);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            damage += 2.0f;
+            maxDamage += 2;
+            currentDamage = maxDamage;
 
             Debug.Log("Current damage: " + currentDamage);
-            Debug.Log("Base damage: " + baseDamage);
+            Debug.Log("Base damage: " + maxDamage);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            damage -= 2.0f;
+            maxDamage -= 2;
+            currentDamage = maxDamage;
 
-            Debug.Log("Current damage: " + damage);
-            Debug.Log("Base damage: " + baseDamage);
+            Debug.Log("Current damage: " + currentDamage);
+            Debug.Log("Base damage: " + maxDamage);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            moveSpeed += 0.1f;
+            maxSpeed += 0.1f;
+            currentSpeed = maxSpeed;
 
-            Debug.Log("Current move speed: " + currentMoveSpeed);
-            Debug.Log("Base move speed: " + baseMovementSpeed);
+            Debug.Log("Current move speed: " + currentSpeed);
+            Debug.Log("Base move speed: " + maxSpeed);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            moveSpeed -= 0.1f;
+            maxSpeed -= 0.1f;
+            currentSpeed = maxSpeed;
 
-            Debug.Log("Current move speed: " + currentMoveSpeed);
-            Debug.Log("Base move speed: " + baseMovementSpeed);
+            Debug.Log("Current move speed: " + currentSpeed);
+            Debug.Log("Base move speed: " + maxSpeed);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            defence += 1.0f;
+            maxDefence += 1.0f;
+            currentDefence = maxDefence;
 
             Debug.Log("Current defence: " + currentDefence);
-            Debug.Log("Base defence: " + baseDefence);
+            Debug.Log("Base defence: " + maxDefence);
 
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            defence -= 1.0f;
+            maxDefence -= 1.0f;
+            currentDefence = maxDefence;
 
             Debug.Log("Current defence: " + currentDefence);
-            Debug.Log("Base defence: " + baseDefence);
+            Debug.Log("Base defence: " + maxDefence);
 
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            dexterity += 0.005f;
-
+            maxDexterity += 0.005f;
+            currentDexterity = maxDexterity;
+            
             Debug.Log("Current dexterity: " + currentDexterity);
-            Debug.Log("Base dexterity: " + baseDexterity);
+            Debug.Log("Base dexterity: " + maxDexterity);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            dexterity -= 0.005f;
+            maxDexterity -= 0.005f;
+            currentDexterity = maxDexterity;
 
             Debug.Log("Current dexterity: " + currentDexterity);
-            Debug.Log("Base dexterity: " + baseDexterity);
+            Debug.Log("Base dexterity: " + maxDexterity);
         }
-        //if (Input.GetKeyDown(KeyCode.C) && Inventory.instance.HasCoin(item_coin))
-        //{
-        //    Inventory.instance.Remove(item_coin, 1);
-        //    Debug.Log("You spent 1 coin");
-        //    coinCounter--;
-        //    coinText.text = "Coins: " + coinCounter;
-        //    if (coinCounter <= 0)
-        //    {
-        //        Debug.Log("You have no coins");
-        //    }
-        //}
-        //Fix bug of removing coins after its reached 0
-        //Key press to spend all coins
-        coinText.text = $"Coins: {Singleton.Instance.Inventory.GetCoins()}";
     }
 
 
@@ -370,7 +415,7 @@ public class PlayerStats : MonoBehaviour
         EnemyHitPacket ehp = packet as EnemyHitPacket;
         if (!PlayerController.instance.invulnerability)
         {
-            currentHealth -= ehp.healthDeplete;
+            currentHealth -= (int)ehp.healthDeplete;
             PlayerController.instance.invulnerability = true;
             EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
             {
@@ -383,19 +428,48 @@ public class PlayerStats : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.StopListening(Event.EnemyHitPlayer, OnEnemyHit);
+        SaveValues();
     }
 
-    public void IncreaseHealth()
+    public void SaveValues()
     {
-        currentHealth = baseHealth + 2;
+        PlayerPrefs.SetInt(Stats.Health.ToString(), currentHealth);
+        PlayerPrefs.SetInt(Stats.Damage.ToString(), currentDamage);
+        PlayerPrefs.SetFloat(Stats.Defence.ToString(), currentDefence);
+        PlayerPrefs.SetFloat(Stats.Dexterity.ToString(), currentDexterity);
+        PlayerPrefs.SetFloat(Stats.Speed.ToString(), currentSpeed);
+
+        PlayerPrefs.SetInt(MaxStats.MaxHealth.ToString(), maxHealth);
+        PlayerPrefs.SetInt(MaxStats.MaxDamage.ToString(), maxDamage);
+        PlayerPrefs.SetFloat(MaxStats.MaxDefence.ToString(), maxDefence);
+        PlayerPrefs.SetFloat(MaxStats.MaxDexterity.ToString(), maxDexterity);
+        PlayerPrefs.SetFloat(MaxStats.MaxSpeed.ToString(), maxSpeed);
+        PlayerPrefs.SetString("isSet", hasBeenInit.ToString());
+    }
+
+    public void LoadValues()
+    {
+
+        currentHealth = PlayerPrefs.GetInt(Stats.Health.ToString(), currentHealth);
+        currentDamage = PlayerPrefs.GetInt(Stats.Damage.ToString(), currentDamage);
+        currentDefence = PlayerPrefs.GetFloat(Stats.Defence.ToString(), currentDefence);
+        currentDexterity = PlayerPrefs.GetFloat(Stats.Dexterity.ToString(), currentDexterity);
+        currentSpeed = PlayerPrefs.GetFloat(Stats.Speed.ToString(), currentSpeed);
+
+        maxHealth =  PlayerPrefs.GetInt(MaxStats.MaxHealth.ToString(), maxHealth);
+        maxDamage = PlayerPrefs.GetInt(MaxStats.MaxDamage.ToString(), maxDamage);
+        maxDefence = PlayerPrefs.GetFloat(MaxStats.MaxDefence.ToString(), maxDefence);
+        maxDexterity = PlayerPrefs.GetFloat(MaxStats.MaxDexterity.ToString(), maxDexterity);
+        maxSpeed = PlayerPrefs.GetFloat(MaxStats.MaxSpeed.ToString(), maxSpeed);
+        hasBeenInit = Convert.ToBoolean(PlayerPrefs.GetString("isSet"));
     }
 
     public void ResetStatValues()
     {
-        currentHealth = baseHealth;
-        currentDamage = baseDamage;
-        currentMoveSpeed = baseMovementSpeed;
-        currentDexterity = baseDexterity;
-        currentDefence = baseDefence;
+        currentHealth = maxHealth = baseHealth;
+        currentDamage = maxDamage = baseDamage;
+        currentSpeed = maxSpeed = baseSpeed;
+        currentDexterity = currentDexterity = baseDexterity;
+        currentDefence = maxDefence = baseDefence;
     }
 }

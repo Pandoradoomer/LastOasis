@@ -70,7 +70,8 @@ public class EventManager : MonoBehaviour
         Action<IEventPacket> thisEvent = null;
         if(Instance.eventDictionary.TryGetValue(e, out thisEvent))
         {
-            thisEvent.Invoke(packet);
+            if(thisEvent != null)
+                thisEvent.Invoke(packet);
         }
     }
 

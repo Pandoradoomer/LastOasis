@@ -462,6 +462,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camConfiner: {fileID: 267082924}
   changeRoom: 1
+--- !u!1 &323294210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 323294211}
+  - component: {fileID: 323294212}
+  m_Layer: 0
+  m_Name: Singleton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &323294211
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323294210}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 792733579}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &323294212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323294210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3f0657cfe631245adfc4e2cb8fd68b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  p_playerStats: {fileID: 3163616529434814902, guid: 89463754a35f643438a53cce11c10e1a, type: 3}
+  p_inventory: {fileID: 9137307401040258604, guid: 4706ec1584bcc5c4ca53d489e7089a43, type: 3}
 --- !u!1 &406970916
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,6 +867,7 @@ MonoBehaviour:
   qmText: {fileID: 0}
   saText: {fileID: 0}
   wheelText: {fileID: 0}
+  mastText: {fileID: 0}
   pickupHealthActivateText: {fileID: 897883989}
   displayMessages: 1
 --- !u!1 &657289896
@@ -1193,6 +1240,7 @@ Transform:
   - {fileID: 2060320100}
   - {fileID: 786109709}
   - {fileID: 1300895956}
+  - {fileID: 323294211}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2406,7 +2454,6 @@ GameObject:
   - component: {fileID: 1703071645}
   - component: {fileID: 1703071641}
   - component: {fileID: 1703071644}
-  - component: {fileID: 1703071646}
   - component: {fileID: 1703071647}
   - component: {fileID: 1703071648}
   - component: {fileID: 1703071649}
@@ -2549,28 +2596,6 @@ MonoBehaviour:
   lastPlayerDirection: {x: 0, y: 0}
   doorWayPoint: {fileID: 0}
   lastKeyPressed: 0
---- !u!114 &1703071646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1703071640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b767754c5c346544b9f0a6d10755277c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  coinCounter: 0
-  item_coin: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
-  item_coin_pile: {fileID: 11400000, guid: 1ec798ec710a5da438483a5e40669421, type: 2}
-  item_coin_bag: {fileID: 11400000, guid: 983c81ff7cf7f8941ae1e38141f0ca3d, type: 2}
-  item_health: {fileID: 11400000, guid: e60e0828f7f717a42abfde00849991a4, type: 2}
-  playerHealthSlider: {fileID: 833101058}
-  coinText: {fileID: 176066924}
-  healthText: {fileID: 1370863165}
 --- !u!114 &1703071647
 MonoBehaviour:
   m_ObjectHideFlags: 0

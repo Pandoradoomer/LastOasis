@@ -32,7 +32,7 @@ public class PlayerAttack : MonoBehaviour
         EventManager.StartListening(Event.DialogueStart, FreezePlayer);
         EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
         //swingDamage = Singleton.Instance.PlayerStats.currentDamage;
-        swingDamage = PlayerStats.currentDamage;
+        swingDamage = Singleton.Instance.PlayerStats.currentDamage;
         comboTimerHolder = comboTimer;
         swingDamageHolder = swingDamage;
         targetLayer = LayerMask.GetMask("Enemy", "Destructible");
@@ -77,7 +77,6 @@ public class PlayerAttack : MonoBehaviour
             }
         }
         ResetComboOnTime();
-        swingDamage = PlayerStats.currentDamage;
     }
 
     private IEnumerator SwingSword()

@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms.GameCenter;
 using UnityEngine.Timeline;
 
-public class Singleton
+public class Singleton : MonoBehaviour
 {
-    private static Singleton _instance;
+    public static Singleton Instance;
 
     private LevelGeneration levelGeneration;
     private PlayerStats playerStats;
@@ -18,11 +18,26 @@ public class Singleton
     private PlayerStacks playerStacks;
     private TransitionManager transitionManager;
 
-    private Singleton()
-    {
+    public GameObject p_playerStats;
+    public GameObject p_inventory;
+
+    private void Awake()
+    {   
+        if(Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }    
+        else
+        {
+            Instance = this;
+        }
         levelGeneration = GameObject.FindObjectOfType<LevelGeneration>();
         playerStats = GameObject.FindObjectOfType<PlayerStats>();
+        if(playerStats == null)
+            playerStats = Instantiate(p_playerStats).GetComponent<PlayerStats>();
         inventory = GameObject.FindObjectOfType<Inventory>();
+        if (inventory == null)
+            inventory = Instantiate(p_inventory).GetComponent<Inventory>();
         itemSpawnManager = GameObject.FindObjectOfType<ItemSpawnManager>();
         enemyManager = GameObject.FindObjectOfType<EnemyManager>();
         playerController = GameObject.FindObjectOfType<PlayerController>();
@@ -31,19 +46,9 @@ public class Singleton
 
     }
 
-    public static Singleton Instance
-    {
-        get
-        {
-            if (_instance == null)
-                _instance = new Singleton();
-            return _instance;
-        }
-    }
-
     public static void Reset()
     {
-        _instance = null;
+        Instance = null;
     }
 
     public LevelGeneration LevelGeneration { get => levelGeneration; }

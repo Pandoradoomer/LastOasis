@@ -7180,6 +7180,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374912521}
   m_CullTransparentMesh: 1
+--- !u!1 &378519337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 378519338}
+  m_Layer: 0
+  m_Name: PlayerStats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &378519338
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378519337}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -18.46291, y: 1.9185674, z: 0.99218184}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &386218771
 GameObject:
   m_ObjectHideFlags: 0
@@ -16799,11 +16830,26 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 818953198}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b767754c5c346544b9f0a6d10755277c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: -1
+  currentSpeed: -1
+  currentDexterity: -1
+  currentDamage: -1
+  currentDefence: -1
+  baseHealth: 100
+  baseSpeed: 2
+  baseDexterity: 0
+  baseDamage: 5
+  baseDefence: 1
+  maxHealth: -1
+  maxSpeed: -1
+  maxDexterity: -1
+  maxDamage: -1
+  maxDefence: -1
   coinCounter: 0
   item_coin: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
   item_coin_pile: {fileID: 11400000, guid: 1ec798ec710a5da438483a5e40669421, type: 2}
@@ -31387,6 +31433,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - {fileID: 11400000, guid: a22c6f107e73ddb43b97b3a5243fbdd6, type: 2}
   - {fileID: 11400000, guid: acb1ebe52ab57b944ace4ab8b3b12a31, type: 2}
+  SpawnOnStart: 0
 --- !u!1 &1532375715
 GameObject:
   m_ObjectHideFlags: 0

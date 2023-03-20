@@ -17,22 +17,30 @@ public class TransitionManager : MonoBehaviour
     float fadeInTime;
     [SerializeField]
     GameObject inventory;
+    [SerializeField]
+    GameObject playerStats;
     // Start is called before the first frame update
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnLevelLoaded;
+        SceneManager.sceneUnloaded += OnLevelUnloaded;
     }
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnLevelLoaded;
+        SceneManager.sceneUnloaded -= OnLevelUnloaded;
     }
     void Start()
     {
 
-        if (GameObject.FindObjectOfType<Inventory>() == null)
-        {
-            Instantiate(inventory);
-        }
+        //if (GameObject.FindObjectOfType<Inventory>() == null)
+        //{
+        //    var go = Instantiate(inventory);
+        //}
+        //if (GameObject.FindObjectOfType<PlayerStats>() == null)
+        //{
+        //    var go = Instantiate(playerStats);
+        //}
     }
 
     // Update is called once per frame
@@ -43,8 +51,12 @@ public class TransitionManager : MonoBehaviour
     
     public void OnLevelLoaded(Scene scene, LoadSceneMode mode)
     {
-        Singleton.Reset();
         StartCoroutine(FadeOut());
+    }
+
+    public void OnLevelUnloaded(Scene scene)
+    {
+        //Singleton.Reset();
     }
 
     public IEnumerator FadeOut()
@@ -73,6 +85,7 @@ public class TransitionManager : MonoBehaviour
 
     public IEnumerator FadeIn()
     {
+        Singleton.Instance.PlayerStats.SaveValues();
         topPanel.gameObject.SetActive(true);
         bottomPanel.gameObject.SetActive(true);
         float maxLerp = topPanel.rectTransform.offsetMin.y + 10;
