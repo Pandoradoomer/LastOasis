@@ -71,6 +71,9 @@ public class PlayerController : MonoBehaviour
     void FreezePlayer(IEventPacket packet)
     {
         rb.velocity = Vector2.zero;
+        animator.SetBool("isMoving", false);
+        animator.SetFloat("moveX", 0);
+        animator.SetFloat("moveY", 0);
         isInDialogue = true;
     }
 

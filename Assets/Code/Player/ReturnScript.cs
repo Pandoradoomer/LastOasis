@@ -1,44 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Transactions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ReturnScript : MonoBehaviour
 {
-    public Rigidbody2D rb;
-    // Start is called before the first frame update
-    // Update is called once per frame
+
+    [SerializeField]
+    private bool playerIsInRange = false;
+    [SerializeField]
+    PopupManager popupManager;
+
+    private void Start()
+    {
+        popupManager = FindObjectOfType<PopupManager>(true);
+    }
+
     void Update()
     {
-        if (room() && Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
-            //Debug.Log("Key pressed while colliding with object!");
-            PopupManager.Instance.Confirm("Are you sure you want to return to the ship?", () =>
+            if (playerIsInRange)
             {
-                //Debug.Log("Yes");
-                ship();
-            }, () =>
-            {
-                stay();
-                //Debug.Log("No");
-            });
+                EventManager.TriggerEvent(Event.DialogueStart, null);
+                popupManager.SpawnPopup(() =>
+                {
+                    StartCoroutine(DoSceneChange());
+                }, () =>
+                {
+                    EventManager.TriggerEvent(Event.DialogueFinish, null);
+                });
+            }
+        }
+
+    }
+    IEnumerator DoSceneChange()
+    {
+        yield return StartCoroutine(Singleton.Instance.TransitionManager.FadeIn());
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Ship");
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.gameObject.tag == "Player")
+        {
+            playerIsInRange = true;
         }
     }
 
-    void ship()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        SceneManager.LoadScene("Ship", LoadSceneMode.Single);
-    }
-
-    void stay()
-    {
-        rb.constraints = RigidbodyConstraints2D.None;
-    }
-
-    //check conditions for return
-    bool room()
-    {
-        return true;
+        if (collision.gameObject.tag == "Player")
+        {
+            playerIsInRange = false;
+        }
     }
 }

@@ -57,15 +57,10 @@ public class PlayerAttack : MonoBehaviour
         if (isInDialogue)
             return;
             //StartCoroutine(SwingSword());
-
-
-        if (SceneManager.GetActiveScene().buildIndex != 3)
+        if (Input.GetMouseButton(0) && canAttack /*&& !instance.invulnerability*/ && instance.currentState != CURRENT_STATE.DASHING && !isComboAttack)
         {
-            if (Input.GetMouseButton(0) && canAttack && !instance.invulnerability && instance.currentState != CURRENT_STATE.DASHING && !isComboAttack)
-            {
-                StartCoroutine(AttackEnum());
-                //Invoke("ResetAttack", swingDelay + animationLength);
-            }
+            StartCoroutine(AttackEnum());
+            //Invoke("ResetAttack", swingDelay + animationLength);
         }
         if(isComboAttack)
         {

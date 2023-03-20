@@ -48,6 +48,9 @@ public class LevelGeneration : MonoBehaviour
     int startRoomX, startRoomY;
 
     [SerializeField] private Animator cameraTransition;
+    int roomIndex = 0;
+    [SerializeField] private GameObject returnToShipObject;
+    [SerializeField] GameObject inventory;
     //GameObject[] gos = GameObject.FindGameObjectsWithTag("DoorWaypoint");
     // Start is called before the first frame update
     void Awake()
@@ -459,15 +462,21 @@ public class LevelGeneration : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            BossManager.instance.bossHPSlider.SetActive(true);
+            //BossManager.instance.bossHPSlider.SetActive(true);
             //foreach (GameObject go in spawnedRooms)
             //    Destroy(go);
-            spawnedRooms.Clear();
-            takenPositions.Clear();
-            CreateRooms(); 
-            SetRoomDoors();
-            DrawMap();
-            CreateBossRoom();
+            //spawnedRooms.Clear();
+            //takenPositions.Clear();
+            //CreateRooms(); 
+            //SetRoomDoors();
+            //DrawMap();
+            //CreateBossRoom();
+            Instantiate(returnToShipObject, GetRoomFromIndex(roomIndex).gameObject.transform.position, Quaternion.identity);
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            Singleton.Instance.Inventory.AddCoins(10);
         }
         //if (Input.GetKeyDown(KeyCode.LeftControl))
         //    TeleportToBossRoom();
@@ -486,7 +495,7 @@ public class LevelGeneration : MonoBehaviour
         RoomExitPacket rep = packet as RoomExitPacket;
         SpawnedRoomData currentRoom = spawnedRooms[rep.roomIndex];
         SpawnedRoomData nextRoom = spawnedRooms[rep.nextRoomIndex];
-
+        roomIndex = rep.nextRoomIndex;
         rooms[currentRoom.x, currentRoom.y].go.SetActive(false);
         rooms[nextRoom.x, nextRoom.y].go.SetActive(true);
         DoorManager dm = nextRoom.go.GetComponent<DoorManager>();

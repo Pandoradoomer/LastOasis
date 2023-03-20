@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.GameCenter;
 using UnityEngine.Timeline;
@@ -15,6 +16,7 @@ public class Singleton
     private EnemyManager enemyManager;
     private PlayerController playerController;
     private PlayerStacks playerStacks;
+    private TransitionManager transitionManager;
 
     private Singleton()
     {
@@ -25,6 +27,7 @@ public class Singleton
         enemyManager = GameObject.FindObjectOfType<EnemyManager>();
         playerController = GameObject.FindObjectOfType<PlayerController>();
         playerStacks = GameObject.FindObjectOfType<PlayerStacks>();
+        transitionManager = GameObject.FindObjectOfType<TransitionManager>();
 
     }
 
@@ -38,6 +41,11 @@ public class Singleton
         }
     }
 
+    public static void Reset()
+    {
+        _instance = null;
+    }
+
     public LevelGeneration LevelGeneration { get => levelGeneration; }
     public PlayerStats PlayerStats { get => playerStats;}
     public Inventory Inventory { get => inventory; }
@@ -45,7 +53,7 @@ public class Singleton
     public EnemyManager EnemyManager { get => enemyManager; }
     public PlayerController PlayerController { get => playerController;}
     public PlayerStacks PlayerStacks { get => playerStacks;}
-
+    public TransitionManager TransitionManager { get => transitionManager;}
 
    
 }

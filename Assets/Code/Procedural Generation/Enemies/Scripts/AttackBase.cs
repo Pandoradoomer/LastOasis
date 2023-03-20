@@ -9,6 +9,7 @@ public class AttackBase : MonoBehaviour
     protected EnemyBase enemyBase;
     public bool IsAttacking = false;
     public bool hasAttacked = false;
+    public SpriteRenderer hitboxRenderer;
 
     void Start()
     {
@@ -23,11 +24,26 @@ public class AttackBase : MonoBehaviour
     private void OnDestroy()
     {
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if(collision.gameObject.tag == "Player")
+    //    {
+    //        if(!IsAttacking)
+    //        {
+    //            //send message to attack
+    //            EventManager.TriggerEvent(Event.EnemyHitboxEntered, new EnemyHitboxEnteredPacket()
+    //            {
+    //                Hitbox = this.gameObject
+    //            });
+    //        }
+    //    }
+    //}
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
-            if(!IsAttacking)
+            if (!IsAttacking)
             {
                 //send message to attack
                 EventManager.TriggerEvent(Event.EnemyHitboxEntered, new EnemyHitboxEnteredPacket()
@@ -35,13 +51,7 @@ public class AttackBase : MonoBehaviour
                     Hitbox = this.gameObject
                 });
             }
-        }
-    }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            if (IsAttacking && !hasAttacked)
+            else if (IsAttacking && !hasAttacked)
             {
                 EventManager.TriggerEvent(Event.EnemyHitPlayer, new EnemyHitPacket()
                 {

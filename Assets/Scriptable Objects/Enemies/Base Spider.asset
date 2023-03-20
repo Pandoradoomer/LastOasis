@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Base Spider
   m_EditorClassIdentifier: 
   Name: Spider
-  MaxHealth: 10
-  Sprite: {fileID: 0}
+  MaxHealth: 10000
+  Sprite: {fileID: 21300000, guid: 350626fd8d6ad5d43bdcf0d002ffc22d, type: 3}
   Type: 0
-  Damage: 8
-  DamageOnCollision: 8
+  Damage: 0
+  DamageOnCollision: 0
   difficulty: 2.5
   multiplier: 1
   Behaviour: {fileID: 0}
@@ -27,4 +27,4 @@ MonoBehaviour:
     minItemQuantity: 10
     maxItemQuantity: 15
     dropProbability: 1
-  color: {r: 0.8039216, g: 0.49803922, b: 0.19607843, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}

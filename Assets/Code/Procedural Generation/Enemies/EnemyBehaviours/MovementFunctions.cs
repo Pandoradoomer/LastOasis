@@ -17,6 +17,13 @@ public static class MovementFunctions
         return Direction * speed;
     }
 
+    public static Vector2 RunFromPlayer(float speed, Vector2 currentPos)
+    {
+        Vector2 playerPos = Singleton.Instance.PlayerController.transform.position;
+        Vector2 dir = (currentPos - playerPos).normalized;
+        return dir * speed;
+    }
+
     public static GridCell GetCell(Vector2 pos, GridCell[,] grid)
     {
         pos.x = Mathf.RoundToInt(pos.x);
@@ -31,8 +38,7 @@ public static class MovementFunctions
         }
         return null;
     }
-
-    public static List<GridCell> FollowPlayer(Vector2 currPos, GridCell[,] grid)
+    public static List<GridCell> GetPath(Vector2 currPos, Vector2 destPos, GridCell[,] grid)
     {
         List<GridCell> list = new List<GridCell>();
         int rows = grid.GetLength(0);
@@ -54,17 +60,18 @@ public static class MovementFunctions
                 newGrid[i, j].isObstacle = grid[i, j].isObstacle;
             }
         }
-        GridCell playerCell = GetCell(
-            Singleton.Instance.PlayerController.transform.position,
+        GridCell playerCell = GetCell(destPos,
             newGrid);
         if(playerCell == null)
         {
             Debug.LogError("Couldn't find player on grid!");
+            return null;
         }
         GridCell startCell = GetCell(currPos, newGrid);
         if(startCell == null)
         {
             Debug.LogError("Couldn't find enemy on grid!");
+            return null;
         }
         if(startCell.x == playerCell.x && startCell.y == playerCell.y)
         {
@@ -248,6 +255,40 @@ public static class MovementFunctions
         }
     }
 
+    static Vector2 CheckDampening(Vector2 dampening)
+    {
+        //function that makes the boids avoid each other by
+        //'steering clear' on top of 'slowing down'
+        if (dampening == Vector2.zero)
+            return dampening;
+        if(dampening.x == 0)
+        {
+            dampening.x = dampening.y / 3.0f;
+            dampening.y = 2.0f * dampening.y / 3.0f;
+            return dampening;
+        }
+        if(dampening.y == 0)
+        {
+            dampening.y = dampening.x / 3.0f;
+            dampening.x = 2.0f * dampening.x / 3.0f;
+            return dampening;
+        }
+        if(Mathf.Abs(dampening.x / dampening.y) > 10.0f)
+        {
+            dampening.y = Mathf.Sign(dampening.y) * Mathf.Abs(dampening.x / 5.0f);
+            return dampening;
+        }
+        if(Mathf.Abs(dampening.y / dampening.x) > 10.0f)
+        {
+            dampening.x = Mathf.Sign(dampening.x) * Mathf.Abs(dampening.y / 5.0f);
+            return dampening;
+        }
+        return dampening;
+
+        
+
+    }
+
     public static Vector2 GetBoidAvoidanceFactor(Vector2 pos, RoomScript room)
     {
         var validEnemies = room.enemies.Where(x => ((Vector2)x.transform.position - pos).magnitude <= 1.0f);
@@ -255,19 +296,21 @@ public static class MovementFunctions
         float avoidanceFactor = 0.05f;
         foreach(EnemyBase enemy in validEnemies)
         {
-            dampening += pos - (Vector2)enemy.transform.position;
+            var diff = (Vector2)enemy.transform.position - pos;
+            dampening -= diff * diff.magnitude;
         }
+        dampening = CheckDampening(dampening);
         return dampening.normalized * avoidanceFactor;
     }
 
     public static Vector2 FollowPlayer(float speed, Vector2 pos, RoomScript room, List<GridCell> path, ref GridCell nextCell)
     {
-
-        path = MovementFunctions.FollowPlayer(pos, room.pathFindingGrid);
+        Vector2 playerPos = Singleton.Instance.PlayerController.transform.position;
+        path = MovementFunctions.GetPath(pos, playerPos, room.pathFindingGrid);
         int degOfFreedom = MovementFunctions.GetDegreesOfFreedom(pos,
-            Singleton.Instance.PlayerController.transform.position,
+            playerPos,
             room.pathFindingGrid);
-        Vector2 boidDampening = MovementFunctions.GetBoidAvoidanceFactor(pos, room);
+        Vector2 boidDampening = MovementFunctions.GetBoidAvoidanceFactor(pos, room) * speed;
         if (degOfFreedom == 3)
         {
             return MovementFunctions.FollowPlayer(speed, pos) + boidDampening;
@@ -287,5 +330,52 @@ public static class MovementFunctions
             return MovementFunctions.MoveTowards(nextCell, speed, pos) + boidDampening;
         }
         return MovementFunctions.FollowPlayer(speed, pos) + boidDampening;
+    }
+    
+    public static Vector2 Skitter(float speed, Vector2 pos, RoomScript room, List<GridCell> path, ref GridCell nextCell, ref GridCell destCell)
+    {
+        GridCell currCell = GetCell(pos, room.pathFindingGrid);
+        int x = currCell.x, y = currCell.y;
+        int i = 0;
+        if(destCell == null)
+        {
+            do
+            {
+                x = Random.Range(currCell.x - 3, currCell.x + 3);
+                y = Random.Range(currCell.y - 3, currCell.y + 3);
+                i++;
+
+            } while (!IsTileValid(x, y, room.pathFindingGrid) || (x == currCell.x && y == currCell.y));
+            if (i >= 1000)
+            {
+                Debug.LogError("Couldn't find random cell within range!");
+                return Random.insideUnitCircle * speed;
+            }
+            destCell = room.pathFindingGrid[y, x];
+            path = GetPath(pos, destCell.pos, room.pathFindingGrid);
+            nextCell = path[0];
+            path.RemoveAt(0);
+        }
+        if(path.Count > 0)
+        {
+            if (nextCell == null || !IsAtDestination(nextCell, path[0].pos) || IsAtDestination(nextCell,pos))
+            {
+                nextCell = path[0];
+                path.RemoveAt(0);
+
+            }
+            return MoveTowards(nextCell, speed, pos);
+        }
+        else
+        {
+            if(nextCell == null || IsAtDestination(nextCell, pos))
+            {
+                destCell = null;
+                return Vector2.zero;
+            }
+            return MoveTowards(nextCell, speed, pos);
+        }
+
+        return Random.insideUnitCircle;
     }
 }

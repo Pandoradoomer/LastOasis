@@ -18,6 +18,8 @@ public class EnemyManager : MonoBehaviour
     public Dictionary<int, List<EnemyRuntimeData>> spawnedEnemies;
     private List<int> hasSpawned;
 
+    [Header("Debug")]
+    public bool SpawnOnStart = false;
 
 
     // Start is called before the first frame update
@@ -40,7 +42,19 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            List<int> keys = new List<int>(spawnedEnemies.Keys);
+            foreach(int key in keys)
+            {
+                foreach(var erd in spawnedEnemies[key])
+                {
+                    Destroy(erd.go);
+                }
+                spawnedEnemies.Remove(key);
+            }
+
+        }
     }
 
 
@@ -132,8 +146,9 @@ public class EnemyManager : MonoBehaviour
     {
         if (e.isBoss)
             return;
-        if (e.isStart)
-            return;
+        if(!SpawnOnStart)
+            if (e.isStart)
+                return;
         //for the sake of the task, let's spawn enemies inside every room, at least 1
         float currentDifficulty = 0;
         List<Vector2> filledPositions = new List<Vector2>();
@@ -170,6 +185,7 @@ public class EnemyManager : MonoBehaviour
             eb.onCollisionDamage = enemyData.DamageOnCollision;
             eb.rs = room.GetComponent<RoomScript>();
             eb.rs.enemies.Add(eb);
+            eb.GetComponent<SpriteRenderer>().sprite = enemyData.Sprite;
             foreach (ItemDrop id in enemyData.itemDrops)
             {
                 float random = Random.Range(0.0f, 1.0f);
