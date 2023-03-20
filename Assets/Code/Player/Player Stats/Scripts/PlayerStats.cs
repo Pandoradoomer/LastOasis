@@ -9,6 +9,26 @@ public class PlayerStats : MonoBehaviour
 {
     [SerializeField] public float maxHealth = 10.0f;
     [SerializeField] public float currentHealth;
+
+    public static float Dexterity
+    {
+        get
+        {
+            if(dex > maxDex)
+            {
+                dex = maxDex;
+            }
+            return dex;
+        }
+
+        set
+        {
+            dex = value;
+        }
+    }
+    public static float maxDex = 0.5f;
+    [SerializeField] private static float dex = 0f;
+
     [SerializeField] public int coinCounter = 0;
     [SerializeField] CollectableData item_coin;
     [SerializeField] CollectableData item_coin_pile;
@@ -67,6 +87,14 @@ public class PlayerStats : MonoBehaviour
         //Fix bug of removing coins after its reached 0
         //Key press to spend all coins
         coinText.text = $"Coins: {Singleton.Instance.Inventory.GetCoins()}";
+
+
+        // Debug purposes, can be removed once everything is working correctly.
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            Dexterity += 0.1f;
+            Debug.Log("Dexterity: " + Dexterity);
+        }
     }
 
 

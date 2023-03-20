@@ -2628,6 +2628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b767754c5c346544b9f0a6d10755277c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dex: 2.95
   maxHealth: 100
   currentHealth: 0
   coinCounter: 0
@@ -2656,16 +2657,9 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  swordCollider: {fileID: 0}
   canAttack: 1
   animationLength: 0.517
   sr: {fileID: 0}
-  combo: 0
-  comboTimer: 0.5
-  comboTimerHolder: 0
-  comboDelay: 0.5
-  damageMultiplier: 1.5
-  isComboAttack: 0
 --- !u!95 &1703071648
 Animator:
   serializedVersion: 4

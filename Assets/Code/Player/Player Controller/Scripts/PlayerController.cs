@@ -11,8 +11,7 @@ public class PlayerController : MonoBehaviour
         IDLE,
         ATTACK,
         DASHING,
-        SCENE_CHANGE,
-        COMBO
+        SCENE_CHANGE
     };
 
     public CURRENT_STATE currentState;
@@ -174,11 +173,11 @@ public class PlayerController : MonoBehaviour
             case CURRENT_STATE.ATTACK:
                 rb.velocity = Vector2.zero;
                 break;
-            case CURRENT_STATE.COMBO:
-                rb.velocity = Vector2.zero;
-                animator.SetFloat("moveX", lastPlayerDirection.x);
-                animator.SetFloat("moveY", lastPlayerDirection.y);
-                break;
+            //case CURRENT_STATE.COMBO:
+            //    rb.velocity = Vector2.zero;
+            //    animator.SetFloat("moveX", lastPlayerDirection.x);
+            //    animator.SetFloat("moveY", lastPlayerDirection.y);
+            //    break;
             case CURRENT_STATE.SCENE_CHANGE:
                 Vector2 movePos = Vector2.MoveTowards(transform.position, doorWayPoint.position, 2 * Time.deltaTime);
                 rb.MovePosition(movePos);

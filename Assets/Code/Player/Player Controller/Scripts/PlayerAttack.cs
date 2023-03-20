@@ -5,34 +5,35 @@ using static PlayerController;
 
 public class PlayerAttack : MonoBehaviour
 {
+    public float SwingDelay
+    {
+        get
+        {
+            return swingDelay - PlayerStats.Dexterity;
+        }
+        set
+        {
+            swingDelay = value;
+        }
+    }
+
     public float swingDuration;
     public float swingDelay;
     public float swingDamage;
-    private float swingDamageHolder;
+
     public LayerMask targetLayer;
 
-    public CircleCollider2D swordCollider;
     public bool canAttack = true;
     public float animationLength;
     public SpriteRenderer sr;
 
     private bool isInDialogue = false;
-
-    [SerializeField] private int combo;
-    [SerializeField] private float comboTimer;
-    [SerializeField] private float comboTimerHolder;
-    [SerializeField] private float comboDelay;
-    [SerializeField] private float damageMultiplier;
-    [SerializeField] private bool isComboAttack;
     private void Awake()
     {
-        //swordCollider = GetComponent<CircleCollider2D>();
-        //sr.enabled = false;
         EventManager.StartListening(Event.DialogueStart, FreezePlayer);
         EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
-        comboTimerHolder = comboTimer;
-        swingDamageHolder = swingDamage;
         targetLayer = LayerMask.GetMask("Enemy", "Destructible");
+        animationLength = AnimationLength("AttackW");
     }
 
     private void OnDestroy()
@@ -53,88 +54,41 @@ public class PlayerAttack : MonoBehaviour
     {
         if (isInDialogue)
             return;
-            //StartCoroutine(SwingSword());
-        if (Input.GetMouseButton(0) && canAttack && !instance.invulnerability && instance.currentState != CURRENT_STATE.DASHING && !isComboAttack)
+
+        if (Input.GetMouseButton(0) && canAttack && (instance.currentState == CURRENT_STATE.RUNNING || instance.currentState == CURRENT_STATE.IDLE))
         {
-            StartCoroutine(AttackEnum());
-            //Invoke("ResetAttack", swingDelay + animationLength);
+            StartCoroutine(Attack());
         }
-        if(isComboAttack)
-        {
-            instance.currentState = CURRENT_STATE.ATTACK;
-            comboTimer -= Time.deltaTime;
-            if(comboTimer > 0 && Input.GetMouseButton(0))
-            {
-                combo++;
-                if(combo == 2)
-                {
-                    swingDamage *= damageMultiplier;
-                }
-                StartCoroutine(AttackEnum());
-            }
-        }
-        ResetComboOnTime();
     }
 
-    private IEnumerator SwingSword()
-    {
-        instance.currentState = CURRENT_STATE.ATTACK;
-        canAttack = true;
-        sr.enabled = true;
-
-        swordCollider.enabled = true;
-        yield return new WaitForSeconds(swingDuration);
-        swordCollider.enabled = false;
-
-        yield return new WaitForSeconds(swingDelay);
-
-        canAttack = false;
-        sr.enabled = false;
-        instance.currentState = CURRENT_STATE.RUNNING;
-    }
-
-    private IEnumerator AttackEnum()
+    private IEnumerator Attack()
     {
         canAttack = false;
-        isComboAttack = false;
         instance.animator.SetTrigger("isAttackingTrigger");
-        instance.animator.SetBool("isMoving", false);
         instance.currentState = CURRENT_STATE.ATTACK;
-        yield return new WaitForSeconds(animationLength);
-        instance.currentState = CURRENT_STATE.COMBO;
-        yield return new WaitForSeconds(comboDelay);
-        if (combo < 2)
-        {
-            comboTimer = comboTimerHolder;
-            isComboAttack = true;
-        }
-        else
-        {
-            ResetCombo();
-        }
+        yield return new WaitForSeconds(animationLength + 0.1f);
+        instance.currentState = CURRENT_STATE.RUNNING;
+        Invoke("ResetAttack", SwingDelay);
     }
 
     private void ResetAttack()
     {
         canAttack = true;
-        isComboAttack = false;
     }
-    private void ResetComboOnTime()
+
+    private float AnimationLength(string clipName)
     {
-        if(comboTimer <= 0)
+        if (instance.animator != null && instance.animator.runtimeAnimatorController != null)
         {
-            ResetCombo();
+            foreach (AnimationClip clip in instance.animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name == clipName)
+                {
+                    return clip.length;
+                }
+            }
         }
+        Debug.LogError("Make sure the animation name is correct.");
+        return 0;
     }
-
-    private void ResetCombo()
-    {
-        isComboAttack = false;
-        comboTimer = comboTimerHolder;
-        combo = 0;
-        swingDamage = swingDamageHolder;
-        instance.currentState = CURRENT_STATE.RUNNING;
-        Invoke("ResetAttack", swingDelay + animationLength);
-    }
-
 }
