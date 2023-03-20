@@ -37,6 +37,7 @@ public class SwordAttack : MonoBehaviour
                 damage = instance.swingDamage,
                 enemy = other.gameObject
             });
+            
         }
     }
 

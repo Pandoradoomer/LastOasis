@@ -14,6 +14,7 @@ public class Singleton
     private ItemSpawnManager itemSpawnManager;
     private EnemyManager enemyManager;
     private PlayerController playerController;
+    private PlayerStacks playerStacks;
 
     private Singleton()
     {
@@ -23,6 +24,7 @@ public class Singleton
         itemSpawnManager = GameObject.FindObjectOfType<ItemSpawnManager>();
         enemyManager = GameObject.FindObjectOfType<EnemyManager>();
         playerController = GameObject.FindObjectOfType<PlayerController>();
+        playerStacks = GameObject.FindObjectOfType<PlayerStacks>();
 
     }
 
@@ -42,6 +44,7 @@ public class Singleton
     public ItemSpawnManager ItemSpawnManager { get => itemSpawnManager;}
     public EnemyManager EnemyManager { get => enemyManager; }
     public PlayerController PlayerController { get => playerController;}
+    public PlayerStacks PlayerStacks { get => playerStacks;}
 
 
    

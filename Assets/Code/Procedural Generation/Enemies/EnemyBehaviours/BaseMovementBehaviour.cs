@@ -74,9 +74,16 @@ public abstract class BaseMovementBehaviour : MonoBehaviour, IMovementBehaviour,
     public void OnHit(IEventPacket packet)
     {
         PlayerHitPacket php = packet as PlayerHitPacket;
-        if(php.enemy == this.gameObject)
+        if (php.enemy == this.gameObject)
         {
             OnHitAction();
+            EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
+            {
+                damage = (int)php.damage,
+                position = this.gameObject.transform.position,
+                textColor = Color.yellow
+
+            });
         }
     }
 

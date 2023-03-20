@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1334606164151576710}
   - component: {fileID: 807352306201077640}
   - component: {fileID: 4433971294307407917}
-  - component: {fileID: 4707213039767086936}
+  - component: {fileID: 2484079431273500743}
   m_Layer: 11
   m_Name: Destructible
   m_TagString: Destructible
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64e2d14899501f845933fd8f3c8dc851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &4707213039767086936
-BoxCollider2D:
+--- !u!58 &2484079431273500743
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -112,15 +112,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.5

@@ -329,7 +329,7 @@ public class LevelGeneration : MonoBehaviour
                 }
                 else
                 {
-                    roomPrefab = roomPrefabs[Random.Range(0, 2)];
+                    roomPrefab = roomPrefabs[Random.Range(0,roomPrefabs.Count)];
                 }
                 var go = Instantiate(roomPrefab, drawPos, Quaternion.identity);
                 go.name = $"Room {spawnedRooms.Count}";
@@ -469,8 +469,8 @@ public class LevelGeneration : MonoBehaviour
             DrawMap();
             CreateBossRoom();
         }
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-            TeleportToBossRoom();
+        //if (Input.GetKeyDown(KeyCode.LeftControl))
+        //    TeleportToBossRoom();
 
     }
 

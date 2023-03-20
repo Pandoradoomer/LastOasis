@@ -22,7 +22,7 @@ public class SceneChange : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             //Debug.Log("Key pressed while colliding with object!");
-            PopupManager.Instance.Confirm("Are you sure you want to embark?", () =>
+            PopupManager.Instance.SpawnPopup(() =>
             {
                 //Debug.Log("Yes");
                 teleport();
@@ -36,7 +36,7 @@ public class SceneChange : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             //Debug.Log("Key pressed while colliding with object!");
-            PopupManager.Instance.Confirm("Are you sure you want to embark?", () =>
+            PopupManager.Instance.SpawnPopup(() =>
             {
                 //Debug.Log("Yes");
                 teleport();
@@ -50,10 +50,10 @@ public class SceneChange : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Mast"))
-        {
-            SceneManager.LoadScene("SampleScene");
-        } 
+        //if (collision.gameObject.CompareTag("Mast"))
+        //{
+        //    SceneManager.LoadScene("SampleScene");
+        //} 
         if (collision.gameObject.CompareTag("Captain"))
         {
             MessageManager.instance.DisplayCaptainText();
