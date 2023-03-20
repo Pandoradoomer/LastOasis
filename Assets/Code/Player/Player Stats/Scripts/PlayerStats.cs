@@ -26,7 +26,7 @@ public class PlayerStats : MonoBehaviour
             dex = value;
         }
     }
-    public static float maxDex = 0.5f;
+    public static float maxDex = 0.95f;
     [SerializeField] private static float dex = 0f;
 
     [SerializeField] public int coinCounter = 0;

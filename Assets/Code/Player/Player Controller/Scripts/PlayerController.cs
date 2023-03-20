@@ -11,15 +11,16 @@ public class PlayerController : MonoBehaviour
         IDLE,
         ATTACK,
         DASHING,
-        SCENE_CHANGE
+        SCENE_CHANGE,
+        MOVE_ATTACK
     };
 
     public CURRENT_STATE currentState;
 
-    [SerializeField] Rigidbody2D rb;
+    [HideInInspector] public Rigidbody2D rb;
     [SerializeField] float speed;
 
-    private Vector2 movement;
+    [HideInInspector] public Vector2 movement;
 
     private SpriteRenderer sr;
     public Animator animator;
@@ -34,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float invulnerabilityDuration;
     [SerializeField] private float dashDistance, dashCooldown, dashLength;
-    [SerializeField] private Vector2 lastPlayerDirection;
+    [SerializeField] public Vector2 lastPlayerDirection;
 
     public Transform doorWayPoint;
 

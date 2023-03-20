@@ -17,9 +17,10 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    public float swingDuration;
     public float swingDelay;
     public float swingDamage;
+
+    public float pushPower;
 
     public LayerMask targetLayer;
 
@@ -55,9 +56,19 @@ public class PlayerAttack : MonoBehaviour
         if (isInDialogue)
             return;
 
-        if (Input.GetMouseButton(0) && canAttack && (instance.currentState == CURRENT_STATE.RUNNING || instance.currentState == CURRENT_STATE.IDLE))
+        if(instance.movement == Vector2.zero)
         {
-            StartCoroutine(Attack());
+            if (Input.GetMouseButton(0) && canAttack && (instance.currentState == CURRENT_STATE.RUNNING || instance.currentState == CURRENT_STATE.IDLE))
+            {
+                StartCoroutine(Attack());
+            }
+        }
+        else
+        { 
+            if (Input.GetMouseButton(0) && canAttack && (instance.currentState == CURRENT_STATE.RUNNING || instance.currentState == CURRENT_STATE.IDLE))
+            {
+                StartCoroutine(MoveAttack(instance.lastPlayerDirection, pushPower));
+            }
         }
     }
 
@@ -69,6 +80,19 @@ public class PlayerAttack : MonoBehaviour
         yield return new WaitForSeconds(animationLength + 0.1f);
         instance.currentState = CURRENT_STATE.RUNNING;
         Invoke("ResetAttack", SwingDelay);
+    }
+
+    private IEnumerator MoveAttack(Vector2 force, float power)
+    {
+        canAttack = false;
+        instance.animator.SetTrigger("isAttackingTrigger");
+        instance.rb.AddForce(force * power);
+        instance.currentState = CURRENT_STATE.MOVE_ATTACK;
+        Invoke("ResetAttack", SwingDelay + animationLength + 0.1f);
+        yield return new WaitForSeconds(0.2f);
+        instance.currentState = CURRENT_STATE.ATTACK;
+        yield return new WaitForSeconds(animationLength - 0.1f);
+        instance.currentState = CURRENT_STATE.RUNNING;
     }
 
     private void ResetAttack()
