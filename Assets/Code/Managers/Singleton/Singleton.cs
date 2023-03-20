@@ -15,6 +15,7 @@ public class Singleton
     private EnemyManager enemyManager;
     private PlayerController playerController;
     private PlayerStacks playerStacks;
+    private TransitionManager transitionManager;
 
     private Singleton()
     {
@@ -25,6 +26,7 @@ public class Singleton
         enemyManager = GameObject.FindObjectOfType<EnemyManager>();
         playerController = GameObject.FindObjectOfType<PlayerController>();
         playerStacks = GameObject.FindObjectOfType<PlayerStacks>();
+        transitionManager = GameObject.FindObjectOfType<TransitionManager>();
 
     }
 
@@ -45,7 +47,7 @@ public class Singleton
     public EnemyManager EnemyManager { get => enemyManager; }
     public PlayerController PlayerController { get => playerController;}
     public PlayerStacks PlayerStacks { get => playerStacks;}
-
+    public TransitionManager TransitionManager { get => transitionManager;}
 
    
 }

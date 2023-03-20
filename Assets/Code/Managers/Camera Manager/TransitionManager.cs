@@ -48,6 +48,7 @@ public class TransitionManager : MonoBehaviour
         float maxLerp = minLerp * 2.0f;
         for (float i = 0; i < 0.1f; i += Time.deltaTime)
             yield return null;
+        EventManager.TriggerEvent(Event.DialogueStart, null);
         for (float i = 0; i < fadeOutTime; i += Time.deltaTime)
         {
             topPanel.rectTransform.offsetMin =
@@ -60,6 +61,7 @@ public class TransitionManager : MonoBehaviour
             yield return null;
         }
         yield return null;
+        EventManager.TriggerEvent(Event.DialogueFinish, null);
     }
 
     public IEnumerator FadeIn()

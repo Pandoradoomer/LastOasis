@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipPlayerController : MonoBehaviour
+public class ShipPlayerController : MonoBehaviour, IPlayerController
 {
     [SerializeField] Rigidbody2D rb;
     [SerializeField] float speed;
@@ -34,6 +34,12 @@ public class ShipPlayerController : MonoBehaviour
 
     void FreezePlayer(IEventPacket packet)
     {
+        FreezePlayer();
+    }
+
+    public void FreezePlayer()
+    {
+
         rb.velocity = Vector2.zero;
         animator.SetBool("isMoving", false);
         isInDialogue = true;
@@ -41,6 +47,11 @@ public class ShipPlayerController : MonoBehaviour
 
     void UnfreezePlayer(IEventPacket packet)
     {
+        UnfreezePlayer();
+    }
+    public void UnfreezePlayer()
+    {
+
         isInDialogue = false;
     }
     // Update is called once per frame
