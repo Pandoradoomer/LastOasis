@@ -43,6 +43,10 @@ public class MessageManager : MonoBehaviour
             DisableChestInteractText();
             DisableHealthConsumableText();
         }
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            Debug.Log($"Coins: {Singleton.Instance.Inventory.GetCoins()}");
+        }
     }
     //***************** CHEST MESSAGES *****************//
     public void DisplayChestText()

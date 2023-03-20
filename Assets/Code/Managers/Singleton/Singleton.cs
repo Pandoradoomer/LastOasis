@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.GameCenter;
 using UnityEngine.Timeline;
@@ -38,6 +39,11 @@ public class Singleton
                 _instance = new Singleton();
             return _instance;
         }
+    }
+
+    public static void Reset()
+    {
+        _instance = null;
     }
 
     public LevelGeneration LevelGeneration { get => levelGeneration; }

@@ -15,6 +15,8 @@ public class TransitionManager : MonoBehaviour
     float fadeOutTime;
     [SerializeField]
     float fadeInTime;
+    [SerializeField]
+    GameObject inventory;
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -26,7 +28,11 @@ public class TransitionManager : MonoBehaviour
     }
     void Start()
     {
-        
+
+        if (GameObject.FindObjectOfType<Inventory>() == null)
+        {
+            Instantiate(inventory);
+        }
     }
 
     // Update is called once per frame
@@ -37,6 +43,7 @@ public class TransitionManager : MonoBehaviour
     
     public void OnLevelLoaded(Scene scene, LoadSceneMode mode)
     {
+        Singleton.Reset();
         StartCoroutine(FadeOut());
     }
 

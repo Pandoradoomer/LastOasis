@@ -50,6 +50,7 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField] private Animator cameraTransition;
     int roomIndex = 0;
     [SerializeField] private GameObject returnToShipObject;
+    [SerializeField] GameObject inventory;
     //GameObject[] gos = GameObject.FindGameObjectsWithTag("DoorWaypoint");
     // Start is called before the first frame update
     void Awake()
@@ -471,6 +472,11 @@ public class LevelGeneration : MonoBehaviour
             //DrawMap();
             //CreateBossRoom();
             Instantiate(returnToShipObject, GetRoomFromIndex(roomIndex).gameObject.transform.position, Quaternion.identity);
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            Singleton.Instance.Inventory.AddCoins(10);
         }
         //if (Input.GetKeyDown(KeyCode.LeftControl))
         //    TeleportToBossRoom();

@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour
     {
         if(coinEntry != null)
             itemDictionary.Add(coinEntry, 0);
+        DontDestroyOnLoad(this.gameObject);
     }
 
 
@@ -33,6 +34,20 @@ public class Inventory : MonoBehaviour
         {
             itemDictionary.Add(collectableData, amount);
         }
+    }
+
+    public void AddCoins(int amount)
+    {
+        itemDictionary[coinEntry] += amount;
+    }
+    public void RemoveCoins(int amount)
+    {
+        if (itemDictionary[coinEntry] > amount)
+        {
+            itemDictionary[coinEntry] = 0;
+            return;
+        }
+        itemDictionary[coinEntry] -= amount;
     }
 
     //Check for Collisions with enemies and remove items
