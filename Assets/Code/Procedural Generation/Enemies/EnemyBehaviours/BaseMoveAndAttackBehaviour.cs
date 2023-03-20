@@ -11,7 +11,8 @@ public abstract class BaseMoveAndAttackBehaviour : MonoBehaviour, IMovementBehav
     [SerializeField]
     protected Rigidbody2D rb;
 
-    public float speed;
+    [SerializeField]
+    protected float speed;
     // Start is called before the first frame update
 
     protected bool canMove = true;
@@ -46,6 +47,13 @@ public abstract class BaseMoveAndAttackBehaviour : MonoBehaviour, IMovementBehav
         if (php.enemy == this.gameObject)
         {
             OnHitAction();
+            EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
+            {
+                damage = (int)php.damage,
+                position = this.gameObject.transform.position,
+                textColor = Color.yellow
+
+            });
         }
     }
 

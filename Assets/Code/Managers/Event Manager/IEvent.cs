@@ -15,6 +15,8 @@ public enum Event
     RoomSpawn, //when room spawns in (initialisation event)
     DoorsLockUnlock, //lock or unlock the doors
     DialogueStart,
-    DialogueFinish
+    DialogueFinish,
+    StackAdded,
+    DamageDealt,
 
 }
