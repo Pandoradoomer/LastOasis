@@ -24,7 +24,8 @@ public class Consumeable : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
-            PlayerStats.instance.currentHealth += health;
+            //PlayerStats.instance.currentHealth += health;
+            PlayerStats.currentHealth -= health;
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static PlayerController;
 
 public class PlayerAttack : MonoBehaviour
@@ -30,6 +31,8 @@ public class PlayerAttack : MonoBehaviour
         //sr.enabled = false;
         EventManager.StartListening(Event.DialogueStart, FreezePlayer);
         EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
+        //swingDamage = Singleton.Instance.PlayerStats.currentDamage;
+        swingDamage = PlayerStats.currentDamage;
         comboTimerHolder = comboTimer;
         swingDamageHolder = swingDamage;
         targetLayer = LayerMask.GetMask("Enemy", "Destructible");
@@ -54,10 +57,15 @@ public class PlayerAttack : MonoBehaviour
         if (isInDialogue)
             return;
             //StartCoroutine(SwingSword());
-        if (Input.GetMouseButton(0) && canAttack && !instance.invulnerability && instance.currentState != CURRENT_STATE.DASHING && !isComboAttack)
+
+
+        if (SceneManager.GetActiveScene().buildIndex != 3)
         {
-            StartCoroutine(AttackEnum());
-            //Invoke("ResetAttack", swingDelay + animationLength);
+            if (Input.GetMouseButton(0) && canAttack && !instance.invulnerability && instance.currentState != CURRENT_STATE.DASHING && !isComboAttack)
+            {
+                StartCoroutine(AttackEnum());
+                //Invoke("ResetAttack", swingDelay + animationLength);
+            }
         }
         if(isComboAttack)
         {
@@ -74,6 +82,7 @@ public class PlayerAttack : MonoBehaviour
             }
         }
         ResetComboOnTime();
+        swingDamage = PlayerStats.currentDamage;
     }
 
     private IEnumerator SwingSword()

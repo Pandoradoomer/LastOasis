@@ -31,6 +31,7 @@ public class MessageManager : MonoBehaviour
     public TextMeshProUGUI qmText;
     public TextMeshProUGUI saText;
     public TextMeshProUGUI wheelText;
+    public TextMeshProUGUI mastText;
     [SerializeField]
     private TextMeshProUGUI pickupHealthActivateText;
     public bool displayMessages;
@@ -176,5 +177,15 @@ public class MessageManager : MonoBehaviour
     public void DisablewheelText()
     {
         wheelText.gameObject.SetActive(false);
+    }
+
+    public void DisplayMastText()
+    {
+        mastText.gameObject.SetActive(true); 
+    }
+
+    public void DisableMastText()
+    {
+        mastText.gameObject.SetActive(false);
     }
 }

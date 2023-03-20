@@ -13,7 +13,8 @@ public class FungusPoisonStack : DepletableStack
     }
     public override void OnDeplete()
     {
-        Singleton.Instance.PlayerStats.currentHealth -= damagePerStack;
+        //Singleton.Instance.PlayerStats.currentHealth -= damagePerStack;
+        PlayerStats.currentHealth -= damagePerStack;
         EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
         {
             textColor = Color.green,

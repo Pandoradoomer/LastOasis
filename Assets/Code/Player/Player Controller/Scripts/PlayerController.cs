@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
     public CURRENT_STATE currentState;
 
-    [SerializeField] Rigidbody2D rb;
+    [SerializeField] public Rigidbody2D rb;
     [SerializeField] float speed;
 
     private Vector2 movement;
@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        //speed = Singleton.Instance.PlayerStats.baseMovementSpeed;
+        speed = PlayerStats.moveSpeed;
         animator = GetComponent<Animator>();
     }
 
@@ -78,6 +80,8 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        speed = PlayerStats.moveSpeed;
+
         if (isInDialogue)
             return;
 
