@@ -6997,11 +6997,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopPanel: {fileID: 326256945}
-  chefText: {fileID: 930359178}
-  carpenterText: {fileID: 1663654145}
-  surgeonText: {fileID: 347267426}
-  qmText: {fileID: 1979737251}
-  gunnerText: {fileID: 1118074369}
   isInShop: 0
   shopActive: 0
   playerInRange: 0
@@ -13052,11 +13047,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopPanel: {fileID: 1591501407}
-  chefText: {fileID: 0}
-  carpenterText: {fileID: 0}
-  surgeonText: {fileID: 0}
-  qmText: {fileID: 0}
-  gunnerText: {fileID: 0}
   isInShop: 0
   shopActive: 0
   playerInRange: 0
@@ -14072,11 +14062,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopPanel: {fileID: 115107220}
-  chefText: {fileID: 0}
-  carpenterText: {fileID: 0}
-  surgeonText: {fileID: 0}
-  qmText: {fileID: 0}
-  gunnerText: {fileID: 0}
   isInShop: 0
   shopActive: 0
   playerInRange: 0
@@ -15578,11 +15563,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopPanel: {fileID: 489338064}
-  chefText: {fileID: 0}
-  carpenterText: {fileID: 0}
-  surgeonText: {fileID: 0}
-  qmText: {fileID: 0}
-  gunnerText: {fileID: 0}
   isInShop: 0
   shopActive: 0
   playerInRange: 0
@@ -60156,11 +60136,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopPanel: {fileID: 1888989399}
-  chefText: {fileID: 930359178}
-  carpenterText: {fileID: 1663654145}
-  surgeonText: {fileID: 347267426}
-  qmText: {fileID: 1979737251}
-  gunnerText: {fileID: 1118074369}
   isInShop: 0
   shopActive: 0
   playerInRange: 0
@@ -67108,6 +67083,18 @@ PrefabInstance:
     - target: {fileID: 8782105196959582798, guid: fa47aafc56d829e4281ea4cf248757f1, type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8782105196959582798, guid: fa47aafc56d829e4281ea4cf248757f1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8782105196959582798, guid: fa47aafc56d829e4281ea4cf248757f1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8782105196959582798, guid: fa47aafc56d829e4281ea4cf248757f1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 8782105196959582798, guid: fa47aafc56d829e4281ea4cf248757f1, type: 3}
       propertyPath: m_LocalPosition.x

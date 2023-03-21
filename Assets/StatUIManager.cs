@@ -140,12 +140,22 @@ public class StatUIManager : MonoBehaviour
                 statPanel.SetActive(false);
                 EventManager.TriggerEvent(Event.DialogueFinish, null);
                 isInStatPage = false;
+                MessageManager.instance.chefText.alpha = 1;
+                MessageManager.instance.carpenterText.alpha = 1;
+                MessageManager.instance.surgeonText.alpha = 1;
+                MessageManager.instance.qmText.alpha = 1;
+                MessageManager.instance.gunnerText.alpha = 1;
             }
             else
             {
                 statPanel.SetActive(true);
                 EventManager.TriggerEvent(Event.DialogueStart, new StartDialoguePacket());
                 isInStatPage = true;
+                MessageManager.instance.chefText.alpha = 0;
+                MessageManager.instance.carpenterText.alpha = 0;
+                MessageManager.instance.surgeonText.alpha = 0;
+                MessageManager.instance.qmText.alpha = 0;
+                MessageManager.instance.gunnerText.alpha = 0;
             }
         }
         healthValue.text = Singleton.Instance.PlayerStats.currentHealth.ToString();
