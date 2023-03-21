@@ -2807,8 +2807,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 60d8ddd7ad13e2a488f7e51e38459298, type: 2}
   - {fileID: 11400000, guid: c2328be07d4e01d40af028c80ab60bf9, type: 2}
   cameraTransition: {fileID: 100664023}
+  roomIndex: 0
   returnToShipObject: {fileID: 2667900461395772098, guid: f8a3901555f2737419567b9b0822675c, type: 3}
   inventory: {fileID: 9137307401040258604, guid: 4706ec1584bcc5c4ca53d489e7089a43, type: 3}
+  consecutiveVisitedRooms: 0
 --- !u!1 &1860392402
 GameObject:
   m_ObjectHideFlags: 0

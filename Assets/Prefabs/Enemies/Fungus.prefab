@@ -145,6 +145,7 @@ MonoBehaviour:
   multiplier: 0
   rs: {fileID: 0}
   enemyData: {fileID: 0}
+  _coinSpawner: {fileID: 7260918969125760000, guid: 7aee68a85b50aba47b35de58f97912a3, type: 3}
 --- !u!114 &9194599716662391718
 MonoBehaviour:
   m_ObjectHideFlags: 0

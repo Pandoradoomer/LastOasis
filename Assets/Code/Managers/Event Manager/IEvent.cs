@@ -18,5 +18,7 @@ public enum Event
     DialogueFinish,
     StackAdded,
     DamageDealt,
+    SpawnObelisk,
+    PlayerDeath
 
 }

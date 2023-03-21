@@ -65,6 +65,7 @@ MonoBehaviour:
   enemyBase: {fileID: 8834572456315719653}
   IsAttacking: 0
   hasAttacked: 0
+  hitboxRenderer: {fileID: 0}
 --- !u!212 &695045781198645394
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -262,6 +263,7 @@ MonoBehaviour:
   multiplier: 0
   rs: {fileID: 0}
   enemyData: {fileID: 0}
+  _coinSpawner: {fileID: 7260918969125760000, guid: 7aee68a85b50aba47b35de58f97912a3, type: 3}
 --- !u!114 &8766861559779334636
 MonoBehaviour:
   m_ObjectHideFlags: 0

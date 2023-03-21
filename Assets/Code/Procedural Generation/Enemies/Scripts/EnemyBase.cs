@@ -13,6 +13,8 @@ public class EnemyBase : MonoBehaviour
     public float multiplier;
     public RoomScript rs;
     public Enemy enemyData;
+    [SerializeField]
+    private GameObject _coinSpawner;
     private void Awake()
     {
         lootToDrop = new Dictionary<Item, int>();
@@ -44,6 +46,7 @@ public class EnemyBase : MonoBehaviour
     {
         if(gameObject.scene.isLoaded)
             rs.enemies.Remove(this);
+        Instantiate(_coinSpawner, this.transform.position, Quaternion.identity);
         EventManager.StopListening(Event.PlayerHitEnemy, OnHit);
     }
 }
