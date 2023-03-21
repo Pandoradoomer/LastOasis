@@ -81,4 +81,103 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         }
         rb.velocity = movement * speed;
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Chef"))
+        {
+            MessageManager.instance.DisplayChefText();
+            Singleton.Instance.ShipShopDisplay.GetShop(collision.gameObject);
+        }
+
+        if (collision.CompareTag("Carpenter"))
+        {
+            MessageManager.instance.DisplayCarpenterText();
+        }
+
+        if (collision.CompareTag("Captain"))
+        {
+            MessageManager.instance.DisplayCaptainText();
+        }
+
+        if (collision.CompareTag("CabinBoy"))
+        {
+            MessageManager.instance.DisplayCabinBoyText();
+        }
+
+        if (collision.CompareTag("Surgeon"))
+        {
+            MessageManager.instance.DisplaySurgeonText();
+            Singleton.Instance.ShipShopDisplay.GetShop(collision.gameObject);
+        }
+
+        if (collision.CompareTag("QuarterMaster"))
+        {
+            MessageManager.instance.DisplayQMText();
+        }
+
+        if (collision.CompareTag("Gunner"))
+        {
+            MessageManager.instance.DisplayGunnerText();
+        }
+
+        if (collision.CompareTag("SeaArtist"))
+        {
+            MessageManager.instance.DisplaySAText();
+        }
+
+        if (collision.CompareTag("Shopkeeper"))
+        {
+            MessageManager.instance.DisplayShopkeeperText();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Chef"))
+        {
+            MessageManager.instance.DisableChefText();
+            Singleton.Instance.ShipShopDisplay.RemoveShop();
+        }
+
+        if (collision.CompareTag("Carpenter"))
+        {
+            MessageManager.instance.DisableCarpenterText();
+        }
+
+        if (collision.CompareTag("Captain"))
+        {
+            MessageManager.instance.DisableCaptainText();
+        }
+
+        if (collision.CompareTag("CabinBoy"))
+        {
+            MessageManager.instance.DisableCabinBoyText();
+        }
+
+        if (collision.CompareTag("Surgeon"))
+        {
+            MessageManager.instance.DisableSurgeonText();
+            Singleton.Instance.ShipShopDisplay.RemoveShop();
+        }
+
+        if (collision.CompareTag("QuarterMaster"))
+        {
+            MessageManager.instance.DisableQMText();
+        }
+
+        if (collision.CompareTag("Gunner"))
+        {
+            MessageManager.instance.DisableGunnerText();
+        }
+
+        if (collision.CompareTag("SeaArtist"))
+        {
+            MessageManager.instance.DisableSAText();
+        }
+
+        if (collision.CompareTag("Shopkeeper"))
+        {
+            MessageManager.instance.DisableShopkeeperText();
+        }
+    }
 }

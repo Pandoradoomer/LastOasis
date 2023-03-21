@@ -40,13 +40,21 @@ public class Inventory : MonoBehaviour
     {
         itemDictionary[coinEntry] += amount;
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            AddCoins(10000);
+        }
+    }
     public void RemoveCoins(int amount)
     {
-        if (itemDictionary[coinEntry] > amount)
-        {
-            itemDictionary[coinEntry] = 0;
-            return;
-        }
+        //if (itemDictionary[coinEntry] > amount)
+        //{
+        //    itemDictionary[coinEntry] = 0;
+        //    return;
+        //}
         itemDictionary[coinEntry] -= amount;
     }
 
