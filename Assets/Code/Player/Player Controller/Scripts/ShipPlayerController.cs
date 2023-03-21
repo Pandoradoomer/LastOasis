@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShipPlayerController : MonoBehaviour, IPlayerController
 {
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] float speed;
+    [SerializeField] float speed; 
 
     private Vector2 movement;
     [SerializeField] private Vector2 lastPlayerDirection;
@@ -17,6 +17,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        //speed = Singleton.Instance.PlayerStats.currentSpeed;
     }
 
     void Start()
@@ -81,4 +82,62 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         }
         rb.velocity = movement * speed;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Chef"))
+        {
+            MessageManager.instance.DisplayChefText();
+        }
+
+        if (collision.CompareTag("Carpenter"))
+        {
+            MessageManager.instance.DisplayCarpenterText();
+        }
+
+        if (collision.CompareTag("Surgeon"))
+        {
+            MessageManager.instance.DisplaySurgeonText();
+        }
+
+        if (collision.CompareTag("QuarterMaster"))
+        {
+            MessageManager.instance.DisplayQMText();
+        }
+
+        if (collision.CompareTag("Gunner"))
+        {
+            MessageManager.instance.DisplayGunnerText();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Chef"))
+        {
+            MessageManager.instance.DisableChefText();
+        }
+
+        if (collision.CompareTag("Carpenter"))
+        {
+            MessageManager.instance.DisableCarpenterText();
+        }
+
+        if (collision.CompareTag("Surgeon"))
+        {
+            MessageManager.instance.DisableSurgeonText();
+        }
+
+        if (collision.CompareTag("QuarterMaster"))
+        {
+            MessageManager.instance.DisableQMText();
+        }
+
+        if (collision.CompareTag("Gunner"))
+        {
+            MessageManager.instance.DisableGunnerText();
+        }
+    }
+
+
 }

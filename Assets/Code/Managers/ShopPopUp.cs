@@ -15,9 +15,6 @@ public class ShopPopUp : MonoBehaviour
         exit.onClick.AddListener(UnfreezePlayer);
     }
 
-    
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && playerInRange)
@@ -33,8 +30,11 @@ public class ShopPopUp : MonoBehaviour
             else
             {
                 shopPanel.SetActive(true);
+
                 //EventManager.StartListening(Event.DialogueStart, FreezePlayer);
                 EventManager.TriggerEvent(Event.DialogueStart, new StartDialoguePacket());
+                //Disable message manager text
+                //Set transparency of text to 0
                 isInShop = true;
 
             }

@@ -35,7 +35,11 @@ public class MessageManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI pickupHealthActivateText;
     public bool displayMessages;
-
+    private ShopPopUp shopPop;
+    private void Start()
+    {
+        shopPop = GetComponent<ShopPopUp>();
+    }
     void Update()
     {
         if (!displayMessages)
@@ -95,12 +99,14 @@ public class MessageManager : MonoBehaviour
 
     public void DisplayChefText()
     {
+        
         chefText.gameObject.SetActive(true);
     }
 
     public void DisableChefText()
     {
-        chefText.gameObject.SetActive(false); 
+        //CHECK IF IN SHOP THEN SET TRANSPARENCY OF TEXT TO 0 
+        chefText.gameObject.SetActive(false);
     }
     
     public void DisplayCarpenterText()
