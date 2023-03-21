@@ -183,6 +183,35 @@ public class PlayerStats : MonoBehaviour
     public static PlayerStats instance { get; private set; }
     void Start()
     {
+        //if (PlayerPrefs.HasKey("isSet"))
+        //    hasBeenInit = Convert.ToBoolean(PlayerPrefs.GetString("isSet"));
+        //if(!hasBeenInit)
+        //{
+        //    hasBeenInit = true;
+        //    currentHealth = maxHealth = baseHealth;
+        //    currentSpeed = maxSpeed = baseSpeed;
+        //    currentDexterity = maxDexterity = baseDexterity;
+        //    currentDefence = maxDefence = baseDefence;
+        //    currentDamage = maxDamage = baseDamage;
+        //}
+        //else
+        //{
+        //    LoadValues();
+        //}
+        //EventManager.StartListening(Event.EnemyHitPlayer, OnEnemyHit);
+        //DontDestroyOnLoad(this.gameObject);
+    }
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            instance = this;
+        }
         if (PlayerPrefs.HasKey("isSet"))
             hasBeenInit = Convert.ToBoolean(PlayerPrefs.GetString("isSet"));
         if(!hasBeenInit)
@@ -200,17 +229,6 @@ public class PlayerStats : MonoBehaviour
         }
         EventManager.StartListening(Event.EnemyHitPlayer, OnEnemyHit);
         DontDestroyOnLoad(this.gameObject);
-    }
-    private void Awake()
-    {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
     }
 
     void Update()

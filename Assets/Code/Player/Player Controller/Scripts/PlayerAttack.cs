@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static PlayerController;
@@ -32,10 +33,13 @@ public class PlayerAttack : MonoBehaviour
         EventManager.StartListening(Event.DialogueStart, FreezePlayer);
         EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
         //swingDamage = Singleton.Instance.PlayerStats.currentDamage;
-        swingDamage = Singleton.Instance.PlayerStats.currentDamage;
         comboTimerHolder = comboTimer;
         swingDamageHolder = swingDamage;
         targetLayer = LayerMask.GetMask("Enemy", "Destructible");
+    }
+    private void Start()
+    {
+        swingDamage = Singleton.Instance.PlayerStats.currentDamage;
     }
 
     private void OnDestroy()
