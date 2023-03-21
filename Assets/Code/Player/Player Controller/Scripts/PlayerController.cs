@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         invulnerabilityHolder = invulnerabilityDuration;
+        dashElapsedCooldown = dashCooldown;
         originalColor = GetComponent<SpriteRenderer>().color;
         speed = Singleton.Instance.PlayerStats.currentSpeed;
         EventManager.StartListening(Event.BossTeleport, BossTeleport);
@@ -214,6 +216,7 @@ public class PlayerController : MonoBehaviour
 
         canDash = false;
         Invoke("ResetDash", dashCooldown);
+        StartCoroutine(ElapseDashCooldown());
         Invoke("DisableIsDashing", dashLength);
     }
 
@@ -228,6 +231,22 @@ public class PlayerController : MonoBehaviour
         int playerLayer = gameObject.layer;
         int enemyLayer = LayerMask.NameToLayer("Enemy");
         //Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+    }
+    float dashElapsedCooldown;
+
+    private IEnumerator ElapseDashCooldown()
+    {
+        dashElapsedCooldown = 0;
+        for(float i = 0; i < dashCooldown; i+= Time.deltaTime)
+        {
+            dashElapsedCooldown += Time.deltaTime;
+            yield return null;
+        }
+        dashElapsedCooldown = 0.8f;
+    }
+    public float GetDashPercentage()
+    {
+        return dashElapsedCooldown / dashCooldown;
     }
 
     private void Invulnerability()
