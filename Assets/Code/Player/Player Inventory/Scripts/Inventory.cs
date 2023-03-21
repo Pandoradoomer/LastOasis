@@ -15,6 +15,10 @@ public class Inventory : MonoBehaviour
             itemDictionary.Add(coinEntry, 0);
         DontDestroyOnLoad(this.gameObject);
     }
+    private void OnDestroy()
+    {
+
+    }
 
 
     public void Add(CollectableData collectableData, int amount)

@@ -32,7 +32,6 @@ public class TransitionManager : MonoBehaviour
     }
     void Start()
     {
-
         //if (GameObject.FindObjectOfType<Inventory>() == null)
         //{
         //    var go = Instantiate(inventory);
@@ -51,6 +50,10 @@ public class TransitionManager : MonoBehaviour
     
     public void OnLevelLoaded(Scene scene, LoadSceneMode mode)
     {
+        if(scene.name == "Ship")
+        {
+            Singleton.Instance.PlayerStats.ResetDeath();
+        }
         StartCoroutine(FadeOut());
     }
 

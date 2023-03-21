@@ -19,6 +19,7 @@ public class EnemyBase : MonoBehaviour
     {
         lootToDrop = new Dictionary<Item, int>();
         EventManager.StartListening(Event.PlayerHitEnemy, OnHit);
+        EventManager.StartListening(Event.PlayerDeath, OnPlayerDeath);
     }
 
     private void Update()
@@ -41,6 +42,10 @@ public class EnemyBase : MonoBehaviour
             currentHealth -= php.damage;
         }
     }
+    private void OnPlayerDeath(IEventPacket packet)
+    {
+
+    }
 
     private void OnDestroy()
     {
@@ -48,5 +53,6 @@ public class EnemyBase : MonoBehaviour
             rs.enemies.Remove(this);
         Instantiate(_coinSpawner, this.transform.position, Quaternion.identity);
         EventManager.StopListening(Event.PlayerHitEnemy, OnHit);
+        EventManager.StopListening(Event.PlayerDeath, OnPlayerDeath);
     }
 }
