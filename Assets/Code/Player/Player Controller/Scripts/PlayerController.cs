@@ -227,7 +227,7 @@ public class PlayerController : MonoBehaviour
         currentState = CURRENT_STATE.RUNNING;
         int playerLayer = gameObject.layer;
         int enemyLayer = LayerMask.NameToLayer("Enemy");
-        Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+        //Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
     }
 
     private void Invulnerability()
@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour
                     invulnerabilityDuration = invulnerabilityHolder;
                     blinkTimer = 1;
                     ChangePlayerAlpha();
-                    IgnoreCollider(false);
+                    //IgnoreCollider(false);
                 }
             }
         }
