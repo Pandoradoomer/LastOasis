@@ -2523,17 +2523,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab3a60db7701df4fad000d45081af36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statPanel: {fileID: 1237174667}
-  isInStatPage: 0
-  statActive: 0
-  exit: {fileID: 1454095524}
-  saveStats: {fileID: 1454095524}
-  loadStats: {fileID: 1454095524}
-  resetStats: {fileID: 1454095524}
   healthValue: {fileID: 135683062}
-  damageValue: {fileID: 1187943521}
   movementSpeedValue: {fileID: 1193420222}
   dexterityValue: {fileID: 1700485236}
+  damageValue: {fileID: 1187943521}
   defenceValue: {fileID: 1596842385}
 --- !u!1 &762025462
 GameObject:
@@ -3232,7 +3225,7 @@ GameObject:
   - component: {fileID: 1024214203}
   - component: {fileID: 1024214202}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: StatCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

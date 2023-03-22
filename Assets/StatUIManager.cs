@@ -33,9 +33,9 @@ public class StatUIManager : MonoBehaviour
        // resetStats.onClick.AddListener(UnfreezePlayer);
         //Get singleton data for player stats here
         healthValue.text = Singleton.Instance.PlayerStats.currentHealth.ToString();
-        movementSpeedValue.text = Singleton.Instance.PlayerStats.currentSpeed.ToString();
-        dexterityValue.text = Singleton.Instance.PlayerStats.currentDexterity.ToString();
-        damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString();
+        movementSpeedValue.text = Singleton.Instance.PlayerStats.currentSpeed.ToString("0.00");
+        dexterityValue.text = Singleton.Instance.PlayerStats.currentDexterity.ToString("0.00");
+        damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString("0.00");
         defenceValue.text = Singleton.Instance.PlayerStats.currentDefence.ToString();
     }
 
@@ -172,9 +172,9 @@ public class StatUIManager : MonoBehaviour
         //    isInStatPage = true;
         //}
         healthValue.text = Singleton.Instance.PlayerStats.currentHealth.ToString();
-        movementSpeedValue.text = Singleton.Instance.PlayerStats.currentSpeed.ToString();
-        dexterityValue.text = Singleton.Instance.PlayerStats.currentDexterity.ToString();
-        damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString();
+        movementSpeedValue.text = Singleton.Instance.PlayerStats.currentSpeed.ToString("0.00");
+        dexterityValue.text = Singleton.Instance.PlayerStats.currentDexterity.ToString("0.00");
+        damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString("0.00");
         defenceValue.text = Singleton.Instance.PlayerStats.currentDefence.ToString();
     }
 }
