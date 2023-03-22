@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
         EventManager.StartListening(Event.BossTeleport, BossTeleport);
         EventManager.StartListening(Event.DialogueStart, FreezePlayer);
         EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
+        EventManager.StartListening(Event.PlayerDeath, FreezePlayer);
     }
 
     private void OnDestroy()
@@ -66,14 +67,13 @@ public class PlayerController : MonoBehaviour
         EventManager.StopListening(Event.BossTeleport, BossTeleport);
         EventManager.StopListening(Event.DialogueStart, FreezePlayer);
         EventManager.StopListening(Event.DialogueFinish, UnfreezePlayer);
+        EventManager.StopListening(Event.PlayerDeath, FreezePlayer);
     }
 
     void FreezePlayer(IEventPacket packet)
     {
         rb.velocity = Vector2.zero;
         animator.SetBool("isMoving", false);
-        animator.SetFloat("moveX", 0);
-        animator.SetFloat("moveY", 0);
         isInDialogue = true;
     }
 
