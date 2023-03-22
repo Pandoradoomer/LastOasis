@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
         ATTACK,
         DASHING,
         SCENE_CHANGE,
-        COMBO
+        MOVE_ATTACK
     };
 
     public CURRENT_STATE currentState;
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] float speed;
 
-    private Vector2 movement;
+    [HideInInspector] public Vector2 movement;
 
     private SpriteRenderer sr;
     public Animator animator;
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float invulnerabilityDuration;
     [SerializeField] private float dashDistance, dashCooldown, dashLength;
-    [SerializeField] private Vector2 lastPlayerDirection;
+    [SerializeField] public Vector2 lastPlayerDirection;
 
     public Transform doorWayPoint;
 
@@ -180,11 +180,11 @@ public class PlayerController : MonoBehaviour
             case CURRENT_STATE.ATTACK:
                 rb.velocity = Vector2.zero;
                 break;
-            case CURRENT_STATE.COMBO:
-                rb.velocity = Vector2.zero;
-                animator.SetFloat("moveX", lastPlayerDirection.x);
-                animator.SetFloat("moveY", lastPlayerDirection.y);
-                break;
+            //case CURRENT_STATE.COMBO:
+            //    rb.velocity = Vector2.zero;
+            //    animator.SetFloat("moveX", lastPlayerDirection.x);
+            //    animator.SetFloat("moveY", lastPlayerDirection.y);
+            //    break;
             case CURRENT_STATE.SCENE_CHANGE:
                 Vector2 movePos = Vector2.MoveTowards(transform.position, doorWayPoint.position, 2 * Time.deltaTime);
                 rb.MovePosition(movePos);
@@ -227,6 +227,7 @@ public class PlayerController : MonoBehaviour
 
     private void DisableIsDashing()
     {
+        rb.velocity = Vector2.zero;
         currentState = CURRENT_STATE.RUNNING;
         int playerLayer = gameObject.layer;
         int enemyLayer = LayerMask.NameToLayer("Enemy");

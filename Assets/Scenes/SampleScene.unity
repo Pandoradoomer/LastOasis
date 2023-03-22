@@ -2903,6 +2903,7 @@ MonoBehaviour:
   currentState: 0
   rb: {fileID: 1703071644}
   speed: 2
+  movement: {x: 0, y: 0}
   animator: {fileID: 0}
   invulnerability: 0
   invulnerabilityDuration: 2
@@ -2924,22 +2925,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b13c3f54a0a605840930cd5e08fce21d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingDuration: 0.5
   swingDelay: 1
   swingDamage: 5
+  pushPower: 150
   targetLayer:
     serializedVersion: 2
-    m_Bits: 128
-  swordCollider: {fileID: 0}
+    m_Bits: 2176
   canAttack: 1
   animationLength: 0.517
   sr: {fileID: 0}
-  combo: 0
-  comboTimer: 0.5
-  comboTimerHolder: 0
-  comboDelay: 0.5
-  damageMultiplier: 1.5
-  isComboAttack: 0
 --- !u!95 &1703071648
 Animator:
   serializedVersion: 4
