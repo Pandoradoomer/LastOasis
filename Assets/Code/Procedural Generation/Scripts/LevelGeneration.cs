@@ -505,7 +505,7 @@ public class LevelGeneration : MonoBehaviour
 
     void SpawnObelisk(IEventPacket packet)
     {
-        if(consecutiveVisitedRooms == 4)
+        if(consecutiveVisitedRooms == numberOfRooms / 3)
         {
             consecutiveVisitedRooms = 0;
             Instantiate(returnToShipObject, GetRoomFromIndex(roomIndex).gameObject.transform.position, Quaternion.identity);
