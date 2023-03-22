@@ -244,6 +244,9 @@ public class PlayerStats : MonoBehaviour
         {
             currentHealth = 0;
         }
+
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
         if (currentHealth <= 0)
         {
             currentHealth = 0;
