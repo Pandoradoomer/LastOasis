@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 1x1 Room 2
   m_EditorClassIdentifier: 
   enemySpawns:
-  - spawnPosition: {x: -1, y: -1}
-    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
+  - spawnPosition: {x: -0, y: -0}
+    enemyToSpawn: {fileID: 11400000, guid: d2d9ba07656c5274e8143c1a692bfc10, type: 2}
   - spawnPosition: {x: -3, y: -3}
     enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: 3, y: -3}
@@ -22,5 +22,9 @@ MonoBehaviour:
   - spawnPosition: {x: 3, y: 3}
     enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: -3, y: 3}
-    enemyToSpawn: {fileID: 0}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
+  - spawnPosition: {x: -1, y: -1}
+    enemyToSpawn: {fileID: 11400000, guid: acb1ebe52ab57b944ace4ab8b3b12a31, type: 2}
+  - spawnPosition: {x: 1, y: 1}
+    enemyToSpawn: {fileID: 11400000, guid: acb1ebe52ab57b944ace4ab8b3b12a31, type: 2}
   isExpandable: 0
