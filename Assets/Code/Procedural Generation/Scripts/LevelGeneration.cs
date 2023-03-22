@@ -48,9 +48,11 @@ public class LevelGeneration : MonoBehaviour
     int startRoomX, startRoomY;
 
     [SerializeField] private Animator cameraTransition;
-    int roomIndex = 0;
+    public int roomIndex = 0;
     [SerializeField] private GameObject returnToShipObject;
     [SerializeField] GameObject inventory;
+    List<int> visitedRooms = new List<int>();
+    public int consecutiveVisitedRooms = 0;
     //GameObject[] gos = GameObject.FindGameObjectsWithTag("DoorWaypoint");
     // Start is called before the first frame update
     void Awake()
@@ -70,6 +72,15 @@ public class LevelGeneration : MonoBehaviour
         SetRoomVariables();
         SetPlayerAtStart();
         EventManager.StartListening(Event.RoomExit, OnRoomExit);
+        EventManager.StartListening(Event.SpawnObelisk, SpawnObelisk);
+        visitedRooms.Add(0);
+    }
+
+    private void OnDestroy()
+    {
+
+        EventManager.StopListening(Event.RoomExit, OnRoomExit);
+        EventManager.StopListening(Event.SpawnObelisk, SpawnObelisk);
     }
 
     void CreateRooms()
@@ -483,6 +494,16 @@ public class LevelGeneration : MonoBehaviour
 
     }
 
+    void SpawnObelisk(IEventPacket packet)
+    {
+        if(consecutiveVisitedRooms == 4)
+        {
+            consecutiveVisitedRooms = 0;
+            Instantiate(returnToShipObject, GetRoomFromIndex(roomIndex).gameObject.transform.position, Quaternion.identity);
+        }
+    }
+    
+
     private IEnumerator CameraTransition(IEventPacket packet)
     {
         PlayerController.instance.doorWayPoint = PlayerController.instance.FindWayPoint();
@@ -498,6 +519,11 @@ public class LevelGeneration : MonoBehaviour
         roomIndex = rep.nextRoomIndex;
         rooms[currentRoom.x, currentRoom.y].go.SetActive(false);
         rooms[nextRoom.x, nextRoom.y].go.SetActive(true);
+        if(!visitedRooms.Contains(rep.nextRoomIndex))
+        {
+            consecutiveVisitedRooms++;
+            visitedRooms.Add(rep.nextRoomIndex);
+        }
         DoorManager dm = nextRoom.go.GetComponent<DoorManager>();
         Vector2 newPlayerPos = dm.GetDoor(((int)rep.direction + 2)%4).transform.position;
         float mult = 1.0f;

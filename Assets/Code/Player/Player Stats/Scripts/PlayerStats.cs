@@ -181,8 +181,39 @@ public class PlayerStats : MonoBehaviour
     public int maxDamage = -1;
     public float maxDefence = -1;
     public static PlayerStats instance { get; private set; }
+
+    bool isDead = false;
     void Start()
     {
+        //if (PlayerPrefs.HasKey("isSet"))
+        //    hasBeenInit = Convert.ToBoolean(PlayerPrefs.GetString("isSet"));
+        //if(!hasBeenInit)
+        //{
+        //    hasBeenInit = true;
+        //    currentHealth = maxHealth = baseHealth;
+        //    currentSpeed = maxSpeed = baseSpeed;
+        //    currentDexterity = maxDexterity = baseDexterity;
+        //    currentDefence = maxDefence = baseDefence;
+        //    currentDamage = maxDamage = baseDamage;
+        //}
+        //else
+        //{
+        //    LoadValues();
+        //}
+        //EventManager.StartListening(Event.EnemyHitPlayer, OnEnemyHit);
+        //DontDestroyOnLoad(this.gameObject);
+    }
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            instance = this;
+        }
         if (PlayerPrefs.HasKey("isSet"))
             hasBeenInit = Convert.ToBoolean(PlayerPrefs.GetString("isSet"));
         if(!hasBeenInit)
@@ -199,18 +230,8 @@ public class PlayerStats : MonoBehaviour
             LoadValues();
         }
         EventManager.StartListening(Event.EnemyHitPlayer, OnEnemyHit);
+        EventManager.StartListening(Event.PlayerDeath, OnPlayerDeath);
         DontDestroyOnLoad(this.gameObject);
-    }
-    private void Awake()
-    {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
     }
 
     void Update()
@@ -219,10 +240,19 @@ public class PlayerStats : MonoBehaviour
         {
             ResetStatValues();
         }
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            currentHealth = 0;
+        }
         if (currentHealth <= 0)
         {
             //Reload scene
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            if(!isDead)
+            {
+                isDead = true;
+                EventManager.TriggerEvent(Event.PlayerDeath, null);
+            }
             Debug.Log("Player died");
         }
         //if (currentHealth >= baseHealth)
@@ -428,6 +458,7 @@ public class PlayerStats : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.StopListening(Event.EnemyHitPlayer, OnEnemyHit);
+        EventManager.StopListening(Event.PlayerDeath, OnPlayerDeath);
         SaveValues();
     }
 
@@ -471,5 +502,17 @@ public class PlayerStats : MonoBehaviour
         currentSpeed = maxSpeed = baseSpeed;
         currentDexterity = currentDexterity = baseDexterity;
         currentDefence = maxDefence = baseDefence;
+    }
+
+    private void OnPlayerDeath(IEventPacket packet)
+    {
+        //currentHealth = maxHealth;
+
+    }
+
+    public void ResetDeath()
+    {
+        currentHealth = maxHealth;
+        isDead = false;
     }
 }

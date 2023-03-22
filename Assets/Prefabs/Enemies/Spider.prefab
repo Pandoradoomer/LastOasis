@@ -369,6 +369,7 @@ MonoBehaviour:
   multiplier: 0
   rs: {fileID: 0}
   enemyData: {fileID: 0}
+  _coinSpawner: {fileID: 7260918969125760000, guid: 7aee68a85b50aba47b35de58f97912a3, type: 3}
 --- !u!50 &-4088637690268722203
 Rigidbody2D:
   serializedVersion: 4
@@ -387,7 +388,7 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!114 &4597732120380776306
