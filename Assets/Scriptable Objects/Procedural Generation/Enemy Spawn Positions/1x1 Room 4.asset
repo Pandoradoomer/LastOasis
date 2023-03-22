@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawns:
   - spawnPosition: {x: -3, y: -3}
-    difficultyRange: {x: 0, y: 5}
+    difficultyRange: {x: 4, y: 5}
   - spawnPosition: {x: 3, y: 3}
     difficultyRange: {x: 0, y: 2}
   - spawnPosition: {x: -3, y: 3}
     difficultyRange: {x: 0, y: 2}
   - spawnPosition: {x: 2, y: 2}
-    difficultyRange: {x: 0, y: 2}
+    difficultyRange: {x: 3, y: 4}
   - spawnPosition: {x: 3, y: -3}
     difficultyRange: {x: 0, y: 2}
   isExpandable: 0

@@ -2907,7 +2907,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   invulnerability: 0
   invulnerabilityDuration: 2
-  dashDistance: 10
+  dashDistance: 4
   dashCooldown: 0.8
   dashLength: 0.25
   lastPlayerDirection: {x: 0, y: 0}
@@ -3928,7 +3928,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.25
+  m_fontSize: 20.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
