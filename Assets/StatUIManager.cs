@@ -11,27 +11,32 @@ using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class StatUIManager : MonoBehaviour
 {
-    public GameObject statPanel;
-    public bool isInStatPage;
-    public bool statActive;
-    bool keyPressed;
-    [SerializeField] Button exit;
-    [SerializeField] Button saveStats;
-    [SerializeField] Button loadStats;
-    [SerializeField] Button resetStats;
+   // public GameObject statPanel;
+   // public bool isInStatPage;
+   //// public bool statActive;
+   // bool keyPressed;
+   // [SerializeField] Button exit;
+   // [SerializeField] Button saveStats;
+   // [SerializeField] Button loadStats;
+   // [SerializeField] Button resetStats;
     [SerializeField] TextMeshProUGUI healthValue;
-    [SerializeField] TextMeshProUGUI damageValue;
     [SerializeField] TextMeshProUGUI movementSpeedValue;
     [SerializeField] TextMeshProUGUI dexterityValue;
+    [SerializeField] TextMeshProUGUI damageValue;
     [SerializeField] TextMeshProUGUI defenceValue;
     void Start()
     {
         StartCoroutine(DisableEscKey());
-        exit.onClick.AddListener(UnfreezePlayer);
-        saveStats.onClick.AddListener(UnfreezePlayer);
-        loadStats.onClick.AddListener(UnfreezePlayer);
-        resetStats.onClick.AddListener(UnfreezePlayer);
-
+        //exit.onClick.AddListener(UnfreezePlayer);
+        //saveStats.onClick.AddListener(UnfreezePlayer);
+        //loadStats.onClick.AddListener(UnfreezePlayer);
+       // resetStats.onClick.AddListener(UnfreezePlayer);
+        //Get singleton data for player stats here
+        healthValue.text = Singleton.Instance.PlayerStats.currentHealth.ToString();
+        movementSpeedValue.text = Singleton.Instance.PlayerStats.currentSpeed.ToString();
+        dexterityValue.text = Singleton.Instance.PlayerStats.currentDexterity.ToString();
+        damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString();
+        defenceValue.text = Singleton.Instance.PlayerStats.currentDefence.ToString();
     }
 
     //Load on awake
@@ -55,7 +60,7 @@ public class StatUIManager : MonoBehaviour
     }
     void Update()
     {
-        DisplayStats();
+       DisplayStats();
     }
 
     void CheckForSave()
@@ -66,7 +71,7 @@ public class StatUIManager : MonoBehaviour
     {
         EventManager.TriggerEvent(Event.DialogueFinish, null);
 
-        isInStatPage = false;
+        //isInStatPage = false;
     }
 
     public void SaveStats()
@@ -121,55 +126,55 @@ public class StatUIManager : MonoBehaviour
     IEnumerator DisableEscKey()
     {
         //Disable Esc to open stat panel until transition panel anim is done
-        keyPressed = false;
+        //keyPressed = false;
         if (!Input.GetKeyDown(KeyCode.Escape))
             {
             yield return null;
         }
         yield return new WaitForSeconds(3.0f);
-        DisplayStats();
+        //DisplayStats();
         
     }
 
     void DisplayStats()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            keyPressed = true;
-            if (statPanel.activeInHierarchy)
-            {
-                statPanel.SetActive(false);
-                EventManager.TriggerEvent(Event.DialogueFinish, null);
-                isInStatPage = false;
-                MessageManager.instance.chefText.alpha = 1;
-                MessageManager.instance.carpenterText.alpha = 1;
-                MessageManager.instance.surgeonText.alpha = 1;
-                MessageManager.instance.qmText.alpha = 1;
-                MessageManager.instance.gunnerText.alpha = 1;
-            }
-            else
-            {
-                statPanel.SetActive(true);
-                EventManager.TriggerEvent(Event.DialogueStart, new StartDialoguePacket());
-                isInStatPage = true;
-                MessageManager.instance.chefText.alpha = 0;
-                MessageManager.instance.carpenterText.alpha = 0;
-                MessageManager.instance.surgeonText.alpha = 0;
-                MessageManager.instance.qmText.alpha = 0;
-                MessageManager.instance.gunnerText.alpha = 0;
-            }
-        }
-        //Checks if stat panel is active at any given time
-        else if (statPanel.activeInHierarchy)
-        {
-            //freezes player repeatedly 
-            EventManager.TriggerEvent(Event.DialogueStart, new StartDialoguePacket());
-            isInStatPage = true;
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    keyPressed = true;
+        //    if (statPanel.activeInHierarchy)
+        //    {
+        //        statPanel.SetActive(false);
+        //        EventManager.TriggerEvent(Event.DialogueFinish, null);
+        //        isInStatPage = false;
+        //        MessageManager.instance.chefText.alpha = 1;
+        //        MessageManager.instance.carpenterText.alpha = 1;
+        //        MessageManager.instance.surgeonText.alpha = 1;
+        //        MessageManager.instance.qmText.alpha = 1;
+        //        MessageManager.instance.gunnerText.alpha = 1;
+        //    }
+        //    else
+        //    {
+        //        statPanel.SetActive(true);
+        //        EventManager.TriggerEvent(Event.DialogueStart, new StartDialoguePacket());
+        //        isInStatPage = true;
+        //        MessageManager.instance.chefText.alpha = 0;
+        //        MessageManager.instance.carpenterText.alpha = 0;
+        //        MessageManager.instance.surgeonText.alpha = 0;
+        //        MessageManager.instance.qmText.alpha = 0;
+        //        MessageManager.instance.gunnerText.alpha = 0;
+        //    }
+        //}
+        ////Checks if stat panel is active at any given time
+        //else if (statPanel.activeInHierarchy)
+        //{
+        //    //freezes player repeatedly 
+        //    EventManager.TriggerEvent(Event.DialogueStart, new StartDialoguePacket());
+        //    isInStatPage = true;
+        //}
         healthValue.text = Singleton.Instance.PlayerStats.currentHealth.ToString();
-        damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString();
-        movementSpeedValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString();
+        movementSpeedValue.text = Singleton.Instance.PlayerStats.currentSpeed.ToString();
         dexterityValue.text = Singleton.Instance.PlayerStats.currentDexterity.ToString();
+        damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString();
         defenceValue.text = Singleton.Instance.PlayerStats.currentDefence.ToString();
     }
 }
