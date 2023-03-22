@@ -14,9 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Doom Slayer
   MaxHealth: 50
-  CurrentHealth: 0
   Sprite: {fileID: 0}
   Type: 1
   Damage: 99999999
+  DamageOnCollision: 0
+  difficulty: -1
+  multiplier: 0
   Behaviour: {fileID: 11500000, guid: 4f9a1fcc931b7d140af8bb27344e219b, type: 3}
+  prefabToSpawn: {fileID: 0}
   itemDrops: []
+  color: {r: 0, g: 0, b: 0, a: 0}
