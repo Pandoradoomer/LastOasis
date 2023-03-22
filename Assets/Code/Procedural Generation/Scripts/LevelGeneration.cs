@@ -14,6 +14,7 @@ public class LevelGeneration : MonoBehaviour
     List<Vector2> takenPositions = new List<Vector2>();
 
     int gridSizeX, gridSizeY;
+    [SerializeField]
     int numberOfRooms = 20;
     /// <summary>
     /// If the range has bigger limits (i.e. [0.7,0.8]), the rooms will aim to clump together and form more homogenous dungeons
