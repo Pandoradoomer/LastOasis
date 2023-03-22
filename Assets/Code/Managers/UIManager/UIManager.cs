@@ -129,15 +129,20 @@ public class UIManager : MonoBehaviour
 
     public IEnumerator FadeOutDeath()
     {
-        Color c = Color.white;
         _returnButton.enabled = false;
         EventSystem.current.SetSelectedGameObject(null);
+        Color deadColor = _deadText.color;
+        Color inventoryColor = _inventoryLostText.color;
+        Color returnColor = _returnButtonText.color;
         for(float i = 0; i < deathTextFadeIn; i+= Time.deltaTime)
         {
-            c.a = Mathf.Lerp(0.0f, 1.0f, (deathTextFadeIn - i) / deathTextFadeIn);
-            _deadText.color = c;
-            _inventoryLostText.color = c;
-            _returnButtonText.color = c;
+            float a = Mathf.Lerp(0.0f, 1.0f, (deathTextFadeIn - i) / deathTextFadeIn);
+            deadColor.a = a;
+            inventoryColor.a = a;
+            returnColor.a = a;
+            _deadText.color = deadColor;
+            _inventoryLostText.color = inventoryColor;
+            _returnButtonText.color = returnColor;
             yield return null;
         }
     }
