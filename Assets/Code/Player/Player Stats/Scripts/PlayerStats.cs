@@ -160,7 +160,7 @@ public class PlayerStats : MonoBehaviour
     public int currentHealth = -1;
     public float currentSpeed = -1;
     public float currentDexterity = -1;
-    public int currentDamage = -1;
+    public float currentDamage = -1;
     public float currentDefence = -1;
 
     private bool hasBeenInit = false;
@@ -434,7 +434,7 @@ public class PlayerStats : MonoBehaviour
     public void SaveValues()
     {
         PlayerPrefs.SetInt(Stats.Health.ToString(), currentHealth);
-        PlayerPrefs.SetInt(Stats.Damage.ToString(), currentDamage);
+        PlayerPrefs.SetFloat(Stats.Damage.ToString(), currentDamage);
         PlayerPrefs.SetFloat(Stats.Defence.ToString(), currentDefence);
         PlayerPrefs.SetFloat(Stats.Dexterity.ToString(), currentDexterity);
         PlayerPrefs.SetFloat(Stats.Speed.ToString(), currentSpeed);
@@ -451,7 +451,7 @@ public class PlayerStats : MonoBehaviour
     {
 
         currentHealth = PlayerPrefs.GetInt(Stats.Health.ToString(), currentHealth);
-        currentDamage = PlayerPrefs.GetInt(Stats.Damage.ToString(), currentDamage);
+        currentDamage = PlayerPrefs.GetFloat(Stats.Damage.ToString(), currentDamage);
         currentDefence = PlayerPrefs.GetFloat(Stats.Defence.ToString(), currentDefence);
         currentDexterity = PlayerPrefs.GetFloat(Stats.Dexterity.ToString(), currentDexterity);
         currentSpeed = PlayerPrefs.GetFloat(Stats.Speed.ToString(), currentSpeed);
