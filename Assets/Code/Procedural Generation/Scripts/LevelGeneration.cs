@@ -37,12 +37,17 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField]
     LevelGenerationData levelData;
 
-    [SerializeField]
-    private Vector2 easyDifficultyRange;
-    [SerializeField]
-    private Vector2 mediumDifficultyRange;
-    [SerializeField]
-    private Vector2 highDifficultyRange;
+    //[SerializeField]
+    //public Vector2 easyDifficultyRange;
+    //[SerializeField]
+    //public Vector2 mediumDifficultyRange;
+    //[SerializeField]
+    //public Vector2 highDifficultyRange;
+    [HideInInspector]
+    public int mediumDistThreshold;
+    [HideInInspector]
+    public int hardDistThreshold;
+
     [SerializeField]
     List<EnemySpawnPosition> enemySpawnPositions;
 
@@ -52,7 +57,8 @@ public class LevelGeneration : MonoBehaviour
     public int roomIndex = 0;
     [SerializeField] private GameObject returnToShipObject;
     [SerializeField] GameObject inventory;
-    List<int> visitedRooms = new List<int>();
+    [HideInInspector]
+    public List<int> visitedRooms = new List<int>();
     public int consecutiveVisitedRooms = 0;
     //GameObject[] gos = GameObject.FindGameObjectsWithTag("DoorWaypoint");
     // Start is called before the first frame update
@@ -74,6 +80,8 @@ public class LevelGeneration : MonoBehaviour
         SetPlayerAtStart();
         EventManager.StartListening(Event.RoomExit, OnRoomExit);
         EventManager.StartListening(Event.SpawnObelisk, SpawnObelisk);
+        mediumDistThreshold = numberOfRooms / 3;
+        hardDistThreshold = 2 * numberOfRooms / 3;
         visitedRooms.Add(0);
     }
 
@@ -363,7 +371,7 @@ public class LevelGeneration : MonoBehaviour
             rs.isBoss = rs.roomIndex == bossRoomIndex;
             rs.isStart = spawnedRooms.IndexOf(room) == 0;
             rs.distToStart = rooms[room.x, room.y].distToStart;
-            rs.roomDifficulty = GenerateDifficulty(rs.distToStart);
+            rs.roomDifficulty = 0;//GenerateDifficulty(rs.distToStart);
             rs.SetDestructible(levelData.healthSpawnChanceDestructible, levelData.coinSpawnChanceDestructible);
             EventManager.TriggerEvent(Event.RoomSpawn, new RoomSpawnPacket()
             {

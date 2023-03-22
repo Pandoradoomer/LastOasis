@@ -5557,7 +5557,9 @@ MonoBehaviour:
   roomIndex: 0
   roomDifficulty: 0
   distToStart: 0
-  spawnPosition: {fileID: 11400000, guid: 67bb625f5e7440446ad9305605ff76d8, type: 2}
+  easySpawnPosition: {fileID: 11400000, guid: 67bb625f5e7440446ad9305605ff76d8, type: 2}
+  mediumSpawnPosition: {fileID: 11400000, guid: 67bb625f5e7440446ad9305605ff76d8, type: 2}
+  hardSpawnPosition: {fileID: 11400000, guid: 67bb625f5e7440446ad9305605ff76d8, type: 2}
   destructibles: []
   Rocks: {fileID: 1775641182561365518}
   enemies: []
