@@ -246,6 +246,7 @@ public class PlayerStats : MonoBehaviour
         }
         if (currentHealth <= 0)
         {
+            currentHealth = 0;
             //Reload scene
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             if(!isDead)
