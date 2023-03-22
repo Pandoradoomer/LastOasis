@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
@@ -12,7 +13,7 @@ public class PlayerController : MonoBehaviour
         ATTACK,
         DASHING,
         SCENE_CHANGE,
-        COMBO
+        MOVE_ATTACK
     };
 
     public CURRENT_STATE currentState;
@@ -20,7 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] float speed;
 
-    private Vector2 movement;
+    [HideInInspector] public Vector2 movement;
 
     private SpriteRenderer sr;
     public Animator animator;
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float invulnerabilityDuration;
     [SerializeField] private float dashDistance, dashCooldown, dashLength;
-    [SerializeField] private Vector2 lastPlayerDirection;
+    [SerializeField] public Vector2 lastPlayerDirection;
 
     public Transform doorWayPoint;
 
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         invulnerabilityHolder = invulnerabilityDuration;
+        dashElapsedCooldown = dashCooldown;
         originalColor = GetComponent<SpriteRenderer>().color;
         speed = Singleton.Instance.PlayerStats.currentSpeed;
         EventManager.StartListening(Event.BossTeleport, BossTeleport);
@@ -178,11 +180,11 @@ public class PlayerController : MonoBehaviour
             case CURRENT_STATE.ATTACK:
                 rb.velocity = Vector2.zero;
                 break;
-            case CURRENT_STATE.COMBO:
-                rb.velocity = Vector2.zero;
-                animator.SetFloat("moveX", lastPlayerDirection.x);
-                animator.SetFloat("moveY", lastPlayerDirection.y);
-                break;
+            //case CURRENT_STATE.COMBO:
+            //    rb.velocity = Vector2.zero;
+            //    animator.SetFloat("moveX", lastPlayerDirection.x);
+            //    animator.SetFloat("moveY", lastPlayerDirection.y);
+            //    break;
             case CURRENT_STATE.SCENE_CHANGE:
                 Vector2 movePos = Vector2.MoveTowards(transform.position, doorWayPoint.position, 2 * Time.deltaTime);
                 rb.MovePosition(movePos);
@@ -214,6 +216,7 @@ public class PlayerController : MonoBehaviour
 
         canDash = false;
         Invoke("ResetDash", dashCooldown);
+        StartCoroutine(ElapseDashCooldown());
         Invoke("DisableIsDashing", dashLength);
     }
 
@@ -224,10 +227,27 @@ public class PlayerController : MonoBehaviour
 
     private void DisableIsDashing()
     {
+        rb.velocity = Vector2.zero;
         currentState = CURRENT_STATE.RUNNING;
         int playerLayer = gameObject.layer;
         int enemyLayer = LayerMask.NameToLayer("Enemy");
-        Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+        //Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+    }
+    float dashElapsedCooldown;
+
+    private IEnumerator ElapseDashCooldown()
+    {
+        dashElapsedCooldown = 0;
+        for(float i = 0; i < dashCooldown; i+= Time.deltaTime)
+        {
+            dashElapsedCooldown += Time.deltaTime;
+            yield return null;
+        }
+        dashElapsedCooldown = 0.8f;
+    }
+    public float GetDashPercentage()
+    {
+        return dashElapsedCooldown / dashCooldown;
     }
 
     private void Invulnerability()
@@ -249,7 +269,7 @@ public class PlayerController : MonoBehaviour
                     invulnerabilityDuration = invulnerabilityHolder;
                     blinkTimer = 1;
                     ChangePlayerAlpha();
-                    IgnoreCollider(false);
+                    //IgnoreCollider(false);
                 }
             }
         }

@@ -42,16 +42,29 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if(Input.GetKeyDown(KeyCode.Keypad1))
         {
             List<int> keys = new List<int>(spawnedEnemies.Keys);
             foreach(int key in keys)
             {
-                foreach(var erd in spawnedEnemies[key])
+                var auxList = new List<EnemyRuntimeData>(spawnedEnemies[key]);
+                for(int i = 0; i < auxList.Count; i++)
                 {
-                    Destroy(erd.go);
+                    var erd = auxList[i];
+                    //Destroy(erd.go);
+                    EventManager.TriggerEvent(Event.EnemyDestroyed, new EnemyDestroyedPacket()
+                    {
+                        go = erd.go,
+                        lootToDrop = erd.go.GetComponent<EnemyBase>().lootToDrop
+                    });
                 }
                 spawnedEnemies.Remove(key);
+                EventManager.TriggerEvent(Event.DoorsLockUnlock, new DoorLockUnlockPacket()
+                {
+                    roomIndex = Singleton.Instance.LevelGeneration.roomIndex,
+                    isUnlock = true
+                });
+                EventManager.TriggerEvent(Event.SpawnObelisk, null);
             }
 
         }
@@ -93,6 +106,7 @@ public class EnemyManager : MonoBehaviour
                 roomIndex = index,
                 isUnlock = true
             });
+            EventManager.TriggerEvent(Event.SpawnObelisk, null);
         }
 
         //awarding the player the necessary items
@@ -101,8 +115,16 @@ public class EnemyManager : MonoBehaviour
         {
             if(kvp.Key is CollectableData)
             {
-                var go = Singleton.Instance.ItemSpawnManager.SpawnItem(kvp.Key, edp.go.transform, kvp.Value);
-                rs.AddtoSpawnedList(go);
+                CollectableData cd = kvp.Key as CollectableData;
+                if(cd.isCoin)
+                {
+                    Singleton.Instance.Inventory.AddCoins(kvp.Value);
+                }
+                else
+                {
+                    var go = Singleton.Instance.ItemSpawnManager.SpawnItem(kvp.Key, edp.go.transform, kvp.Value);
+                    rs.AddtoSpawnedList(go);
+                }
             }
         }
 
