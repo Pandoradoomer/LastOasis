@@ -6,7 +6,7 @@ public abstract class BaseAttackBehaviour : MonoBehaviour, IEnemyBehaviour, IAtt
 {
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         AddAdditionalEventListeners();
         EventManager.StartListening(Event.PlayerHitEnemy, OnHit);
