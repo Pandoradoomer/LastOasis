@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2883471299118405730}
-  speed: 2
+  speed: 1.4
   attackHitbox: {fileID: 4092553047194163884}
   windUpTime: 0.75
   strikeTime: 3
