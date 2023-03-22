@@ -11,7 +11,7 @@ public class PlayerAttack : MonoBehaviour
     {
         get
         {
-            return swingDelay - PlayerStats.Dexterity;
+            return swingDelay - Singleton.Instance.PlayerStats.currentDexterity;
         }
         set
         {
