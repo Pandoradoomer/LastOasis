@@ -511,6 +511,15 @@ public class PlayerStats : MonoBehaviour
     private void OnPlayerDeath(IEventPacket packet)
     {
         //currentHealth = maxHealth;
+        if(PlayerPrefs.HasKey(PlayerPrefsKeys.DEATH_NUMBER.ToString()))
+        {
+            int value = PlayerPrefs.GetInt(PlayerPrefsKeys.DEATH_NUMBER.ToString());
+            PlayerPrefs.SetInt(PlayerPrefsKeys.DEATH_NUMBER.ToString(), value + 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.DEATH_NUMBER.ToString(), 1);
+        }
 
     }
 

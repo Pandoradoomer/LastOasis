@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Base Spider
   m_EditorClassIdentifier: 
   Name: Spider
-  MaxHealth: 10000
+  MaxHealth: 10
   Sprite: {fileID: 21300000, guid: 350626fd8d6ad5d43bdcf0d002ffc22d, type: 3}
   Type: 0
-  Damage: 0
+  Damage: 8
   DamageOnCollision: 0
   difficulty: 2.5
   multiplier: 1

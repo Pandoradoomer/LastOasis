@@ -159,6 +159,10 @@ public class DialogueManager : MonoBehaviour
 
     string QueryPlayerStatsForVariable(string variable)
     {
+        if(PlayerPrefs.HasKey(variable.ToString()))
+        {
+            return PlayerPrefs.GetInt(variable.ToString()).ToString();
+        }
         return "0";
     }
     bool ParseTag(ref int index, ref string text)

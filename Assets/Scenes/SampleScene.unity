@@ -3459,7 +3459,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - {fileID: 11400000, guid: a22c6f107e73ddb43b97b3a5243fbdd6, type: 2}
   - {fileID: 11400000, guid: acb1ebe52ab57b944ace4ab8b3b12a31, type: 2}
-  SpawnOnStart: 0
+  SpawnOnStart: 1
 --- !u!1 &1906047035
 GameObject:
   m_ObjectHideFlags: 0
@@ -3928,7 +3928,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.1
+  m_fontSize: 20.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

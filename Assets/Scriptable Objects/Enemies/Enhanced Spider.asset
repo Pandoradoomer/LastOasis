@@ -17,7 +17,7 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 3677b52960c319946a9e4d4d99100d78, type: 3}
   Type: 0
   Damage: 12
-  DamageOnCollision: 8
+  DamageOnCollision: 0
   difficulty: 1
   multiplier: 0
   Behaviour: {fileID: 0}

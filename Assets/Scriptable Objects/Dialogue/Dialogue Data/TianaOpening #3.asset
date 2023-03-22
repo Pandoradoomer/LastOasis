@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47dfd1d8f360d5d429ef0e480c5ac4cd, type: 3}
   m_Name: TianaOpening #3
   m_EditorClassIdentifier: 
-  dialogueText: You've died [deathCounter] times already. Take better care in the
+  dialogueText: You've died [DEATH_NUMBER] times already. Take better care in the
     future, idiot.
   characterData: {fileID: 11400000, guid: 8a99de9ff759be34582c053e432b3109, type: 2}
