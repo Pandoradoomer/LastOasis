@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class StatUIManager : MonoBehaviour
 {
@@ -30,9 +31,9 @@ public class StatUIManager : MonoBehaviour
         saveStats.onClick.AddListener(UnfreezePlayer);
         loadStats.onClick.AddListener(UnfreezePlayer);
         resetStats.onClick.AddListener(UnfreezePlayer);
+
     }
 
- 
     //Load on awake
 
     private void Awake()
@@ -157,6 +158,13 @@ public class StatUIManager : MonoBehaviour
                 MessageManager.instance.qmText.alpha = 0;
                 MessageManager.instance.gunnerText.alpha = 0;
             }
+        }
+        //Checks if stat panel is active at any given time
+        else if (statPanel.activeInHierarchy)
+        {
+            //freezes player repeatedly 
+            EventManager.TriggerEvent(Event.DialogueStart, new StartDialoguePacket());
+            isInStatPage = true;
         }
         healthValue.text = Singleton.Instance.PlayerStats.currentHealth.ToString();
         damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString();
