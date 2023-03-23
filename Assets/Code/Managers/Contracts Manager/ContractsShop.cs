@@ -41,17 +41,20 @@ public class ContractsShop : ScriptableObject
             switch(GainList[i])
             {
                 case GAIN_STAT.Health:
+                    Singleton.Instance.PlayerStats.maxHealth += 20;
+                    Singleton.Instance.PlayerStats.currentHealth = Singleton.Instance.PlayerStats.maxHealth;
                     break;
                 case GAIN_STAT.Damage:
-                    Singleton.Instance.PlayerStats.currentDamage *= 2;
+                    Singleton.Instance.PlayerStats.maxDamage += 6;
+                    Singleton.Instance.PlayerStats.currentDamage = Singleton.Instance.PlayerStats.maxDamage;
                     break;
                 case GAIN_STAT.Defence:
                     break;
                 case GAIN_STAT.Dexterity:
-                    Singleton.Instance.PlayerStats.currentDexterity *= 1.2f;
                     break;
                 case GAIN_STAT.Speed:
-                    Singleton.Instance.PlayerStats.currentSpeed *= 1.2f;
+                    Singleton.Instance.PlayerStats.maxSpeed += 0.5f;
+                    Singleton.Instance.PlayerStats.currentSpeed = Singleton.Instance.PlayerStats.maxSpeed;
                     break;
             }
         }
@@ -63,14 +66,16 @@ public class ContractsShop : ScriptableObject
                 case LOSE_STAT.Health:
                     break;
                 case LOSE_STAT.Damage:
-                    Singleton.Instance.PlayerStats.currentDamage = Mathf.RoundToInt((float)Singleton.Instance.PlayerStats.currentDamage / 1.5f);
+                    Singleton.Instance.PlayerStats.maxDamage -= 3;
+                    Singleton.Instance.PlayerStats.currentDamage = Singleton.Instance.PlayerStats.maxDamage;
                     break;
                 case LOSE_STAT.Defence:
                     break;
                 case LOSE_STAT.Dexterity:
-                    Singleton.Instance.PlayerStats.currentDexterity /= 2;
                     break;
                 case LOSE_STAT.Speed:
+                    Singleton.Instance.PlayerStats.maxSpeed -= 0.7f;
+                    Singleton.Instance.PlayerStats.currentSpeed = Singleton.Instance.PlayerStats.maxSpeed;
                     break;
             }
         }
@@ -111,17 +116,17 @@ public class ContractsShop : ScriptableObject
             switch (GainList[i])
             {
                 case GAIN_STAT.Health:
+                    AmountToGainList.Add(20);
                     break;
                 case GAIN_STAT.Damage:
-                    AmountToGainList.Add(Singleton.Instance.PlayerStats.currentDamage * 2 - Singleton.Instance.PlayerStats.currentDamage);
+                    AmountToGainList.Add(6);
                     break;
                 case GAIN_STAT.Defence:
                     break;
                 case GAIN_STAT.Dexterity:
-                    AmountToGainList.Add(Singleton.Instance.PlayerStats.currentDexterity * 1.2f - Singleton.Instance.PlayerStats.currentDexterity);
                     break;
                 case GAIN_STAT.Speed:
-                    AmountToGainList.Add(Singleton.Instance.PlayerStats.currentSpeed * 1.2f - Singleton.Instance.PlayerStats.currentSpeed);
+                    AmountToGainList.Add(0.5f);
                     break;
             }
         }
@@ -138,14 +143,14 @@ public class ContractsShop : ScriptableObject
                 case LOSE_STAT.Health:
                     break;
                 case LOSE_STAT.Damage:
-                    AmountToLoseList.Add(Singleton.Instance.PlayerStats.currentDamage / 1.5f - Singleton.Instance.PlayerStats.currentDamage);
+                    AmountToLoseList.Add(3);
                     break;
                 case LOSE_STAT.Defence:
                     break;
                 case LOSE_STAT.Dexterity:
-                    AmountToLoseList.Add(Singleton.Instance.PlayerStats.currentDexterity / 2 - Singleton.Instance.PlayerStats.currentDexterity);
                     break;
                 case LOSE_STAT.Speed:
+                    AmountToLoseList.Add(0.7f);
                     break;
             }
         }

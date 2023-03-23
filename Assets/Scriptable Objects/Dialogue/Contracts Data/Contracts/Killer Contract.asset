@@ -13,17 +13,15 @@ MonoBehaviour:
   m_Name: Killer Contract
   m_EditorClassIdentifier: 
   GainList: 01000000
-  LostList: 03000000
-  ContractCost: 1000
+  LostList: 04000000
+  ContractCost: 0
   ContractName: Killer Contract
-  ContractDescription: You will receive double your damage. But you will lose half
-    of your dexterity! Arr!
-  AmountToGain: 0
-  AmountToLose: 0
-  AmountToGainArray: []
-  AmountToLoseArray: []
-  AmountToGainList: []
-  AmountToLoseList: []
+  ContractDescription: You will gain some more damage, but in return you will lose
+    speed!
+  AmountToGainList:
+  - 6
+  AmountToLoseList:
+  - 0.7
   NpcImage: {fileID: -1438145718, guid: e08e37f654307fd4eaa10f98f201a7c3, type: 3}
   NpcName: Ship Captain
   ContractBought: 0
