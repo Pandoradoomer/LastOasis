@@ -24,6 +24,7 @@ public class StatUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI dexterityValue;
     [SerializeField] TextMeshProUGUI damageValue;
     [SerializeField] TextMeshProUGUI defenceValue;
+    [SerializeField] TextMeshProUGUI coinValue;
     void Start()
     {
         StartCoroutine(DisableEscKey());
@@ -37,6 +38,7 @@ public class StatUIManager : MonoBehaviour
         dexterityValue.text = Singleton.Instance.PlayerStats.currentDexterity.ToString("0.00");
         damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString("0.00");
         defenceValue.text = Singleton.Instance.PlayerStats.currentDefence.ToString();
+        //coinValue.text = Singleton.Instance.PlayerStats.c
     }
 
     //Load on awake
