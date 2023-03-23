@@ -175,7 +175,7 @@ public class RoomScript : MonoBehaviour
             isStart = isStart,
             roomIndex = roomIndex,
             difficulty = roomDifficulty,
-            enemyPositions = spawnPosition,
+            enemyPositions = easySpawnPosition,
         });
     }
 
