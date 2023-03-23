@@ -98,6 +98,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("Captain"))
         {
             MessageManager.instance.DisplayCaptainText();
+            Singleton.Instance.ContractsDisplay.GetContractShop(collision.gameObject);
         }
 
         if (collision.CompareTag("CabinBoy"))
@@ -114,6 +115,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("QuarterMaster"))
         {
             MessageManager.instance.DisplayQMText();
+            Singleton.Instance.ContractsDisplay.GetContractShop(collision.gameObject);
         }
 
         if (collision.CompareTag("Gunner"))
@@ -148,6 +150,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("Captain"))
         {
             MessageManager.instance.DisableCaptainText();
+            Singleton.Instance.ContractsDisplay.RemoveShop();
         }
 
         if (collision.CompareTag("CabinBoy"))
@@ -164,6 +167,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("QuarterMaster"))
         {
             MessageManager.instance.DisableQMText();
+            Singleton.Instance.ContractsDisplay.RemoveShop();
         }
 
         if (collision.CompareTag("Gunner"))

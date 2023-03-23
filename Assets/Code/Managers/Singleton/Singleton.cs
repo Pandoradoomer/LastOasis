@@ -18,6 +18,7 @@ public class Singleton : MonoBehaviour
     private PlayerStacks playerStacks;
     private TransitionManager transitionManager;
     private ShipShopDisplay shipShopDisplay;
+    private ContractsDisplay contractsDisplay;
 
     public GameObject p_playerStats;
     public GameObject p_inventory;
@@ -45,6 +46,7 @@ public class Singleton : MonoBehaviour
         playerStacks = GameObject.FindObjectOfType<PlayerStacks>();
         transitionManager = GameObject.FindObjectOfType<TransitionManager>();
         shipShopDisplay = GameObject.FindObjectOfType<ShipShopDisplay>();
+        contractsDisplay = GameObject.FindObjectOfType<ContractsDisplay>();
 
     }
 
@@ -62,5 +64,6 @@ public class Singleton : MonoBehaviour
     public PlayerStacks PlayerStacks { get => playerStacks;}
     public TransitionManager TransitionManager { get => transitionManager;}
     public ShipShopDisplay ShipShopDisplay { get => shipShopDisplay;}
+    public ContractsDisplay ContractsDisplay { get => contractsDisplay;}
    
 }
