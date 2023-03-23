@@ -185,23 +185,7 @@ public class PlayerStats : MonoBehaviour
     bool isDead = false;
     void Start()
     {
-        //if (PlayerPrefs.HasKey("isSet"))
-        //    hasBeenInit = Convert.ToBoolean(PlayerPrefs.GetString("isSet"));
-        //if(!hasBeenInit)
-        //{
-        //    hasBeenInit = true;
-        //    currentHealth = maxHealth = baseHealth;
-        //    currentSpeed = maxSpeed = baseSpeed;
-        //    currentDexterity = maxDexterity = baseDexterity;
-        //    currentDefence = maxDefence = baseDefence;
-        //    currentDamage = maxDamage = baseDamage;
-        //}
-        //else
-        //{
-        //    LoadValues();
-        //}
-        //EventManager.StartListening(Event.EnemyHitPlayer, OnEnemyHit);
-        //DontDestroyOnLoad(this.gameObject);
+
     }
     private void Awake()
     {
@@ -454,7 +438,7 @@ public class PlayerStats : MonoBehaviour
             EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
             {
                 textColor = Color.red,
-                position = transform.position,
+                position = Singleton.Instance.PlayerController.transform.position,
                 damage = (int)ehp.healthDeplete
             });
         }
