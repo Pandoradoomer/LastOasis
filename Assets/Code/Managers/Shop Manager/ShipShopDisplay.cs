@@ -11,6 +11,7 @@ public class ShipShopDisplay : MonoBehaviour
 
     public ShipShop shipShop;
 
+    [Header("Connect Gameobjects")]
     public Image npcSprite;
     public TextMeshProUGUI npcName;
     public TextMeshProUGUI npcDialogue;

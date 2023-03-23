@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerPopUp : MonoBehaviour
 {
+    private ShopPopUp shopScript;
+
+    private void Start()
+    {
+        shopScript = GetComponent<ShopPopUp>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Chef"))

@@ -15,9 +15,6 @@ public class ShopPopUp : MonoBehaviour
         exit.onClick.AddListener(UnfreezePlayer);
     }
 
-    
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && playerInRange)
@@ -28,13 +25,26 @@ public class ShopPopUp : MonoBehaviour
                 shopPanel.SetActive(false);
                 EventManager.TriggerEvent(Event.DialogueFinish, null);
                 isInShop = false;
+                MessageManager.instance.chefText.alpha = 1;
+                MessageManager.instance.carpenterText.alpha = 1;
+                MessageManager.instance.surgeonText.alpha = 1;
+                MessageManager.instance.qmText.alpha = 1;
+                MessageManager.instance.gunnerText.alpha = 1;
 
             }
             else
             {
                 shopPanel.SetActive(true);
+
                 //EventManager.StartListening(Event.DialogueStart, FreezePlayer);
                 EventManager.TriggerEvent(Event.DialogueStart, new StartDialoguePacket());
+                //Disable message manager text
+                //Set transparency of text to 0
+                MessageManager.instance.chefText.alpha = 0;
+                MessageManager.instance.carpenterText.alpha = 0;
+                MessageManager.instance.surgeonText.alpha = 0;
+                MessageManager.instance.qmText.alpha = 0;
+                MessageManager.instance.gunnerText.alpha = 0;
                 isInShop = true;
 
             }

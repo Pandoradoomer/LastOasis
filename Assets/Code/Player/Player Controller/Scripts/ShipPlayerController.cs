@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShipPlayerController : MonoBehaviour, IPlayerController
 {
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] float speed;
+    [SerializeField] float speed; 
 
     private Vector2 movement;
     [SerializeField] private Vector2 lastPlayerDirection;
@@ -17,6 +17,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        //speed = Singleton.Instance.PlayerStats.currentSpeed;
     }
 
     void Start()
@@ -39,7 +40,6 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
 
     public void FreezePlayer()
     {
-
         rb.velocity = Vector2.zero;
         animator.SetBool("isMoving", false);
         isInDialogue = true;
@@ -97,6 +97,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("Captain"))
         {
             MessageManager.instance.DisplayCaptainText();
+            Singleton.Instance.ContractsDisplay.GetContractShop(collision.gameObject);
         }
 
         if (collision.CompareTag("CabinBoy"))
@@ -113,6 +114,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("QuarterMaster"))
         {
             MessageManager.instance.DisplayQMText();
+            Singleton.Instance.ContractsDisplay.GetContractShop(collision.gameObject);
         }
 
         if (collision.CompareTag("Gunner"))
@@ -147,6 +149,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("Captain"))
         {
             MessageManager.instance.DisableCaptainText();
+            Singleton.Instance.ContractsDisplay.RemoveShop();
         }
 
         if (collision.CompareTag("CabinBoy"))
@@ -163,6 +166,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("QuarterMaster"))
         {
             MessageManager.instance.DisableQMText();
+            Singleton.Instance.ContractsDisplay.RemoveShop();
         }
 
         if (collision.CompareTag("Gunner"))

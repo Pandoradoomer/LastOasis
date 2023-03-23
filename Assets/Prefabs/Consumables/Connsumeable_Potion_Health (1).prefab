@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4062859841916245381}
   - component: {fileID: 4062859841916245380}
   m_Layer: 0
-  m_Name: Consumeable_Potion_Health
+  m_Name: Connsumeable_Potion_Health (1)
   m_TagString: HealthPotion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,8 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: e60e0828f7f717a42abfde00849991a4, type: 2}
-  player: {fileID: 0}
-  health: 3
+  health: 10
 --- !u!58 &4062859841916245380
 CircleCollider2D:
   m_ObjectHideFlags: 0

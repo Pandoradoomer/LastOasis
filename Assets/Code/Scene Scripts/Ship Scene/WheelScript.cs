@@ -25,13 +25,13 @@ public class WheelScript : MonoBehaviour
         {
             if(playerIsInRange)
             {
-                controller.isInDialogue = true;
+                EventManager.TriggerEvent(Event.DialogueStart, null);
                 popupManager.SpawnPopup(() =>
                 {
                     StartCoroutine(DoSceneChange());
                 }, () =>
                 {
-                    controller.isInDialogue = false;
+                    EventManager.TriggerEvent(Event.DialogueFinish, null);
                 });
             }
         }

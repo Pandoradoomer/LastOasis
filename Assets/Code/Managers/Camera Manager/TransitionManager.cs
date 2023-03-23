@@ -61,6 +61,7 @@ public class TransitionManager : MonoBehaviour
     {
         topPanel.gameObject.SetActive(true);
         bottomPanel.gameObject.SetActive(true);
+        EventManager.TriggerEvent(Event.DialogueFinish, null);
         float minLerp = topPanel.rectTransform.offsetMin.y;
         float maxLerp = minLerp * 2.0f;
         for (float i = 0; i < 0.1f; i += Time.deltaTime)
@@ -83,6 +84,7 @@ public class TransitionManager : MonoBehaviour
 
     public IEnumerator FadeIn()
     {
+        EventManager.TriggerEvent(Event.DialogueStart, new StartDialoguePacket());
         Singleton.Instance.PlayerStats.SaveValues();
         topPanel.gameObject.SetActive(true);
         bottomPanel.gameObject.SetActive(true);
