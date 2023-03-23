@@ -40,7 +40,6 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
 
     public void FreezePlayer()
     {
-
         rb.velocity = Vector2.zero;
         animator.SetBool("isMoving", false);
         isInDialogue = true;
