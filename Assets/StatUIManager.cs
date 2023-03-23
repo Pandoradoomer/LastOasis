@@ -38,7 +38,7 @@ public class StatUIManager : MonoBehaviour
         dexterityValue.text = Singleton.Instance.PlayerStats.currentDexterity.ToString("0.00");
         damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString("0.00");
         defenceValue.text = Singleton.Instance.PlayerStats.currentDefence.ToString();
-        //coinValue.text = Singleton.Instance.PlayerStats.c
+        coinValue.text = Singleton.Instance.Inventory.GetCoins().ToString();
     }
 
     //Load on awake
@@ -178,5 +178,7 @@ public class StatUIManager : MonoBehaviour
         dexterityValue.text = Singleton.Instance.PlayerStats.currentDexterity.ToString("0.00");
         damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString("0.00");
         defenceValue.text = Singleton.Instance.PlayerStats.currentDefence.ToString();
+        coinValue.text = Singleton.Instance.Inventory.GetCoins().ToString();
+
     }
 }
