@@ -1376,7 +1376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &805676097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3098,7 +3098,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d25afe025abcaeb4c9bd8785471e5505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfRooms: 20
   randomCompareStart: 0.2
   randomCompareEnd: 0.01
   startRoomPrefab: {fileID: 5306978490892935168, guid: 3017fa6a5b070c34db4ee75c781fd500, type: 3}
@@ -3111,8 +3110,9 @@ MonoBehaviour:
   - {fileID: 5306978490892935168, guid: 4b06d36afe534da40a5b912e8f784c55, type: 3}
   - {fileID: 5306978490892935168, guid: b047f680fa9b4ca489cb44db3129884d, type: 3}
   levelData: {fileID: 11400000, guid: baf825015cb48d1419e24d05fa1a49a9, type: 2}
-  mediumDistThreshold: 0
-  hardDistThreshold: 0
+  easyDifficultyRange: {x: 1, y: 3}
+  mediumDifficultyRange: {x: 2, y: 4}
+  highDifficultyRange: {x: 3, y: 5}
   enemySpawnPositions:
   - {fileID: 11400000, guid: 60d8ddd7ad13e2a488f7e51e38459298, type: 2}
   - {fileID: 11400000, guid: c2328be07d4e01d40af028c80ab60bf9, type: 2}
@@ -3120,7 +3120,6 @@ MonoBehaviour:
   roomIndex: 0
   returnToShipObject: {fileID: 2667900461395772098, guid: f8a3901555f2737419567b9b0822675c, type: 3}
   inventory: {fileID: 9137307401040258604, guid: 4706ec1584bcc5c4ca53d489e7089a43, type: 3}
-  visitedRooms: 
   consecutiveVisitedRooms: 0
 --- !u!1 &1860392402
 GameObject:
@@ -3929,7 +3928,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.25
+  m_fontSize: 20.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

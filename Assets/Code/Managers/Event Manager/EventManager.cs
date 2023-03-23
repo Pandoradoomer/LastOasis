@@ -15,9 +15,7 @@ public class EventManager : MonoBehaviour
         {
             if(!eventManager)
             {
-                var go = new GameObject().AddComponent(typeof(EventManager));
-                go.name = "EventManager";
-                eventManager = go.GetComponent<EventManager>();//FindObjectOfType(typeof(EventManager)) as EventManager;
+                eventManager = FindObjectOfType(typeof(EventManager)) as EventManager;
             }
             if(!eventManager)
             {
