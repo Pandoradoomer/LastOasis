@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         invulnerabilityHolder = invulnerabilityDuration;
         dashElapsedCooldown = dashCooldown;
         originalColor = GetComponent<SpriteRenderer>().color;
-        speed = Singleton.Instance.PlayerStats.currentSpeed;
+        speed = PlayerStats.instance.currentSpeed;
         EventManager.StartListening(Event.BossTeleport, BossTeleport);
         EventManager.StartListening(Event.DialogueStart, FreezePlayer);
         EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);

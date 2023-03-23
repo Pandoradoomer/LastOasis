@@ -59,7 +59,7 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
     }
     float GetDepletionTime()
     {
-        float sqDistance = (this.transform.position - Singleton.Instance.PlayerController.transform.position).sqrMagnitude;
+        float sqDistance = (this.transform.position - PlayerController.instance.transform.position).sqrMagnitude;
         float sqMax = maxDistanceCap * maxDistanceCap;
         float sqMin = minDistanceCap * minDistanceCap;
         sqDistance = Mathf.Clamp(sqDistance, sqMin, sqMax);
@@ -120,7 +120,7 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
         canMove = false;
         DoStopAttack();
         Vector2 spiderPos = transform.position;
-        Vector2 playerPos = Singleton.Instance.PlayerController.transform.position;
+        Vector2 playerPos = PlayerController.instance.transform.position;
         Vector2 dir = (spiderPos - playerPos).normalized;
 
         rb.velocity = Vector2.zero;

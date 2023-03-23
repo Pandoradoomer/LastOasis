@@ -36,12 +36,20 @@ public class BossManager : MonoBehaviour
             Destroy(this);
         }
     }
-
+    public void bossTest()
+    {
+        if (!hasSpawned)
+        {
+            hasSpawned = true;
+            SpawnBoss();
+        }
+    }
     private void OnDestroy()
     {
         EventManager.StopListening(Event.EnemyDestroyed, OnEnemyDestroyed);
     }
 
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player" && isBossRoom)
@@ -56,6 +64,7 @@ public class BossManager : MonoBehaviour
             }
         }
     }
+    
 
     private void OnEnemyDestroyed(IEventPacket packet)
     {

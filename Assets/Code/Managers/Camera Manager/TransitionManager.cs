@@ -42,12 +42,7 @@ public class TransitionManager : MonoBehaviour
         //}
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
+
     public void OnLevelLoaded(Scene scene, LoadSceneMode mode)
     {
         if(scene.name == "Ship")

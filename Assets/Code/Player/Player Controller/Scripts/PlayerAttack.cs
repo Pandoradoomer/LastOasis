@@ -7,11 +7,12 @@ using static PlayerController;
 
 public class PlayerAttack : MonoBehaviour
 {
+
     public float SwingDelay
     {
         get
         {
-            return swingDelay - Singleton.Instance.PlayerStats.currentDexterity;
+            return swingDelay - PlayerStats.instance.currentDexterity;
         }
         set
         {
@@ -31,6 +32,12 @@ public class PlayerAttack : MonoBehaviour
     public SpriteRenderer sr;
 
     private bool isInDialogue = false;
+
+    public void testStats()
+    {
+        swingDamage = PlayerStats.instance.currentDamage;
+        swingDelay = swingDelay - PlayerStats.instance.currentDexterity;
+    }
     private void Awake()
     {
         EventManager.StartListening(Event.DialogueStart, FreezePlayer);
@@ -40,7 +47,7 @@ public class PlayerAttack : MonoBehaviour
     }
     private void Start()
     {
-        swingDamage = Singleton.Instance.PlayerStats.currentDamage;
+        swingDamage = PlayerStats.instance.currentDamage;
     }
 
     private void OnDestroy()
@@ -76,6 +83,7 @@ public class PlayerAttack : MonoBehaviour
                 StartCoroutine(MoveAttack(instance.lastPlayerDirection, pushPower));
             }
         }
+        testStats();
     }
 
     private IEnumerator Attack()

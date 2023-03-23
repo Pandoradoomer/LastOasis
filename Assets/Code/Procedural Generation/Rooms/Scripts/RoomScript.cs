@@ -163,6 +163,19 @@ public class RoomScript : MonoBehaviour
         }
     }
 
+    public void testRoom()
+    {
+        EventManager.TriggerEvent(Event.TestRoom, new EnemySpawnPacket
+        {
+            roomCentre = transform.position,
+            isBoss = isBoss,
+            isStart = isStart,
+            roomIndex = roomIndex,
+            difficulty = roomDifficulty,
+            enemyPositions = spawnPosition,
+        });
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")

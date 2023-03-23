@@ -33,7 +33,7 @@ public class FungusAttack : AttackBase
                 EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
                 {
                     damage = (int)enemyBase.attackDamage,
-                    position = Singleton.Instance.PlayerController.transform.position,
+                    position = PlayerController.instance.transform.position,
                     textColor = Color.red
                 });
                 isInMist = true;

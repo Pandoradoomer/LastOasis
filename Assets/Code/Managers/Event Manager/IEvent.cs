@@ -19,6 +19,7 @@ public enum Event
     StackAdded,
     DamageDealt,
     SpawnObelisk,
-    PlayerDeath
+    PlayerDeath,
+    TestRoom
 
 }

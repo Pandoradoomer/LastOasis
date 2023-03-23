@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SandboxScript : MonoBehaviour
 {
     //public GameObject enemyPrefab;
     public GameObject[] enemies;
     public RoomScript roomScript;
+    public BossManager testBoss;
 
     [SerializeField]
     int roomIndex = 1;
@@ -22,6 +25,13 @@ public class SandboxScript : MonoBehaviour
     float multiplier = 1;
     [SerializeField]
     bool enemyDelayedSpawn = false; //press 'i' to trigger a delayed spawn
+
+    [Header("PlayerStats Display")]
+    public GameObject currentHealthtext;
+    public GameObject currentSpeedtext;
+    public GameObject currentDexteritytext;
+    public GameObject currentDamagetext;
+    public GameObject currentDefencetext;
 
     void Awake()
     {
@@ -48,6 +58,15 @@ public class SandboxScript : MonoBehaviour
         roomScript.distToStart = roomDistanceToStart;
     }
 
+    void updateStatDisplay()
+    {
+        currentHealthtext.GetComponent<TMPro.TextMeshProUGUI>().text = "Health: " + PlayerStats.instance.currentHealth.ToString();
+        currentSpeedtext.GetComponent<TMPro.TextMeshProUGUI>().text = "Speed: " + PlayerStats.instance.currentSpeed.ToString();
+        currentDexteritytext.GetComponent<TMPro.TextMeshProUGUI>().text = "Dexterity: " + PlayerStats.instance.currentDexterity.ToString();
+        currentDamagetext.GetComponent<TMPro.TextMeshProUGUI>().text = "Damage: " + PlayerStats.instance.currentDamage.ToString();
+        currentDefencetext.GetComponent<TMPro.TextMeshProUGUI>().text = "Defense: " + PlayerStats.instance.currentDefence.ToString();
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
@@ -60,5 +79,13 @@ public class SandboxScript : MonoBehaviour
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            roomScript.isBoss= true;
+            testBoss.bossTest();
+        }
+        updateStatDisplay();
     }
+
+
 }

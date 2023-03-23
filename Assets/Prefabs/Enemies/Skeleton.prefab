@@ -122,7 +122,10 @@ MonoBehaviour:
   currentHealth: 10
   onCollisionDamage: 2
   attackDamage: 0
+  multiplier: 0
   rs: {fileID: 0}
+  enemyData: {fileID: 0}
+  _coinSpawner: {fileID: 7260918969125760000, guid: 7aee68a85b50aba47b35de58f97912a3, type: 3}
 --- !u!50 &2902856258695615456
 Rigidbody2D:
   serializedVersion: 4
@@ -242,7 +245,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyBase: {fileID: 3553608011051858595}
   IsAttacking: 0
-  hitboxSprite: {fileID: 7715847163351198838}
+  hasAttacked: 0
+  hitboxRenderer: {fileID: 0}
 --- !u!212 &7535866033655819174
 SpriteRenderer:
   m_ObjectHideFlags: 0

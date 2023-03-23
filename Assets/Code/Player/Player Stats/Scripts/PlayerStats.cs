@@ -213,6 +213,7 @@ public class PlayerStats : MonoBehaviour
         else
         {
             instance = this;
+
         }
         if (PlayerPrefs.HasKey("isSet"))
             hasBeenInit = Convert.ToBoolean(PlayerPrefs.GetString("isSet"));
@@ -233,6 +234,7 @@ public class PlayerStats : MonoBehaviour
         EventManager.StartListening(Event.PlayerDeath, OnPlayerDeath);
         DontDestroyOnLoad(this.gameObject);
     }
+
 
     void Update()
     {   
@@ -267,7 +269,6 @@ public class PlayerStats : MonoBehaviour
         {
             maxHealth += 5;
             currentHealth = maxHealth;
-
             Debug.Log("Current health: " + currentHealth);
             Debug.Log("Base health: " + maxHealth);
         }
@@ -275,7 +276,6 @@ public class PlayerStats : MonoBehaviour
         {
             maxHealth -= 5;
             currentHealth = maxHealth;
-
             Debug.Log("Current health: " + currentHealth);
             Debug.Log("Base health: " + maxHealth);
         }
@@ -354,7 +354,6 @@ public class PlayerStats : MonoBehaviour
             Debug.Log("Base dexterity: " + maxDexterity);
         }
     }
-
 
     void OnTriggerEnter2D(Collider2D coll)
     {
