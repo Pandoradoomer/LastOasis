@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour
         //}
         ChangeColorOnDash();
         Invulnerability();
+        testStats();
     }
 
     KeyCode GetLastKeyPressed()
@@ -192,6 +193,10 @@ public class PlayerController : MonoBehaviour
 
         }
 
+    }
+    public void testStats()
+    {
+        speed = PlayerStats.instance.currentSpeed;
     }
 
     void BossTeleport(IEventPacket packet)
