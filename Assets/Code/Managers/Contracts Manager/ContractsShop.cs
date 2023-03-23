@@ -63,7 +63,7 @@ public class ContractsShop : ScriptableObject
                 case LOSE_STAT.Health:
                     break;
                 case LOSE_STAT.Damage:
-                    Singleton.Instance.PlayerStats.currentDamage /= 1.5f;
+                    Singleton.Instance.PlayerStats.currentDamage = Mathf.RoundToInt((float)Singleton.Instance.PlayerStats.currentDamage / 1.5f);
                     break;
                 case LOSE_STAT.Defence:
                     break;

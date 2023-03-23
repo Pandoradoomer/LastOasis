@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 public enum Stats
 {
@@ -160,7 +161,7 @@ public class PlayerStats : MonoBehaviour
     public int currentHealth = -1;
     public float currentSpeed = -1;
     public float currentDexterity = -1;
-    public float currentDamage = -1;
+    public int currentDamage = -1;
     public float currentDefence = -1;
 
     private bool hasBeenInit = false;
@@ -454,7 +455,7 @@ public class PlayerStats : MonoBehaviour
             EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
             {
                 textColor = Color.red,
-                position = transform.position,
+                position = Singleton.Instance.PlayerController.transform.position,
                 damage = (int)ehp.healthDeplete
             });
         }
@@ -469,7 +470,7 @@ public class PlayerStats : MonoBehaviour
     public void SaveValues()
     {
         PlayerPrefs.SetInt(Stats.Health.ToString(), currentHealth);
-        PlayerPrefs.SetFloat(Stats.Damage.ToString(), currentDamage);
+        PlayerPrefs.SetInt(Stats.Damage.ToString(), currentDamage);
         PlayerPrefs.SetFloat(Stats.Defence.ToString(), currentDefence);
         PlayerPrefs.SetFloat(Stats.Dexterity.ToString(), currentDexterity);
         PlayerPrefs.SetFloat(Stats.Speed.ToString(), currentSpeed);
@@ -486,7 +487,7 @@ public class PlayerStats : MonoBehaviour
     {
 
         currentHealth = PlayerPrefs.GetInt(Stats.Health.ToString(), currentHealth);
-        currentDamage = PlayerPrefs.GetFloat(Stats.Damage.ToString(), currentDamage);
+        currentDamage = PlayerPrefs.GetInt(Stats.Damage.ToString(), currentDamage);
         currentDefence = PlayerPrefs.GetFloat(Stats.Defence.ToString(), currentDefence);
         currentDexterity = PlayerPrefs.GetFloat(Stats.Dexterity.ToString(), currentDexterity);
         currentSpeed = PlayerPrefs.GetFloat(Stats.Speed.ToString(), currentSpeed);

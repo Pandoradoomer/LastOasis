@@ -176,7 +176,7 @@ public class StatUIManager : MonoBehaviour
         healthValue.text = Singleton.Instance.PlayerStats.currentHealth.ToString();
         movementSpeedValue.text = Singleton.Instance.PlayerStats.currentSpeed.ToString("0.00");
         dexterityValue.text = Singleton.Instance.PlayerStats.currentDexterity.ToString("0.00");
-        damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString("0.00");
+        damageValue.text = Singleton.Instance.PlayerStats.currentDamage.ToString();
         defenceValue.text = Singleton.Instance.PlayerStats.currentDefence.ToString();
         coinValue.text = Singleton.Instance.Inventory.GetCoins().ToString();
 
