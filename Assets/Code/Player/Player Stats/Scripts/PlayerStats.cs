@@ -185,23 +185,7 @@ public class PlayerStats : MonoBehaviour
     bool isDead = false;
     void Start()
     {
-        //if (PlayerPrefs.HasKey("isSet"))
-        //    hasBeenInit = Convert.ToBoolean(PlayerPrefs.GetString("isSet"));
-        //if(!hasBeenInit)
-        //{
-        //    hasBeenInit = true;
-        //    currentHealth = maxHealth = baseHealth;
-        //    currentSpeed = maxSpeed = baseSpeed;
-        //    currentDexterity = maxDexterity = baseDexterity;
-        //    currentDefence = maxDefence = baseDefence;
-        //    currentDamage = maxDamage = baseDamage;
-        //}
-        //else
-        //{
-        //    LoadValues();
-        //}
-        //EventManager.StartListening(Event.EnemyHitPlayer, OnEnemyHit);
-        //DontDestroyOnLoad(this.gameObject);
+
     }
     private void Awake()
     {
@@ -244,8 +228,12 @@ public class PlayerStats : MonoBehaviour
         {
             currentHealth = 0;
         }
+
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
         if (currentHealth <= 0)
         {
+            currentHealth = 0;
             //Reload scene
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             if(!isDead)
@@ -450,7 +438,7 @@ public class PlayerStats : MonoBehaviour
             EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
             {
                 textColor = Color.red,
-                position = transform.position,
+                position = Singleton.Instance.PlayerController.transform.position,
                 damage = (int)ehp.healthDeplete
             });
         }
@@ -507,6 +495,15 @@ public class PlayerStats : MonoBehaviour
     private void OnPlayerDeath(IEventPacket packet)
     {
         //currentHealth = maxHealth;
+        if(PlayerPrefs.HasKey(PlayerPrefsKeys.DEATH_NUMBER.ToString()))
+        {
+            int value = PlayerPrefs.GetInt(PlayerPrefsKeys.DEATH_NUMBER.ToString());
+            PlayerPrefs.SetInt(PlayerPrefsKeys.DEATH_NUMBER.ToString(), value + 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.DEATH_NUMBER.ToString(), 1);
+        }
 
     }
 

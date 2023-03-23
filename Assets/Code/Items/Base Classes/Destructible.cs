@@ -7,7 +7,8 @@ public class Destructible : MonoBehaviour
 {
     public Dictionary<Item, int> lootToDrop;
     private RoomScript rs;
-
+    [SerializeField]
+    GameObject _coinSpawner;
     private void Awake()
     {
         rs = transform.root.gameObject.GetComponent<RoomScript>();
@@ -48,8 +49,20 @@ public class Destructible : MonoBehaviour
         {
             foreach (var kvp in lootToDrop)
             {
-                var go = Singleton.Instance.ItemSpawnManager.SpawnItem(kvp.Key, this.transform, kvp.Value);
-                rs.AddtoSpawnedList(go);
+                if(kvp.Key is CollectableData)
+                {
+                    var collect = kvp.Key as CollectableData;
+                    if(collect.isCoin)
+                    {
+                        Singleton.Instance.Inventory.AddCoins(kvp.Value);
+                        Instantiate(_coinSpawner, this.transform.position, Quaternion.identity);
+                    }
+                }
+                else
+                {
+                    var go = Singleton.Instance.ItemSpawnManager.SpawnItem(kvp.Key, this.transform, kvp.Value);
+                    rs.AddtoSpawnedList(go);
+                }
             }
             rs.RemoveDestructibleFromList(this);
         }

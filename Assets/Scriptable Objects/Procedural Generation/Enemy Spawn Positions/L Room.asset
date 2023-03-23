@@ -14,27 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawns:
   - spawnPosition: {x: -0, y: -0}
-    difficultyRange: {x: 0, y: 5}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: 7, y: 3}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: -1, y: 3}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: -1, y: 3}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: 8, y: 3}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: 3, y: 8}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: 3, y: 7}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: 3, y: -1}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: 7, y: -2}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: -2, y: 7}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: -3, y: 8}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: 8, y: -3}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   isExpandable: 0

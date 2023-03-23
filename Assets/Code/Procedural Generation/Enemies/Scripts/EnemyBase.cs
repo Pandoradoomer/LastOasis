@@ -49,9 +49,11 @@ public class EnemyBase : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(gameObject.scene.isLoaded)
+        if (gameObject.scene.isLoaded)
+        {
             rs.enemies.Remove(this);
-        Instantiate(_coinSpawner, this.transform.position, Quaternion.identity);
+            Instantiate(_coinSpawner, this.transform.position, Quaternion.identity);
+        }
         EventManager.StopListening(Event.PlayerHitEnemy, OnHit);
         EventManager.StopListening(Event.PlayerDeath, OnPlayerDeath);
     }

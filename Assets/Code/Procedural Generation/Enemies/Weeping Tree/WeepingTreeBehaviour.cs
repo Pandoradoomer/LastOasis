@@ -55,6 +55,7 @@ public class WeepingTreeBehaviour : BaseAttackBehaviour
     // Start is called before the first frame update
     new void Start()
     {
+        base.Start();
         maxTimer = timer;
     }
     protected override void RemoveAdditionalEventListeners()

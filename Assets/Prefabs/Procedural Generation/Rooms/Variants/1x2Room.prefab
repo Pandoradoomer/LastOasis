@@ -3357,7 +3357,7 @@ BoxCollider2D:
     adaptiveTilingThreshold: 0.5
     drawMode: 2
     adaptiveTiling: 0
-  m_AutoTiling: 1
+  m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 9, y: 19}
   m_EdgeRadius: 0
@@ -3395,7 +3395,9 @@ MonoBehaviour:
   roomIndex: 0
   roomDifficulty: 0
   distToStart: 0
-  spawnPosition: {fileID: 11400000, guid: cdae2b39ade622144922d6a8bd0de70d, type: 2}
+  easySpawnPosition: {fileID: 11400000, guid: cdae2b39ade622144922d6a8bd0de70d, type: 2}
+  mediumSpawnPosition: {fileID: 11400000, guid: cdae2b39ade622144922d6a8bd0de70d, type: 2}
+  hardSpawnPosition: {fileID: 11400000, guid: cdae2b39ade622144922d6a8bd0de70d, type: 2}
   destructibles: []
   Rocks: {fileID: 1775641182561365518}
   enemies: []

@@ -10,19 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67ed594a628394c468c33617460cb506, type: 3}
-  m_Name: Enemy2
+  m_Name: Spider L1
   m_EditorClassIdentifier: 
-  Name: Dude
+  Name: Spider
   MaxHealth: 10
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: 350626fd8d6ad5d43bdcf0d002ffc22d, type: 3}
   Type: 0
-  Damage: 5
-  difficulty: 1
-  Behaviour: {fileID: 11500000, guid: 71ecb0def39e00242b5c4b0c88112998, type: 3}
-  prefabToSpawn: {fileID: 2714170247650124136, guid: 812149e56edf8644baef156d9fbd0dd3, type: 3}
+  Damage: 8
+  DamageOnCollision: 0
+  difficulty: 2.5
+  multiplier: 1
+  Behaviour: {fileID: 0}
+  prefabToSpawn: {fileID: 9218272971871820839, guid: 185ac2cdfa5544f4f843f1b92f8106b9, type: 3}
   itemDrops:
   - itemType: {fileID: 11400000, guid: af2404d67d1727447a4e30258b438d48, type: 2}
-    minItemQuantity: 7
-    maxItemQuantity: 12
+    minItemQuantity: 2
+    maxItemQuantity: 3
     dropProbability: 1
-  color: {r: 0, g: 1, b: 0.080822706, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}

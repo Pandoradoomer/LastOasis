@@ -14,6 +14,7 @@ public class EnemySpawnPosition : ScriptableObject
 public class EnemySpawn
 {
     public Vector2 spawnPosition;
-    public Vector2 difficultyRange;
+    //public Vector2 difficultyRange;
+    public Enemy enemyToSpawn;
 }
 

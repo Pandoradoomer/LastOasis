@@ -14,11 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawns:
   - spawnPosition: {x: 2, y: -2}
-    difficultyRange: {x: 0, y: 5}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: -2, y: 2}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: acb1ebe52ab57b944ace4ab8b3b12a31, type: 2}
   - spawnPosition: {x: -2, y: -2}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   - spawnPosition: {x: 2, y: 2}
-    difficultyRange: {x: 0, y: 2}
+    enemyToSpawn: {fileID: 11400000, guid: acb1ebe52ab57b944ace4ab8b3b12a31, type: 2}
+  - spawnPosition: {x: -0, y: -2}
+    enemyToSpawn: {fileID: 11400000, guid: d2d9ba07656c5274e8143c1a692bfc10, type: 2}
+  - spawnPosition: {x: 4, y: 4}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
+  - spawnPosition: {x: -4, y: 4}
+    enemyToSpawn: {fileID: 11400000, guid: 444cf2c22a715ee48baa346d5511d360, type: 2}
   isExpandable: 0
