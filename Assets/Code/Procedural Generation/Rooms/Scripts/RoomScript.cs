@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,9 @@ public class RoomScript : MonoBehaviour
     public int roomIndex;
     public float roomDifficulty;
     public int distToStart;
-    public EnemySpawnPosition spawnPosition;
+    public EnemySpawnPosition easySpawnPosition;
+    public EnemySpawnPosition mediumSpawnPosition;
+    public EnemySpawnPosition hardSpawnPosition;
     [SerializeField]
     private List<Destructible> destructibles;
     [SerializeField]
@@ -172,7 +175,7 @@ public class RoomScript : MonoBehaviour
             isStart = isStart,
             roomIndex = roomIndex,
             difficulty = roomDifficulty,
-            enemyPositions = spawnPosition,
+            enemyPositions = easySpawnPosition,
         });
     }
 
@@ -187,8 +190,8 @@ public class RoomScript : MonoBehaviour
                 isStart = isStart,
                 roomIndex = roomIndex,
                 difficulty = roomDifficulty,
-                enemyPositions = spawnPosition
-            });
+                enemyPositions = SelectSpawnPosition()
+            }) ;
             EventManager.TriggerEvent(Event.ChestSpawn, new ChestSpawnPacket
             {
                 roomCentre = transform.position,
@@ -196,6 +199,27 @@ public class RoomScript : MonoBehaviour
                 difficulty = roomDifficulty,
                 canSpawnChest = true
             });
+        }
+    }
+
+    private EnemySpawnPosition SelectSpawnPosition()
+    {
+        LevelGeneration  levelGen = Singleton.Instance.LevelGeneration;
+        int currentVisitedRooms = levelGen.visitedRooms.Count();
+        if (currentVisitedRooms < levelGen.mediumDistThreshold)
+        {
+            Debug.Log("Easy spawn selected");
+            return easySpawnPosition;
+        }
+        else if (currentVisitedRooms < levelGen.hardDistThreshold)
+        {
+            Debug.Log("Medium spawn selected");
+            return mediumSpawnPosition;
+        }
+        else
+        {
+            Debug.Log("Hard spawn selected");
+            return hardSpawnPosition;
         }
     }
 }

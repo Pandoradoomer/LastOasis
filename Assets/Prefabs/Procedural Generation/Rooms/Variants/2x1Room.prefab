@@ -3380,9 +3380,12 @@ MonoBehaviour:
   roomIndex: 0
   roomDifficulty: 0
   distToStart: 0
-  spawnPosition: {fileID: 11400000, guid: 2d7fce9ca64e8644b8c0cb43999bd635, type: 2}
+  easySpawnPosition: {fileID: 11400000, guid: 2d7fce9ca64e8644b8c0cb43999bd635, type: 2}
+  mediumSpawnPosition: {fileID: 11400000, guid: 2d7fce9ca64e8644b8c0cb43999bd635, type: 2}
+  hardSpawnPosition: {fileID: 11400000, guid: 2d7fce9ca64e8644b8c0cb43999bd635, type: 2}
   destructibles: []
   Rocks: {fileID: 163130414715727026}
+  enemies: []
 --- !u!1 &5306978491055589901
 GameObject:
   m_ObjectHideFlags: 0
@@ -7025,7 +7028,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8499868145653018313}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1

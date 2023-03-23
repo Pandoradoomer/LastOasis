@@ -352,8 +352,11 @@ public static class MovementFunctions
             }
             destCell = room.pathFindingGrid[y, x];
             path = GetPath(pos, destCell.pos, room.pathFindingGrid);
-            nextCell = path[0];
-            path.RemoveAt(0);
+            if(path.Count > 0)
+            {
+                nextCell = path[0];
+                path.RemoveAt(0);
+            }
         }
         if(path.Count > 0)
         {

@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: e60e0828f7f717a42abfde00849991a4, type: 2}
-  health: 3
+  health: 10
 --- !u!58 &8614166745243125312
 CircleCollider2D:
   m_ObjectHideFlags: 0

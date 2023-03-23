@@ -99,8 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: e60e0828f7f717a42abfde00849991a4, type: 2}
-  player: {fileID: 0}
-  health: 3
+  health: 10
 --- !u!58 &4795170935815726587
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 public enum Stats
 {
@@ -453,7 +454,7 @@ public class PlayerStats : MonoBehaviour
             EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
             {
                 textColor = Color.red,
-                position = transform.position,
+                position = Singleton.Instance.PlayerController.transform.position,
                 damage = (int)ehp.healthDeplete
             });
         }

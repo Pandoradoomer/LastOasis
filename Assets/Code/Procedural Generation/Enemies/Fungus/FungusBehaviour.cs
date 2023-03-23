@@ -6,6 +6,7 @@ using UnityEngine;
 public enum FungusState
 {
     MOVING,
+    WINDUP,
     FARTING,
     STUN
 }
@@ -36,7 +37,7 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
     public List<GridCell> path = new List<GridCell>();
     GridCell nextCell = null;
     public EnemyBase eb;
-
+    [SerializeField]
     FungusState currState = FungusState.MOVING;
 
     // Start is called before the first frame update
@@ -69,6 +70,8 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
 
     protected override void DoAttack()
     {
+        currState = FungusState.WINDUP;
+        GetComponent<SpriteRenderer>().color = new Color(1,0,1,1);
         StartCoroutine(AttackFunctions.Swing(this, this, windUpTime, strikeTime));
         isAttacking = true;
     }
@@ -76,6 +79,7 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
     protected override void DoBeginAttack()
     {
         currState = FungusState.FARTING;
+        GetComponent<SpriteRenderer>().color = Color.white;
         attackHitbox.GetComponent<Collider2D>().enabled = true;
         attackHitbox.IsAttacking = true;
         attackHitbox.GetComponent<SpriteRenderer>().enabled = true;
@@ -84,14 +88,17 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
 
     protected override void DoStopAttack()
     {
+        GetComponent<SpriteRenderer>().color = Color.white;
         attackHitbox.GetComponent<SpriteRenderer>().enabled = false;
         attackHitbox.GetComponent<Collider2D>().enabled = false;
         attackHitbox.StopAttack();
         isAttacking = false;
         attackHitbox.IsAttacking = false;
-        if(currState != FungusState.STUN)
+        if (currState != FungusState.STUN)
+        {
             currState = FungusState.MOVING;
-        timer = maxTimer;
+            timer = maxTimer;
+        }
     }
 
     protected override Vector2 GetMovement()
@@ -102,6 +109,8 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
                 return MovementFunctions.FollowPlayer(speed, transform.position, eb.rs, path, ref nextCell);
             case FungusState.STUN:
                 return rb.velocity;
+            case FungusState.WINDUP:
+                return Vector2.zero;
             case FungusState.FARTING:
                 return Vector2.zero;
         }
@@ -110,7 +119,7 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
 
     protected override void OnHitAction()
     {
-        if(currState != FungusState.FARTING)
+        if(currState != FungusState.FARTING && currState != FungusState.WINDUP)
             StartCoroutine(PushBack());
     }
 
@@ -135,7 +144,14 @@ public class FungusBehaviour : BaseMoveAndAttackBehaviour
             yield return null;
         }
         canMove = true;
-        currState = FungusState.MOVING;
+        if(timer <= 0)
+        {
+            currState = FungusState.FARTING;
+        }
+        else
+        {
+            currState = FungusState.MOVING;
+        }
     }
 
     protected override void DoSetAnimatorVariables()

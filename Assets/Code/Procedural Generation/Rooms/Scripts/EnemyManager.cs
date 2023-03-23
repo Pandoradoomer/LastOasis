@@ -172,20 +172,14 @@ public class EnemyManager : MonoBehaviour
             if (e.isStart)
                 return;
         //for the sake of the task, let's spawn enemies inside every room, at least 1
-        float currentDifficulty = 0;
         List<Vector2> filledPositions = new List<Vector2>();
         GameObject room = Singleton.Instance.LevelGeneration.GetRoomFromIndex(e.roomIndex);
         for(int i = 0; i < e.enemyPositions.enemySpawns.Count; i++)
         {
             EnemySpawn es = e.enemyPositions.enemySpawns[i];
-            var availableEnemies = enemies.FindAll(x => x.difficulty <= es.difficultyRange.y && x.difficulty >= es.difficultyRange.x);
-            if (availableEnemies.Count == 0)
-            {
-                Debug.LogError($"Couldn't find enemy to spawn at spawn point {i} in room {room.name}");
-                continue;
-            }
-            Enemy enemyData = availableEnemies[Random.Range(0, availableEnemies.Count)];
-            var go = Instantiate(enemyData.prefabToSpawn, e.roomCentre + es.spawnPosition, Quaternion.identity);
+            Enemy enemyData = es.enemyToSpawn;
+            GameObject prefabToSpawn = es.enemyToSpawn.prefabToSpawn;
+            var go = Instantiate(prefabToSpawn, e.roomCentre + es.spawnPosition, Quaternion.identity);
             go.transform.parent = room.transform;
 
             EnemyRuntimeData erd = new EnemyRuntimeData()
@@ -194,8 +188,6 @@ public class EnemyManager : MonoBehaviour
                 SpawnPos = e.roomCentre + es.spawnPosition,
                 maxHealth = enemyData.MaxHealth
             }; 
-            
-            //go.GetComponent<SpriteRenderer>().color = enemyData.color;
 
             //setting the index;
             EnemyBase eb = go.GetComponent<EnemyBase>();

@@ -30,20 +30,18 @@ public class EnemySpawnPositionEditor : Editor
             return;
         foreach(EnemySpawn es in esp.enemySpawns)
         {
-            if(es.difficultyRange.y > max)
-                max = es.difficultyRange.y;
-            if(es.difficultyRange.y < min)
-                min = es.difficultyRange.y;
+            //if(es.difficultyRange.y > max)
+            //    max = es.difficultyRange.y;
+            //if(es.difficultyRange.y < min)
+            //    min = es.difficultyRange.y;
         }
         EditorGUI.BeginChangeCheck();
         foreach (EnemySpawn es in esp.enemySpawns)
         {
             Handles.Label(es.spawnPosition + Vector2.up * 0.5f, $"Pos {posIndex}");
+            if(es.enemyToSpawn != null)
+                Handles.Label(es.spawnPosition, es.enemyToSpawn.name);
             newTargetPos.Add(Handles.PositionHandle(es.spawnPosition, Quaternion.identity));
-            if(max == min)
-                Handles.DrawWireDisc(es.spawnPosition, Vector3.forward, 0.5f);
-            else
-                Handles.DrawWireDisc(es.spawnPosition, Vector3.forward, 0.5f * Mathf.Lerp(1.0f, 3.0f, (es.difficultyRange.y - min)/(max-min)));
             posIndex++;
         }
         if(EditorGUI.EndChangeCheck())
