@@ -33,7 +33,7 @@ public class DoorCollider : MonoBehaviour
             EventManager.TriggerEvent(Event.RoomExit, new RoomExitPacket()
             {
                 roomIndex = room.roomIndex,
-                nextRoomIndex = Singleton.Instance.LevelGeneration.GetNeighbourOfRoom(room.roomIndex, dir),
+                nextRoomIndex = LevelGeneration.Instance.GetNeighbourOfRoom(room.roomIndex, dir),
                 direction = dir
             });
         }

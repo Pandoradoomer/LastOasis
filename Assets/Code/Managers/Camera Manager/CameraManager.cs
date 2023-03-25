@@ -16,6 +16,8 @@ public class CameraManager : MonoBehaviour
     }
     private void Update()
     {
+        if(room == null)
+            room = FindObjectOfType<RoomScript>();
         if(room.enabled && !changeRoom)
         {
             changeRoom = true;

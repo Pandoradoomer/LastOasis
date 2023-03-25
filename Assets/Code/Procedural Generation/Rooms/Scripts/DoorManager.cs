@@ -27,9 +27,13 @@ public class DoorManager : MonoBehaviour
 
     void Awake()
     {
+    }
+    private void Start()
+    {
         doorOpen = new List<bool>();
         for (int i = 0; i < doors.Count; i++)
             doorOpen.Add(true);
+
     }
 
     // Update is called once per frame

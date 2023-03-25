@@ -11,7 +11,7 @@ public static class MovementFunctions
     public static Vector2 FollowPlayer(float speed, Vector2 currentPos)
     {
         //PlayerController pc = Singleton.Instance.PlayerController;
-        Vector2 playerPos = PlayerController.instance.transform.position;
+        Vector2 playerPos = PlayerController.Instance.transform.position;
 
         Vector2 Direction = (playerPos - currentPos).normalized;
         return Direction * speed;
@@ -19,7 +19,7 @@ public static class MovementFunctions
 
     public static Vector2 RunFromPlayer(float speed, Vector2 currentPos)
     {
-        Vector2 playerPos = Singleton.Instance.PlayerController.transform.position;
+        Vector2 playerPos = PlayerController.Instance.transform.position;
         Vector2 dir = (currentPos - playerPos).normalized;
         return dir * speed;
     }
@@ -304,7 +304,7 @@ public static class MovementFunctions
 
     public static Vector2 FollowPlayer(float speed, Vector2 pos, RoomScript room, List<GridCell> path, ref GridCell nextCell)
     {
-        Vector2 playerPos = PlayerController.instance.transform.position;
+        Vector2 playerPos = PlayerController.Instance.transform.position;
         path = MovementFunctions.GetPath(pos, playerPos, room.pathFindingGrid);
         int degOfFreedom = MovementFunctions.GetDegreesOfFreedom(pos,
             playerPos,

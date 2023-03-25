@@ -13,7 +13,19 @@ public class ItemSpawnManager : MonoBehaviour
     public CollectableData coinData;
     [SerializeField]
     public ConsumeableData healthPotion;
-    //TODO: Add Spawn for ConsumableData as well
+
+    public static ItemSpawnManager Instance;
+    public void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     public void Spawn(CollectableData data, Transform t, int amount)
     {
         var go = Instantiate(collectablePrefab, t.position, Quaternion.identity);

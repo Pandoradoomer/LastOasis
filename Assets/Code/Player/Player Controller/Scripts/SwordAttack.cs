@@ -17,7 +17,7 @@ public class SwordAttack : MonoBehaviour
 
     private void CursorRotate()
     {
-        if (PlayerController.instance.currentState != PlayerController.CURRENT_STATE.DASHING)
+        if (PlayerController.Instance.currentState != PlayerController.CURRENT_STATE.DASHING)
         {
             // Rotate sword to face mouse pointer
             Vector3 mousePos = Input.mousePosition;

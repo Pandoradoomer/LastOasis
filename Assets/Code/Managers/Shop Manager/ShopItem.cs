@@ -82,19 +82,19 @@ public class ShopItem : ScriptableObject
 
     public void PurchaseItem()
     {
-        if(Singleton.Instance.Inventory.GetCoins() >= ItemCost)
+        if(Inventory.Instance.GetCoins() >= ItemCost)
         {
-            Singleton.Instance.Inventory.RemoveCoins(ItemCost);
+            Inventory.Instance.RemoveCoins(ItemCost);
             switch (ItemStat)
             {
                 case ITEM_STAT.HEALTH:
-                    Singleton.Instance.PlayerStats.maxHealth += (int)CalculateStatValue();
-                    Singleton.Instance.PlayerStats.currentHealth = Singleton.Instance.PlayerStats.maxHealth;
+                    PlayerStats.Instance.maxHealth += (int)CalculateStatValue();
+                    PlayerStats.Instance.currentHealth = PlayerStats.Instance.maxHealth;
                     break;
 
                 case ITEM_STAT.DAMAGE:
-                    Singleton.Instance.PlayerStats.maxDamage += (int)CalculateStatValue();
-                    Singleton.Instance.PlayerStats.currentDamage = Singleton.Instance.PlayerStats.maxDamage;
+                    PlayerStats.Instance.maxDamage += (int)CalculateStatValue();
+                    PlayerStats.Instance.currentDamage = PlayerStats.Instance.maxDamage;
                     break;
 
                 case ITEM_STAT.DEFENCE:
@@ -102,13 +102,13 @@ public class ShopItem : ScriptableObject
                     break;
 
                 case ITEM_STAT.DEXTERITY:
-                    Singleton.Instance.PlayerStats.maxDexterity += CalculateStatValue();
-                    Singleton.Instance.PlayerStats.currentDexterity = Singleton.Instance.PlayerStats.maxDexterity;
+                    PlayerStats.Instance.maxDexterity += CalculateStatValue();
+                    PlayerStats.Instance.currentDexterity = PlayerStats.Instance.maxDexterity;
                     break;
 
                 case ITEM_STAT.MOVEMENT_SPEED:
-                    Singleton.Instance.PlayerStats.maxSpeed += CalculateStatValue();
-                    Singleton.Instance.PlayerStats.currentSpeed = Singleton.Instance.PlayerStats.maxSpeed;
+                    PlayerStats.Instance.maxSpeed += CalculateStatValue();
+                    PlayerStats.Instance.currentSpeed = PlayerStats.Instance.maxSpeed;
                     break;
             }
             ItemLevel++;

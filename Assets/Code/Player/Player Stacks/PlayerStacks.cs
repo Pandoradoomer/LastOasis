@@ -6,6 +6,20 @@ public class PlayerStacks : MonoBehaviour
 {
     private Dictionary<Stack, int> stacks = new Dictionary<Stack, int>();
     private Dictionary<DepletableStack, float> stacksCooldown = new Dictionary<DepletableStack, float>();
+
+    public static PlayerStacks Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     void Start()
     {
         EventManager.StartListening(Event.StackAdded, AddStack);

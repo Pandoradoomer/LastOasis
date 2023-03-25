@@ -86,7 +86,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("Chef"))
         {
             MessageManager.instance.DisplayChefText();
-            Singleton.Instance.ShipShopDisplay.GetShop(collision.gameObject);
+            ShipShopDisplay.Instance.GetShop(collision.gameObject);
         }
 
         if (collision.CompareTag("Carpenter"))
@@ -97,7 +97,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("Captain"))
         {
             MessageManager.instance.DisplayCaptainText();
-            Singleton.Instance.ContractsDisplay.GetContractShop(collision.gameObject);
+            ContractsDisplay.Instance.GetContractShop(collision.gameObject);
         }
 
         if (collision.CompareTag("CabinBoy"))
@@ -108,13 +108,13 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("Surgeon"))
         {
             MessageManager.instance.DisplaySurgeonText();
-            Singleton.Instance.ShipShopDisplay.GetShop(collision.gameObject);
+            ShipShopDisplay.Instance.GetShop(collision.gameObject);
         }
 
         if (collision.CompareTag("QuarterMaster"))
         {
             MessageManager.instance.DisplayQMText();
-            Singleton.Instance.ContractsDisplay.GetContractShop(collision.gameObject);
+            ContractsDisplay.Instance.GetContractShop(collision.gameObject);
         }
 
         if (collision.CompareTag("Gunner"))
@@ -138,7 +138,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("Chef"))
         {
             MessageManager.instance.DisableChefText();
-            Singleton.Instance.ShipShopDisplay.RemoveShop();
+            ShipShopDisplay.Instance.RemoveShop();
         }
 
         if (collision.CompareTag("Carpenter"))
@@ -149,7 +149,7 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("Captain"))
         {
             MessageManager.instance.DisableCaptainText();
-            Singleton.Instance.ContractsDisplay.RemoveShop();
+            ContractsDisplay.Instance.RemoveShop();
         }
 
         if (collision.CompareTag("CabinBoy"))
@@ -160,13 +160,13 @@ public class ShipPlayerController : MonoBehaviour, IPlayerController
         if (collision.CompareTag("Surgeon"))
         {
             MessageManager.instance.DisableSurgeonText();
-            Singleton.Instance.ShipShopDisplay.RemoveShop();
+            ShipShopDisplay.Instance.RemoveShop();
         }
 
         if (collision.CompareTag("QuarterMaster"))
         {
             MessageManager.instance.DisableQMText();
-            Singleton.Instance.ContractsDisplay.RemoveShop();
+            ContractsDisplay.Instance.RemoveShop();
         }
 
         if (collision.CompareTag("Gunner"))

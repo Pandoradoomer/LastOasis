@@ -82,11 +82,11 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
 
     private float GetDistanceToPlayer()
     {
-        return (transform.position - PlayerController.instance.transform.position).sqrMagnitude;
+        return (transform.position - PlayerController.Instance.transform.position).sqrMagnitude;
     }
     void TurnAttackHitbox()
     {
-        Vector2 dir = PlayerController.instance.transform.position - transform.position;
+        Vector2 dir = PlayerController.Instance.transform.position - transform.position;
         dir = dir.normalized;
 
         //it is closer on the x axis
@@ -146,7 +146,7 @@ public class SpiderBehaviour : BaseMoveAndAttackBehaviour
             StopCoroutine(AttackCoroutine);
         DoStopAttack();
         Vector2 spiderPos = transform.position;
-        Vector2 playerPos = PlayerController.instance.transform.position;
+        Vector2 playerPos = PlayerController.Instance.transform.position;
         Vector2 dir = (spiderPos - playerPos).normalized;
 
         rb.velocity = Vector2.zero;

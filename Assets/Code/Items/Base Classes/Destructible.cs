@@ -28,13 +28,13 @@ public class Destructible : MonoBehaviour
     public void AddHealth()
     {
         //Debug.Log($"Health added to {gameObject.name} in Room {transform.root.gameObject.name}");
-        lootToDrop.Add(Singleton.Instance.ItemSpawnManager.healthPotion, 1);
+        lootToDrop.Add(ItemSpawnManager.Instance.healthPotion, 1);
     }
 
     public void AddCoin(int value)
     {
         //Debug.Log($"Coin added to {gameObject.name} in Room {transform.root.gameObject.name}");
-        lootToDrop.Add(Singleton.Instance.ItemSpawnManager.coinData, value);
+        lootToDrop.Add(ItemSpawnManager.Instance.coinData, value);
     }
 
     private void OnHit(IEventPacket packet)
@@ -54,13 +54,13 @@ public class Destructible : MonoBehaviour
                     var collect = kvp.Key as CollectableData;
                     if(collect.isCoin)
                     {
-                        Singleton.Instance.Inventory.AddCoins(kvp.Value);
+                        Inventory.Instance.AddCoins(kvp.Value);
                         Instantiate(_coinSpawner, this.transform.position, Quaternion.identity);
                     }
                 }
                 else
                 {
-                    var go = Singleton.Instance.ItemSpawnManager.SpawnItem(kvp.Key, this.transform, kvp.Value);
+                    var go = ItemSpawnManager.Instance.SpawnItem(kvp.Key, this.transform, kvp.Value);
                     rs.AddtoSpawnedList(go);
                 }
             }

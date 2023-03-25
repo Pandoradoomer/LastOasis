@@ -37,7 +37,7 @@ public class ReturnScript : MonoBehaviour
     }
     IEnumerator DoSceneChange()
     {
-        yield return StartCoroutine(Singleton.Instance.TransitionManager.FadeIn());
+        yield return StartCoroutine(TransitionManager.Instance.FadeIn());
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Ship");
         while (!asyncLoad.isDone)
         {

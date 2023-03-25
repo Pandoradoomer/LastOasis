@@ -17,7 +17,7 @@ public class DoorTrigger : MonoBehaviour
     IEnumerator DoTransition()
     {
         EventManager.TriggerEvent(Event.DialogueStart, null);
-        yield return StartCoroutine(Singleton.Instance.TransitionManager.FadeIn());
+        yield return StartCoroutine(TransitionManager.Instance.FadeIn());
         AsyncOperation sceneLoad = SceneManager.LoadSceneAsync("SampleScene");
         while(!sceneLoad.isDone)
         {

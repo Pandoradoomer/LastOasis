@@ -38,6 +38,7 @@ public class RoomScript : MonoBehaviour
     {
         spawnedItems = new List<GameObject>();
         GenerateGrid();
+        EventManager.StartListening(Event.DoorsLockUnlock, LockUnlockDoors);
     }
 
     void GenerateGrid()
@@ -80,7 +81,6 @@ public class RoomScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.StartListening(Event.DoorsLockUnlock, LockUnlockDoors);
         EventManager.StartListening(Event.RoomExit, OnRoomExit);
     }
 
@@ -204,7 +204,7 @@ public class RoomScript : MonoBehaviour
 
     private EnemySpawnPosition SelectSpawnPosition()
     {
-        LevelGeneration  levelGen = Singleton.Instance.LevelGeneration;
+        LevelGeneration levelGen = LevelGeneration.Instance;
         int currentVisitedRooms = levelGen.visitedRooms.Count();
         if (currentVisitedRooms < levelGen.mediumDistThreshold)
         {

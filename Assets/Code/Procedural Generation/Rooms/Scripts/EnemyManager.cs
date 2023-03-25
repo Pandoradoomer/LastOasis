@@ -9,7 +9,6 @@ using static UnityEditor.PlayerSettings;
 
 public class EnemyManager : MonoBehaviour
 {
-    //TODO: add to singleton;
     [SerializeField]
     private GameObject enemyPrefab;
     [SerializeField]
@@ -20,6 +19,20 @@ public class EnemyManager : MonoBehaviour
 
     [Header("Debug")]
     public bool SpawnOnStart = false;
+
+    public static EnemyManager Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
 
     // Start is called before the first frame update
@@ -61,7 +74,7 @@ public class EnemyManager : MonoBehaviour
                 spawnedEnemies.Remove(key);
                 EventManager.TriggerEvent(Event.DoorsLockUnlock, new DoorLockUnlockPacket()
                 {
-                    roomIndex = Singleton.Instance.LevelGeneration.roomIndex,
+                    roomIndex = LevelGeneration.Instance.roomIndex,
                     isUnlock = true
                 });
                 EventManager.TriggerEvent(Event.SpawnObelisk, null);
@@ -118,11 +131,11 @@ public class EnemyManager : MonoBehaviour
                 CollectableData cd = kvp.Key as CollectableData;
                 if(cd.isCoin)
                 {
-                    Singleton.Instance.Inventory.AddCoins(kvp.Value);
+                    Inventory.Instance.AddCoins(kvp.Value);
                 }
                 else
                 {
-                    var go = Singleton.Instance.ItemSpawnManager.SpawnItem(kvp.Key, edp.go.transform, kvp.Value);
+                    var go = ItemSpawnManager.Instance.SpawnItem(kvp.Key, edp.go.transform, kvp.Value);
                     rs.AddtoSpawnedList(go);
                 }
             }
@@ -173,7 +186,7 @@ public class EnemyManager : MonoBehaviour
                 return;
         //for the sake of the task, let's spawn enemies inside every room, at least 1
         List<Vector2> filledPositions = new List<Vector2>();
-        GameObject room = Singleton.Instance.LevelGeneration.GetRoomFromIndex(e.roomIndex);
+        GameObject room = LevelGeneration.Instance.GetRoomFromIndex(e.roomIndex);
         for(int i = 0; i < e.enemyPositions.enemySpawns.Count; i++)
         {
             EnemySpawn es = e.enemyPositions.enemySpawns[i];

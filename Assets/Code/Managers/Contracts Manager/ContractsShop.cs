@@ -41,20 +41,20 @@ public class ContractsShop : ScriptableObject
             switch(GainList[i])
             {
                 case GAIN_STAT.Health:
-                    Singleton.Instance.PlayerStats.maxHealth += 20;
-                    Singleton.Instance.PlayerStats.currentHealth = Singleton.Instance.PlayerStats.maxHealth;
+                    PlayerStats.Instance.maxHealth += 20;
+                    PlayerStats.Instance.currentHealth = PlayerStats.Instance.maxHealth;
                     break;
                 case GAIN_STAT.Damage:
-                    Singleton.Instance.PlayerStats.maxDamage += 6;
-                    Singleton.Instance.PlayerStats.currentDamage = Singleton.Instance.PlayerStats.maxDamage;
+                    PlayerStats.Instance.maxDamage += 6;
+                    PlayerStats.Instance.currentDamage = PlayerStats.Instance.maxDamage;
                     break;
                 case GAIN_STAT.Defence:
                     break;
                 case GAIN_STAT.Dexterity:
                     break;
                 case GAIN_STAT.Speed:
-                    Singleton.Instance.PlayerStats.maxSpeed += 0.5f;
-                    Singleton.Instance.PlayerStats.currentSpeed = Singleton.Instance.PlayerStats.maxSpeed;
+                    PlayerStats.Instance.maxSpeed += 0.5f;
+                    PlayerStats.Instance.currentSpeed = PlayerStats.Instance.maxSpeed;
                     break;
             }
         }
@@ -66,21 +66,21 @@ public class ContractsShop : ScriptableObject
                 case LOSE_STAT.Health:
                     break;
                 case LOSE_STAT.Damage:
-                    Singleton.Instance.PlayerStats.maxDamage -= 3;
-                    Singleton.Instance.PlayerStats.currentDamage = Singleton.Instance.PlayerStats.maxDamage;
+                    PlayerStats.Instance.maxDamage -= 3;
+                    PlayerStats.Instance.currentDamage = PlayerStats.Instance.maxDamage;
                     break;
                 case LOSE_STAT.Defence:
                     break;
                 case LOSE_STAT.Dexterity:
                     break;
                 case LOSE_STAT.Speed:
-                    Singleton.Instance.PlayerStats.maxSpeed -= 0.7f;
-                    Singleton.Instance.PlayerStats.currentSpeed = Singleton.Instance.PlayerStats.maxSpeed;
+                    PlayerStats.Instance.maxSpeed -= 0.7f;
+                    PlayerStats.Instance.currentSpeed = PlayerStats.Instance.maxSpeed;
                     break;
             }
         }
 
-        Singleton.Instance.Inventory.RemoveCoins(ContractCost);
+        Inventory.Instance.RemoveCoins(ContractCost);
         ContractBought = true;
     }
 

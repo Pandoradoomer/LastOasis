@@ -60,10 +60,10 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _hpText.text = $"{Singleton.Instance.PlayerStats.currentHealth}/{Singleton.Instance.PlayerStats.maxHealth}";
-        _hpSlider.value = (float)Singleton.Instance.PlayerStats.currentHealth / (float)Singleton.Instance.PlayerStats.maxHealth;
-        _coinText.text = $"× {Singleton.Instance.Inventory.GetCoins()}";
-        _dashBar.value = Singleton.Instance.PlayerController.GetDashPercentage();
+        _hpText.text = $"{PlayerStats.Instance.currentHealth}/{PlayerStats.Instance.maxHealth}";
+        _hpSlider.value = (float)PlayerStats.Instance.currentHealth / (float)PlayerStats.Instance.maxHealth;
+        _coinText.text = $"× {Inventory.Instance.GetCoins()}";
+        _dashBar.value = PlayerController.Instance.GetDashPercentage();
     }
     public IEnumerator ShowDeathScreen()
     {
@@ -94,7 +94,7 @@ public class UIManager : MonoBehaviour
             yield return null;
 
         Color inventoryTextColor = _inventoryLostText.color;
-        _inventoryLostText.text = $"You've lost {Singleton.Instance.Inventory.GetCoins()} coins xD";
+        _inventoryLostText.text = $"You've lost {Inventory.Instance.GetCoins()} coins xD";
         inventoryTextColor.a = 0.0f;
         _inventoryLostText.color = inventoryTextColor;
         _inventoryLostText.gameObject.SetActive(true);
@@ -154,7 +154,7 @@ public class UIManager : MonoBehaviour
     }
     IEnumerator ReturnTransition()
     {
-        Singleton.Instance.Inventory.ClearInventory();
+        Inventory.Instance.ClearInventory();
         yield return StartCoroutine(FadeOutDeath());
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Ship");
         while (!asyncLoad.isDone)

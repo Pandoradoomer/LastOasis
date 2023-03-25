@@ -27,7 +27,7 @@ public class Collectable : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Singleton.Instance.Inventory.Add(data, stackSize);
+            Inventory.Instance.Add(data, stackSize);
             Destroy(gameObject);                   
         }
     }

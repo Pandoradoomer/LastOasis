@@ -60,29 +60,44 @@ public class LevelGeneration : MonoBehaviour
     [HideInInspector]
     public List<int> visitedRooms = new List<int>();
     public int consecutiveVisitedRooms = 0;
-    //GameObject[] gos = GameObject.FindGameObjectsWithTag("DoorWaypoint");
+
+    public static LevelGeneration Instance;
     // Start is called before the first frame update
     void Awake()
     {
-        if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
+        if (Instance != null && Instance != this)
         {
-            numberOfRooms = Mathf.RoundToInt((worldSize.x * 2) * (worldSize.y * 2));
+            Destroy(this);
         }
-        gridSizeX = Mathf.RoundToInt(worldSize.x);
-        gridSizeY = Mathf.RoundToInt(worldSize.y);
-        CreateRooms();
-        SetRoomDoors();
-        SetStartRoom();
-        CalculateDistanceFromStart();
-        DrawMap();
-        CreateBossRoom();
-        SetRoomVariables();
-        SetPlayerAtStart();
-        EventManager.StartListening(Event.RoomExit, OnRoomExit);
-        EventManager.StartListening(Event.SpawnObelisk, SpawnObelisk);
-        mediumDistThreshold = numberOfRooms / 3;
-        hardDistThreshold = 2 * numberOfRooms / 3;
-        visitedRooms.Add(0);
+        else
+        {
+            Instance = this;
+        }
+    }
+        
+
+    private void Start()
+    {
+            if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
+            {
+                numberOfRooms = Mathf.RoundToInt((worldSize.x * 2) * (worldSize.y * 2));
+            }
+            gridSizeX = Mathf.RoundToInt(worldSize.x);
+            gridSizeY = Mathf.RoundToInt(worldSize.y);
+            CreateRooms();
+            SetRoomDoors();
+            SetStartRoom();
+            CalculateDistanceFromStart();
+            DrawMap();
+            CreateBossRoom();
+            SetRoomVariables();
+            SetPlayerAtStart();
+            EventManager.StartListening(Event.RoomExit, OnRoomExit);
+            EventManager.StartListening(Event.SpawnObelisk, SpawnObelisk);
+            mediumDistThreshold = numberOfRooms / 3;
+            hardDistThreshold = 2 * numberOfRooms / 3;
+            visitedRooms.Add(0);
+        
     }
 
     private void OnDestroy()
@@ -392,7 +407,7 @@ public class LevelGeneration : MonoBehaviour
 
     void SetPlayerAtStart()
     {
-        Singleton.Instance.PlayerController.transform.position = rooms[startRoomX, startRoomY].gridPos * roomSize;
+        PlayerController.Instance.transform.position = rooms[startRoomX, startRoomY].gridPos * roomSize;
         rooms[startRoomX, startRoomY].go.SetActive(true);
         rooms[startRoomX, startRoomY].go.name = "StartRoom";
     }
@@ -496,7 +511,7 @@ public class LevelGeneration : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.LeftControl))
         {
-            Singleton.Instance.Inventory.AddCoins(10);
+            Inventory.Instance.AddCoins(10);
         }
         //if (Input.GetKeyDown(KeyCode.LeftControl))
         //    TeleportToBossRoom();
@@ -515,12 +530,12 @@ public class LevelGeneration : MonoBehaviour
 
     private IEnumerator CameraTransition(IEventPacket packet)
     {
-        PlayerController.instance.doorWayPoint = PlayerController.instance.FindWayPoint();
-        PlayerController.instance.currentState = PlayerController.CURRENT_STATE.SCENE_CHANGE;
+        PlayerController.Instance.doorWayPoint = PlayerController.Instance.FindWayPoint();
+        PlayerController.Instance.currentState = PlayerController.CURRENT_STATE.SCENE_CHANGE;
         yield return new WaitForSeconds(0.5f);
         cameraTransition.SetTrigger("RoomChange");
         yield return new WaitForSeconds(1.4f);
-        PlayerController.instance.currentState = PlayerController.CURRENT_STATE.RUNNING;
+        PlayerController.Instance.currentState = PlayerController.CURRENT_STATE.RUNNING;
 
         RoomExitPacket rep = packet as RoomExitPacket;
         SpawnedRoomData currentRoom = spawnedRooms[rep.roomIndex];
@@ -547,10 +562,10 @@ public class LevelGeneration : MonoBehaviour
             case (Direction.E):
                 newPlayerPos += Vector2.right * mult; break;
         }
-        Singleton.Instance.PlayerController.transform.position = newPlayerPos;
+        PlayerController.Instance.transform.position = newPlayerPos;
 
         yield return new WaitForSeconds(0.4f);
-        PlayerController.instance.currentState = PlayerController.CURRENT_STATE.RUNNING;
+        PlayerController.Instance.currentState = PlayerController.CURRENT_STATE.RUNNING;
     }
 
     public GameObject GetRoomFromIndex(int index)

@@ -28,6 +28,20 @@ public class ShipShopDisplay : MonoBehaviour
 
     private bool canOpenShop;
 
+    public static ShipShopDisplay Instance;
+
+    public void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.E) && canOpenShop)
@@ -54,8 +68,8 @@ public class ShipShopDisplay : MonoBehaviour
     {
         if (_shopItem.ItemLevel < 10)
         {
-            if (_shopItem.CalculateItemCost() > Singleton.Instance.Inventory.GetCoins())
-                npcDialogue.text = "Not enough money! You are missing: " + (_shopItem.CalculateItemCost() - Singleton.Instance.Inventory.GetCoins());
+            if (_shopItem.CalculateItemCost() > Inventory.Instance.GetCoins())
+                npcDialogue.text = "Not enough money! You are missing: " + (_shopItem.CalculateItemCost() - Inventory.Instance.GetCoins());
             else
             {
                 _shopItem.PurchaseItem();
@@ -111,7 +125,7 @@ public class ShipShopDisplay : MonoBehaviour
         npcName.text = shipShop.NpcName;
         npcDialogue.text = shipShop.NpcDialogue;
 
-        playerCoins.text = "" + Singleton.Instance.Inventory.GetCoins();
+        playerCoins.text = "" + Inventory.Instance.GetCoins();
 
         itemSprite.sprite = shipShop.ShopItem.ItemSprite;
         itemTitle.text = shipShop.ShopItem.ItemTitle;

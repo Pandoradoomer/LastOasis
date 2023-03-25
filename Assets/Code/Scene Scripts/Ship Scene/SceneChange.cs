@@ -144,8 +144,8 @@ public class SceneChange : MonoBehaviour
 
     void teleport()
     {
-        int coins = Singleton.Instance.Inventory.GetCoins();
-        Singleton.Instance.Inventory.Remove(item_coin, coins);
+        int coins = Inventory.Instance.GetCoins();
+        Inventory.Instance.Remove(item_coin, coins);
         SceneManager.LoadScene("StartTestScene", LoadSceneMode.Single);
     }
 

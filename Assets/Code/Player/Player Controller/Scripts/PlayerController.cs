@@ -42,10 +42,10 @@ public class PlayerController : MonoBehaviour
 
     public KeyCode lastKeyPressed;
 
-    public static PlayerController instance;
+    public static PlayerController Instance;
     private void Awake()
     {
-        instance = this;
+        Instance = this;
         animator = GetComponent<Animator>();
     }
 
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         invulnerabilityHolder = invulnerabilityDuration;
         dashElapsedCooldown = dashCooldown;
         originalColor = GetComponent<SpriteRenderer>().color;
-        speed = PlayerStats.instance.currentSpeed;
+        speed = PlayerStats.Instance.currentSpeed;
         EventManager.StartListening(Event.BossTeleport, BossTeleport);
         EventManager.StartListening(Event.DialogueStart, FreezePlayer);
         EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
     }
     public void testStats()
     {
-        speed = PlayerStats.instance.currentSpeed;
+        speed = PlayerStats.Instance.currentSpeed;
     }
 
     void BossTeleport(IEventPacket packet)
@@ -313,7 +313,7 @@ public class PlayerController : MonoBehaviour
         float tempDist = 3;
         for (int i = 0; i < wayPoints.Length; i++)
         {
-            float distance = Vector2.Distance(PlayerController.instance.transform.position, wayPoints[i].transform.position);
+            float distance = Vector2.Distance(PlayerController.Instance.transform.position, wayPoints[i].transform.position);
             if (distance < tempDist)
             {
                 tempTrans = wayPoints[i].transform;

@@ -20,6 +20,19 @@ public class TransitionManager : MonoBehaviour
     [SerializeField]
     GameObject playerStats;
     // Start is called before the first frame update
+    public static TransitionManager Instance;
+    private void Awake()
+    {
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnLevelLoaded;
@@ -32,14 +45,7 @@ public class TransitionManager : MonoBehaviour
     }
     void Start()
     {
-        //if (GameObject.FindObjectOfType<Inventory>() == null)
-        //{
-        //    var go = Instantiate(inventory);
-        //}
-        //if (GameObject.FindObjectOfType<PlayerStats>() == null)
-        //{
-        //    var go = Instantiate(playerStats);
-        //}
+
     }
 
 
@@ -47,7 +53,7 @@ public class TransitionManager : MonoBehaviour
     {
         if(scene.name == "Ship")
         {
-            Singleton.Instance.PlayerStats.ResetDeath();
+            PlayerStats.Instance.ResetDeath();
         }
         StartCoroutine(FadeOut());
     }
@@ -85,7 +91,7 @@ public class TransitionManager : MonoBehaviour
     public IEnumerator FadeIn()
     {
         EventManager.TriggerEvent(Event.DialogueStart, new StartDialoguePacket());
-        Singleton.Instance.PlayerStats.SaveValues();
+        PlayerStats.Instance.SaveValues();
         topPanel.gameObject.SetActive(true);
         bottomPanel.gameObject.SetActive(true);
         float maxLerp = topPanel.rectTransform.offsetMin.y + 10;

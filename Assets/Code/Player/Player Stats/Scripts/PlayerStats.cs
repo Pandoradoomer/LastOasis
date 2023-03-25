@@ -28,134 +28,6 @@ public enum MaxStats
 
 public class PlayerStats : MonoBehaviour
 {
-    /*
-    public static float health
-    {
-        get
-        {
-            if (currentHealth >= cappedHealth)
-            {
-                currentHealth = cappedHealth;
-            }
-            else if (currentHealth <= 0)
-            {
-                currentHealth = 0;
-            }
-            return currentHealth;
-
-        }
-        set
-        {
-            currentHealth = value;
-            
-        }
-    }
-
-    [SerializeField] public static float baseHealth = 100.0f;
-    [SerializeField] public static float currentHealth = baseHealth;
-    [SerializeField] private static float cappedHealth = 165.0f;
-    
-    public static float damage
-    {
-        get
-        {
-            if (currentDamage >= cappedDamage)
-            {
-                currentDamage = cappedDamage;
-            }
-            else if (currentDamage <= 0)
-            {
-                currentDamage= 0;
-            }
-            return currentDamage;
-        }
-        set
-        {
-            currentDamage = value;
-        }
-    }
-
-    [SerializeField] public static float baseDamage = 10.0f;
-    [SerializeField] public static float currentDamage = baseDamage;
-    [SerializeField] private static float cappedDamage = 64.0f;
-
-    public static float moveSpeed
-    {
-        get
-        {
-            if (currentMoveSpeed >= cappedMoveSpeed)
-            {
-                currentMoveSpeed = cappedMoveSpeed;
-            }
-            else if (currentMoveSpeed <= 0)
-            {
-                currentMoveSpeed = 0;
-            }
-            return currentMoveSpeed;
-        }
-        set
-        {
-            currentMoveSpeed = value;
-        }
-    }
-
-
-    [SerializeField] public static float baseMovementSpeed = 2.0f;
-    [SerializeField] public static float currentMoveSpeed = baseMovementSpeed;
-    [SerializeField] private static float cappedMoveSpeed = 3.55f;
-
-    public static float dexterity
-    {
-        get
-        {
-            if (currentDexterity >= cappedDexterity)
-            {
-                currentDexterity = cappedDexterity;
-            }
-            else if (currentDexterity <= 0)
-            {
-                currentDexterity = 0;
-            }
-
-            return currentDexterity;
-        }
-        set
-        {
-            currentDexterity = value;
-        }
-    }
-
-    [SerializeField] public static float baseDexterity = 1.0f;
-    [SerializeField] public static float currentDexterity = baseDexterity;
-    [SerializeField] private static float cappedDexterity = 1.275f;
-
-    public static float defence
-    {
-        get
-        {
-            if (currentDefence >= cappedDefence)
-            {
-                currentDefence = cappedDefence;
-            }
-            else if (currentDefence <= 0)
-            {
-                currentDefence = 0;
-            }
-            return currentDefence;
-        }
-
-        set
-        {
-            currentDefence = value;
-        }
-    }
-
-
-
-    [SerializeField] public static float baseDefence = 1f;
-    [SerializeField] public static float currentDefence = baseDefence;
-    [SerializeField] private static float cappedDefence = 55.0f;*/
-
     //Values that the player is currently holding
     [Header("Current Values")]
     public int currentHealth = -1;
@@ -181,39 +53,19 @@ public class PlayerStats : MonoBehaviour
     public float maxDexterity = -1;
     public int maxDamage = -1;
     public float maxDefence = -1;
-    public static PlayerStats instance { get; private set; }
+    public static PlayerStats Instance { get; private set; }
 
     bool isDead = false;
-    void Start()
-    {
-        //if (PlayerPrefs.HasKey("isSet"))
-        //    hasBeenInit = Convert.ToBoolean(PlayerPrefs.GetString("isSet"));
-        //if(!hasBeenInit)
-        //{
-        //    hasBeenInit = true;
-        //    currentHealth = maxHealth = baseHealth;
-        //    currentSpeed = maxSpeed = baseSpeed;
-        //    currentDexterity = maxDexterity = baseDexterity;
-        //    currentDefence = maxDefence = baseDefence;
-        //    currentDamage = maxDamage = baseDamage;
-        //}
-        //else
-        //{
-        //    LoadValues();
-        //}
-        //EventManager.StartListening(Event.EnemyHitPlayer, OnEnemyHit);
-        //DontDestroyOnLoad(this.gameObject);
-    }
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
         else
         {
-            instance = this;
+            Instance = this;
 
         }
         if (PlayerPrefs.HasKey("isSet"))
@@ -236,6 +88,10 @@ public class PlayerStats : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
+    void Start()
+    {
+
+    }
 
     void Update()
     {   
@@ -382,13 +238,13 @@ public class PlayerStats : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // When collided with enemy or boss, the player will take damage.
-        if (!PlayerController.instance.invulnerability)
+        if (!PlayerController.Instance.invulnerability)
         {
             if (collision.gameObject.CompareTag("Enemy"))
             {
                 int healthDeplete = (int)collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
                 currentHealth -= healthDeplete;
-                PlayerController.instance.invulnerability = true;
+                PlayerController.Instance.invulnerability = true;
                 EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
                 {
                     textColor = Color.red,
@@ -400,7 +256,7 @@ public class PlayerStats : MonoBehaviour
             {
                 int healthDeplete = (int)collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
                 currentHealth -= healthDeplete;
-                PlayerController.instance.invulnerability = true;
+                PlayerController.Instance.invulnerability = true;
                 EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
                 {
                     textColor = Color.red,
@@ -415,13 +271,13 @@ public class PlayerStats : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         // When player does not move from the collision point, player will still take damage.
-        if (!PlayerController.instance.invulnerability)
+        if (!PlayerController.Instance.invulnerability)
         {
             if (collision.gameObject.CompareTag("Enemy"))
             {
                 int healthDeplete = (int)collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
                 currentHealth -= healthDeplete;
-                PlayerController.instance.invulnerability = true;
+                PlayerController.Instance.invulnerability = true;
                 EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
                 {
                     textColor = Color.red,
@@ -433,7 +289,7 @@ public class PlayerStats : MonoBehaviour
             {
                 int healthDeplete = (int)collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
                 currentHealth -= healthDeplete;
-                PlayerController.instance.invulnerability = true;
+                PlayerController.Instance.invulnerability = true;
                 EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
                 {
                     textColor = Color.red,
@@ -447,14 +303,14 @@ public class PlayerStats : MonoBehaviour
     private void OnEnemyHit(IEventPacket packet)
     {
         EnemyHitPacket ehp = packet as EnemyHitPacket;
-        if (!PlayerController.instance.invulnerability)
+        if (!PlayerController.Instance.invulnerability)
         {
             currentHealth -= (int)ehp.healthDeplete;
-            PlayerController.instance.invulnerability = true;
+            PlayerController.Instance.invulnerability = true;
             EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
             {
                 textColor = Color.red,
-                position = Singleton.Instance.PlayerController.transform.position,
+                position = PlayerController.Instance.transform.position,
                 damage = (int)ehp.healthDeplete
             });
         }

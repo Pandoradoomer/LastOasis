@@ -26,6 +26,20 @@ public class ContractsDisplay : MonoBehaviour
 
     private bool canOpen;
 
+    public static ContractsDisplay Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     private void AmendContractShop()
     {
         purchaseButton.interactable = !contractsShop.ContractBought;
@@ -40,7 +54,7 @@ public class ContractsDisplay : MonoBehaviour
         contractGoodStat.text += contractsShop.GainText();
         contractBadStat.text += contractsShop.LoseText();
         contractPrice.text = "Cost: " + contractsShop.ContractCost;
-        playerCoins.text = Singleton.Instance.Inventory.GetCoins().ToString();
+        playerCoins.text = Inventory.Instance.GetCoins().ToString();
         npcImage.sprite = contractsShop.NpcImage;
         npcName.text = contractsShop.NpcName;
     }
@@ -97,7 +111,7 @@ public class ContractsDisplay : MonoBehaviour
 
     private void OnButtonClick(ContractsShop _contractsShop)
     {
-        if(Singleton.Instance.Inventory.GetCoins() >= _contractsShop.ContractCost)
+        if(Inventory.Instance.GetCoins() >= _contractsShop.ContractCost)
         {
             _contractsShop.PurchaseContract();
             purchaseButton.interactable = false;

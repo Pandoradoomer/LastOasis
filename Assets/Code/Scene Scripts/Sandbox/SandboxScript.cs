@@ -60,11 +60,11 @@ public class SandboxScript : MonoBehaviour
 
     void updateStatDisplay()
     {
-        currentHealthtext.GetComponent<TMPro.TextMeshProUGUI>().text = "Health: " + PlayerStats.instance.currentHealth.ToString();
-        currentSpeedtext.GetComponent<TMPro.TextMeshProUGUI>().text = "Speed: " + PlayerStats.instance.currentSpeed.ToString();
-        currentDexteritytext.GetComponent<TMPro.TextMeshProUGUI>().text = "Dexterity: " + PlayerStats.instance.currentDexterity.ToString();
-        currentDamagetext.GetComponent<TMPro.TextMeshProUGUI>().text = "Damage: " + PlayerStats.instance.currentDamage.ToString();
-        currentDefencetext.GetComponent<TMPro.TextMeshProUGUI>().text = "Defense: " + PlayerStats.instance.currentDefence.ToString();
+        currentHealthtext.GetComponent<TMPro.TextMeshProUGUI>().text = "Health: " + PlayerStats.Instance.currentHealth.ToString();
+        currentSpeedtext.GetComponent<TMPro.TextMeshProUGUI>().text = "Speed: " + PlayerStats.Instance.currentSpeed.ToString();
+        currentDexteritytext.GetComponent<TMPro.TextMeshProUGUI>().text = "Dexterity: " + PlayerStats.Instance.currentDexterity.ToString();
+        currentDamagetext.GetComponent<TMPro.TextMeshProUGUI>().text = "Damage: " + PlayerStats.Instance.currentDamage.ToString();
+        currentDefencetext.GetComponent<TMPro.TextMeshProUGUI>().text = "Defense: " + PlayerStats.Instance.currentDefence.ToString();
     }
 
     void Update()

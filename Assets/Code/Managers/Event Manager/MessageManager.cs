@@ -50,7 +50,7 @@ public class MessageManager : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            Debug.Log($"Coins: {Singleton.Instance.Inventory.GetCoins()}");
+            Debug.Log($"Coins: {Inventory.Instance.GetCoins()}");
         }
     }
     //***************** CHEST MESSAGES *****************//

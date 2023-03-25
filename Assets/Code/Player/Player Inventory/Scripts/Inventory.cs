@@ -9,11 +9,21 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private CollectableData coinEntry;
 
+    public static Inventory Instance;
+
     private void Awake()
     {
         if(coinEntry != null)
             itemDictionary.Add(coinEntry, 0);
         DontDestroyOnLoad(this.gameObject);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
     private void OnDestroy()
     {

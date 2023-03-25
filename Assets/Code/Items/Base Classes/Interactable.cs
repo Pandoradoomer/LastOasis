@@ -78,7 +78,7 @@ public class Interactable : MonoBehaviour
                         Transform t = transform;
                         Vector3 r = new Vector3(Random.Range(-2.5f, 1.5f), Random.Range(-2.0f, 1.0f));
                         t.position += r;
-                        Singleton.Instance.ItemSpawnManager.Spawn(itemToSpawn, t, easyCoins);
+                        ItemSpawnManager.Instance.Spawn(itemToSpawn, t, easyCoins);
                         t.position -= r;
                     }
                 }
@@ -89,7 +89,7 @@ public class Interactable : MonoBehaviour
                         Transform t = transform;
                         Vector3 r = new Vector3(Random.Range(-2.5f, 1.5f), Random.Range(-2.0f, 1.0f));
                         t.position += r;
-                        Singleton.Instance.ItemSpawnManager.Spawn(itemToSpawn, t, mediumCoins);
+                        ItemSpawnManager.Instance.Spawn(itemToSpawn, t, mediumCoins);
                         t.position -= r;
                     }
                 }
@@ -101,7 +101,7 @@ public class Interactable : MonoBehaviour
                         Transform t = transform;
                         Vector3 r = new Vector3(Random.Range(-2.5f, 1.5f), Random.Range(-2.0f, 1.0f));
                         t.position += r;
-                        Singleton.Instance.ItemSpawnManager.Spawn(itemToSpawn, t, hardCoins);
+                        ItemSpawnManager.Instance.Spawn(itemToSpawn, t, hardCoins);
                         t.position -= r;
                     }
                 }
@@ -159,7 +159,7 @@ public class Interactable : MonoBehaviour
         EnemyBase[] enemyIndex = GameObject.FindObjectsOfType<EnemyBase>();
         EnemyBase enemy = null;
 
-        Dictionary<int,List<EnemyRuntimeData>> enemiesInCurRoom = Singleton.Instance.EnemyManager.spawnedEnemies;
+        Dictionary<int,List<EnemyRuntimeData>> enemiesInCurRoom = EnemyManager.Instance.spawnedEnemies;
 
         int enemiesInRoom = 0;
         if (enemyIndex != null && enemy == null)
