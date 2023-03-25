@@ -43,7 +43,6 @@ public class SandboxScript : MonoBehaviour
             {
                 //Debug.Log(enemy);
                 enemy.GetComponent<EnemyBase>().roomIndex = roomIndex;
-                enemy.GetComponent<EnemyBase>().onCollisionDamage = onCollisionDamage;
                 enemy.GetComponent<EnemyBase>().attackDamage = attackDamage;
                 enemy.GetComponent<EnemyBase>().multiplier = multiplier;
                 enemy.GetComponent<EnemyBase>().rs = roomScript;

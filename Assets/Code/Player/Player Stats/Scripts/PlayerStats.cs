@@ -240,30 +240,6 @@ public class PlayerStats : MonoBehaviour
         // When collided with enemy or boss, the player will take damage.
         if (!PlayerController.Instance.invulnerability)
         {
-            if (collision.gameObject.CompareTag("Enemy"))
-            {
-                int healthDeplete = (int)collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
-                currentHealth -= healthDeplete;
-                PlayerController.Instance.invulnerability = true;
-                EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
-                {
-                    textColor = Color.red,
-                    position = transform.position,
-                    damage = healthDeplete
-                });
-            }
-            if (collision.gameObject.CompareTag("Boss"))
-            {
-                int healthDeplete = (int)collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
-                currentHealth -= healthDeplete;
-                PlayerController.Instance.invulnerability = true;
-                EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
-                {
-                    textColor = Color.red,
-                    position = transform.position,
-                    damage = healthDeplete
-                });
-            }
         }
     }
 
@@ -273,30 +249,6 @@ public class PlayerStats : MonoBehaviour
         // When player does not move from the collision point, player will still take damage.
         if (!PlayerController.Instance.invulnerability)
         {
-            if (collision.gameObject.CompareTag("Enemy"))
-            {
-                int healthDeplete = (int)collision.gameObject.GetComponent<EnemyBase>().onCollisionDamage;
-                currentHealth -= healthDeplete;
-                PlayerController.Instance.invulnerability = true;
-                EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
-                {
-                    textColor = Color.red,
-                    position = transform.position,
-                    damage = healthDeplete
-                });
-            }
-            if (collision.gameObject.CompareTag("Boss"))
-            {
-                int healthDeplete = (int)collision.gameObject.GetComponent<BossPattern>().onCollisionDamage;
-                currentHealth -= healthDeplete;
-                PlayerController.Instance.invulnerability = true;
-                EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
-                {
-                    textColor = Color.red,
-                    position = transform.position,
-                    damage = healthDeplete
-                });
-            }
         }
     }
 

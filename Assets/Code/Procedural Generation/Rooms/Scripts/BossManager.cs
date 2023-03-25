@@ -76,8 +76,6 @@ public class BossManager : MonoBehaviour
     private void SpawnBoss()
     {
         GameObject go = Instantiate(bossPrefab, transform.position, Quaternion.identity);
-        var behaviour = boss.Behaviour;
-        go.AddComponent(behaviour.GetClass());
 
         bossHPSlider.SetActive(true);
     }

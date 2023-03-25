@@ -7,7 +7,6 @@ public class EnemyBase : MonoBehaviour
 {
     public int roomIndex;
     public float currentHealth = 10;
-    public float onCollisionDamage;
     public float attackDamage;
     public Dictionary<Item, int> lootToDrop;
     public float multiplier;

@@ -111,7 +111,7 @@ public class EnemyManagerLite : MonoBehaviour
             eb.attackDamage = enemyData.Damage;
             eb.multiplier = enemyData.multiplier;
             eb.enemyData = enemyData;
-            eb.onCollisionDamage = enemyData.DamageOnCollision;
+            //eb.onCollisionDamage = enemyData.DamageOnCollision;
             eb.rs = room.GetComponent<RoomScript>();
             eb.rs.enemies.Add(eb);
             eb.GetComponent<SpriteRenderer>().sprite = enemyData.Sprite;
