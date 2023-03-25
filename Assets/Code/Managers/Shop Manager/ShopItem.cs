@@ -88,11 +88,13 @@ public class ShopItem : ScriptableObject
             switch (ItemStat)
             {
                 case ITEM_STAT.HEALTH:
-                    Singleton.Instance.PlayerStats.currentHealth += (int)CalculateStatValue();
+                    Singleton.Instance.PlayerStats.maxHealth += (int)CalculateStatValue();
+                    Singleton.Instance.PlayerStats.currentHealth = Singleton.Instance.PlayerStats.maxHealth;
                     break;
 
                 case ITEM_STAT.DAMAGE:
-                    Singleton.Instance.PlayerStats.currentDamage += (int)CalculateStatValue();
+                    Singleton.Instance.PlayerStats.maxDamage += (int)CalculateStatValue();
+                    Singleton.Instance.PlayerStats.currentDamage = Singleton.Instance.PlayerStats.maxDamage;
                     break;
 
                 case ITEM_STAT.DEFENCE:
@@ -100,11 +102,13 @@ public class ShopItem : ScriptableObject
                     break;
 
                 case ITEM_STAT.DEXTERITY:
-                    Singleton.Instance.PlayerStats.currentDexterity += CalculateStatValue();
+                    Singleton.Instance.PlayerStats.maxDexterity += CalculateStatValue();
+                    Singleton.Instance.PlayerStats.currentDexterity = Singleton.Instance.PlayerStats.maxDexterity;
                     break;
 
                 case ITEM_STAT.MOVEMENT_SPEED:
-                    Singleton.Instance.PlayerStats.currentSpeed += CalculateStatValue();
+                    Singleton.Instance.PlayerStats.maxSpeed += CalculateStatValue();
+                    Singleton.Instance.PlayerStats.currentSpeed = Singleton.Instance.PlayerStats.maxSpeed;
                     break;
             }
             ItemLevel++;

@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bottomPanel: {fileID: 0}
   topPanel: {fileID: 0}
-  fadeOutTime: 2.5
-  fadeInTime: 2.5
+  fadeOutTime: 1.5
+  fadeInTime: 1.5
   inventory: {fileID: 9137307401040258604, guid: 4706ec1584bcc5c4ca53d489e7089a43, type: 3}
+  playerStats: {fileID: 0}
