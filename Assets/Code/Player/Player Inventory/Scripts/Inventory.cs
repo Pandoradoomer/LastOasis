@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour
     //Weapon handler
     [SerializeField]
     private List<GameObject> weaponList = new List<GameObject>();
-    private List<IPlayerWeapon> weapons = new List<IPlayerWeapon>();
+    //private List<IPlayerWeapon> weapons = new List<IPlayerWeapon>();
 
     public static Inventory Instance;
 
@@ -157,7 +157,9 @@ public class Inventory : MonoBehaviour
     public void AddWeapon(GameObject weapon)
     {
         weaponList.Add(weapon);
-        Destroy(weapon);
+        //Instantiate weapon prefab
+        //Instantiate(weapon);
+        //Destroy(weapon);
         Debug.Log("Weapon added " + weapon.name);
     }
 }

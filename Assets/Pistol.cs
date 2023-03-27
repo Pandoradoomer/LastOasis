@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapons : MonoBehaviour, IPlayerWeapon
+public class Pistol : MonoBehaviour
 {
-    [SerializeField] private GameObject sword;
     [SerializeField] private GameObject pistol;
 
     public void DealDamage(int damage)
@@ -20,20 +19,19 @@ public class Weapons : MonoBehaviour, IPlayerWeapon
         }
         else
         {
-            Singleton.Instance.Inventory.AddWeapon(this.gameObject);
+            Singleton.Instance.Inventory.AddWeapon(pistol);
         }
-        //Singleton.Instance.Inventory.AddWeapon(sword);
-       // Singleton.Instance.Inventory.AddWeapon(pistol);
+
     }
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
