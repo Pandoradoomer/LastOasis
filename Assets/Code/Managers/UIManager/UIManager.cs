@@ -60,8 +60,8 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _hpText.text = $"{PlayerStats.Instance.currentHealth}/{PlayerStats.Instance.maxHealth}";
-        _hpSlider.value = (float)PlayerStats.Instance.currentHealth / (float)PlayerStats.Instance.maxHealth;
+        _hpText.text = $"{PlayerStats.Instance.cachedCalculatedValues[Stat.Current_Health]}/{PlayerStats.Instance.cachedCalculatedValues[Stat.Health]}";
+        _hpSlider.value = PlayerStats.Instance.GetCurrentHealthPercentage();
         _coinText.text = $"× {Inventory.Instance.GetCoins()}";
         _dashBar.value = PlayerController.Instance.GetDashPercentage();
     }

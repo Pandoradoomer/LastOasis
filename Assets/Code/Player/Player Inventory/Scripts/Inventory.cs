@@ -52,6 +52,7 @@ public class Inventory : MonoBehaviour
 
     public void AddCoins(int amount)
     {
+        amount = (int)((PlayerStats.Instance.cachedCalculatedValues[Stat.Coin_Gain] / 100.0f) * amount);
         itemDictionary[coinEntry] += amount;
     }
 

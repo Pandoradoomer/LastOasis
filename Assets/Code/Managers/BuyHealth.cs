@@ -20,13 +20,9 @@ public class BuyHealth : MonoBehaviour
     }
     private void BuyLvl1()
     {
-        PlayerStats.Instance.maxHealth += 2;
-        PlayerStats.Instance.currentHealth = PlayerStats.Instance.maxHealth;
     }
 
     private void BuyLvl2()
     {
-        PlayerStats.Instance.maxHealth += 3;
-        PlayerStats.Instance.currentHealth = PlayerStats.Instance.maxHealth;
     }
 }

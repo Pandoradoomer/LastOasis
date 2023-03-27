@@ -12,7 +12,7 @@ public class PlayerAttack : MonoBehaviour
     {
         get
         {
-            return swingDelay - PlayerStats.Instance.currentDexterity;
+            return swingDelay - PlayerStats.Instance.cachedCalculatedValues[Stat.Dexterity];
         }
         set
         {
@@ -35,8 +35,8 @@ public class PlayerAttack : MonoBehaviour
 
     public void testStats()
     {
-        swingDamage = PlayerStats.Instance.currentDamage;
-        swingDelay = swingDelay - PlayerStats.Instance.currentDexterity;
+        swingDamage = PlayerStats.Instance.cachedCalculatedValues[Stat.Damage];
+        swingDelay = swingDelay - PlayerStats.Instance.cachedCalculatedValues[Stat.Dexterity];
     }
     private void Awake()
     {
@@ -47,7 +47,7 @@ public class PlayerAttack : MonoBehaviour
     }
     private void Start()
     {
-        swingDamage = PlayerStats.Instance.currentDamage;
+        swingDamage = PlayerStats.Instance.cachedCalculatedValues[Stat.Damage];
     }
 
     private void OnDestroy()

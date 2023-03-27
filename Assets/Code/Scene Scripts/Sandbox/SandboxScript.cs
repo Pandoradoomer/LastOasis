@@ -59,11 +59,11 @@ public class SandboxScript : MonoBehaviour
 
     void updateStatDisplay()
     {
-        currentHealthtext.GetComponent<TMPro.TextMeshProUGUI>().text = "Health: " + PlayerStats.Instance.currentHealth.ToString();
-        currentSpeedtext.GetComponent<TMPro.TextMeshProUGUI>().text = "Speed: " + PlayerStats.Instance.currentSpeed.ToString();
-        currentDexteritytext.GetComponent<TMPro.TextMeshProUGUI>().text = "Dexterity: " + PlayerStats.Instance.currentDexterity.ToString();
-        currentDamagetext.GetComponent<TMPro.TextMeshProUGUI>().text = "Damage: " + PlayerStats.Instance.currentDamage.ToString();
-        currentDefencetext.GetComponent<TMPro.TextMeshProUGUI>().text = "Defense: " + PlayerStats.Instance.currentDefence.ToString();
+        currentHealthtext.GetComponent<TMPro.TextMeshProUGUI>().text = "Health: " + PlayerStats.Instance.cachedCalculatedValues[Stat.Current_Health].ToString();
+        currentSpeedtext.GetComponent<TMPro.TextMeshProUGUI>().text = "Speed: " + PlayerStats.Instance.cachedCalculatedValues[Stat.Speed].ToString();
+        currentDexteritytext.GetComponent<TMPro.TextMeshProUGUI>().text = "Dexterity: " + PlayerStats.Instance.cachedCalculatedValues[Stat.Dexterity].ToString();
+        currentDamagetext.GetComponent<TMPro.TextMeshProUGUI>().text = "Damage: " + PlayerStats.Instance.cachedCalculatedValues[Stat.Damage].ToString();
+        currentDefencetext.GetComponent<TMPro.TextMeshProUGUI>().text = "Defense: " + PlayerStats.Instance.cachedCalculatedValues[Stat.Defence].ToString();
     }
 
     void Update()

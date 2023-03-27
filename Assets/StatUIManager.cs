@@ -33,11 +33,11 @@ public class StatUIManager : MonoBehaviour
         //loadStats.onClick.AddListener(UnfreezePlayer);
        // resetStats.onClick.AddListener(UnfreezePlayer);
         //Get singleton data for player stats here
-        healthValue.text = PlayerStats.Instance.currentHealth.ToString();
-        movementSpeedValue.text = PlayerStats.Instance.currentSpeed.ToString("0.00");
-        dexterityValue.text = PlayerStats.Instance.currentDexterity.ToString("0.00");
-        damageValue.text = PlayerStats.Instance.currentDamage.ToString();
-        defenceValue.text = PlayerStats.Instance.currentDefence.ToString();
+        healthValue.text = PlayerStats.Instance.cachedCalculatedValues[Stat.Current_Health].ToString();
+        movementSpeedValue.text = PlayerStats.Instance.cachedCalculatedValues[Stat.Speed].ToString("0.00");
+        dexterityValue.text = PlayerStats.Instance.cachedCalculatedValues[Stat.Dexterity].ToString("0.00");
+        damageValue.text = PlayerStats.Instance.cachedCalculatedValues[Stat.Damage].ToString();
+        defenceValue.text = PlayerStats.Instance.cachedCalculatedValues[Stat.Defence].ToString();
         coinValue.text = Inventory.Instance.GetCoins().ToString();
     }
 
@@ -145,11 +145,11 @@ public class StatUIManager : MonoBehaviour
         //    EventManager.TriggerEvent(Event.DialogueStart, new StartDialoguePacket());
         //    isInStatPage = true;
         //}
-        healthValue.text = PlayerStats.Instance.currentHealth.ToString();
-        movementSpeedValue.text = PlayerStats.Instance.currentSpeed.ToString("0.00");
-        dexterityValue.text = PlayerStats.Instance.currentDexterity.ToString("0.00");
-        damageValue.text = PlayerStats.Instance.currentDamage.ToString();
-        defenceValue.text = PlayerStats.Instance.currentDefence.ToString();
+        healthValue.text = PlayerStats.Instance.cachedCalculatedValues[Stat.Current_Health].ToString();
+        movementSpeedValue.text = PlayerStats.Instance.cachedCalculatedValues[Stat.Speed].ToString("0.00");
+        dexterityValue.text = PlayerStats.Instance.cachedCalculatedValues[Stat.Dexterity].ToString("0.00");
+        damageValue.text = PlayerStats.Instance.cachedCalculatedValues[Stat.Damage].ToString();
+        defenceValue.text = PlayerStats.Instance.cachedCalculatedValues[Stat.Defence].ToString();
         coinValue.text = Inventory.Instance.GetCoins().ToString();
 
     }

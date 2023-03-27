@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerStacks : MonoBehaviour
 {
     private Dictionary<Stack, int> stacks = new Dictionary<Stack, int>();
-    private Dictionary<DepletableStack, float> stacksCooldown = new Dictionary<DepletableStack, float>();
+    private Dictionary<TimeDepletableStack, float> stacksCooldown = new Dictionary<TimeDepletableStack, float>();
 
     public static PlayerStacks Instance;
+    public TextMeshProUGUI textField;
 
+    [SerializeField]
+    private Contract testContract;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -38,22 +42,25 @@ public class PlayerStacks : MonoBehaviour
             if(stacks.ContainsKey(sap.stackToAdd))
             {
                 stacks[sap.stackToAdd] += sap.stackNumber;
-                AddDepletableStack(sap.stackToAdd);
+                if(sap.stackToAdd is TimeDepletableStack)
+                    AddDepletableStack(sap.stackToAdd);
 
             }
             else
             {
                 stacks.Add(sap.stackToAdd, sap.stackNumber);
-                AddDepletableStack(sap.stackToAdd);
+                if (sap.stackToAdd is TimeDepletableStack)
+                    AddDepletableStack(sap.stackToAdd);
             }
+            sap.stackToAdd.OnAdd();
         }
     }
 
     void AddDepletableStack(Stack stack)
     {
-        if (!(stack is DepletableStack))
+        if (!(stack is TimeDepletableStack))
             return;
-        DepletableStack ds = (DepletableStack)stack;
+        TimeDepletableStack ds = (TimeDepletableStack)stack;
         if(stacksCooldown.ContainsKey(ds))
         {
             stacksCooldown[ds] = ds.timeToDeplete;
@@ -66,12 +73,40 @@ public class PlayerStacks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DepleteStacks();
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            foreach(var stacks in testContract.stacksToAdd)
+            {
+                EventManager.TriggerEvent(Event.StackAdded, new StackAddedPacket()
+                {
+                    stackNumber = stacks.stacksToAdd,
+                    stackToAdd = stacks.stack
+                });
+            }
+        }
+        DepleteTimeStacks();
+        DisplayStacks();
     }
 
-    void DepleteStacks()
+    public bool RemoveStack(Stack stack)
     {
-        List<DepletableStack> keys = new List<DepletableStack>(stacksCooldown.Keys);
+        if(stacks.ContainsKey(stack))
+        {
+            stacks[stack]--;
+            if (stacks[stack] == 0)
+            {
+                stacks.Remove(stack);
+                return true;
+            }
+            else
+                return false;
+        }
+        return false;
+    }
+
+    void DepleteTimeStacks()
+    {
+        List<TimeDepletableStack> keys = new List<TimeDepletableStack>(stacksCooldown.Keys);
 
         foreach(var key in keys)
         {
@@ -95,5 +130,14 @@ public class PlayerStacks : MonoBehaviour
                 }
             }
         }
+    }
+    void DisplayStacks()
+    {
+        string text = "";
+        foreach(var kvp in stacks)
+        {
+            text += $"{kvp.Key.GetType()}, {kvp.Value}\n";
+        }
+        textField.text = text;
     }
 }

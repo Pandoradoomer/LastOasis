@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
@@ -55,11 +56,12 @@ public class PlayerController : MonoBehaviour
         invulnerabilityHolder = invulnerabilityDuration;
         dashElapsedCooldown = dashCooldown;
         originalColor = GetComponent<SpriteRenderer>().color;
-        speed = PlayerStats.Instance.currentSpeed;
+        speed = PlayerStats.Instance.cachedCalculatedValues[Stat.Speed];
         EventManager.StartListening(Event.BossTeleport, BossTeleport);
         EventManager.StartListening(Event.DialogueStart, FreezePlayer);
         EventManager.StartListening(Event.DialogueFinish, UnfreezePlayer);
         EventManager.StartListening(Event.PlayerDeath, FreezePlayer);
+        EventManager.StartListening(Event.StatChanged, UpdateStats);
     }
 
     private void OnDestroy()
@@ -68,6 +70,7 @@ public class PlayerController : MonoBehaviour
         EventManager.StopListening(Event.DialogueStart, FreezePlayer);
         EventManager.StopListening(Event.DialogueFinish, UnfreezePlayer);
         EventManager.StopListening(Event.PlayerDeath, FreezePlayer);
+        EventManager.StopListening(Event.StatChanged, UpdateStats);
     }
 
     void FreezePlayer(IEventPacket packet)
@@ -196,7 +199,7 @@ public class PlayerController : MonoBehaviour
     }
     public void testStats()
     {
-        speed = PlayerStats.Instance.currentSpeed;
+        speed = PlayerStats.Instance.cachedCalculatedValues[Stat.Speed];
     }
 
     void BossTeleport(IEventPacket packet)
@@ -321,5 +324,15 @@ public class PlayerController : MonoBehaviour
             }
         }
         return tempTrans;
+    }
+
+    private void UpdateStats(IEventPacket packet)
+    {
+        StatChangedPacket scp = packet as StatChangedPacket;
+        if(scp != null)
+        {
+            if (scp.stat == Stat.Speed)
+                speed = PlayerStats.Instance.cachedCalculatedValues[Stat.Speed];
+        }
     }
 }

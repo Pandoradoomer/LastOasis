@@ -24,9 +24,10 @@ public class Consumeable : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
-            PlayerStats.Instance.currentHealth += (int)health;
-            //PlayerStats.instance.currentHealth += health;
-            //PlayerStats.currentHealth -= health;
+            //ADD CALCULATION BY MODIFIER
+            PlayerStats.Instance.HealPlayer(health);
+            //PlayerStats.Instance.cachedCalculatedValues[Stat.Current_Health] += health;
+            //PlayerStats.Instance.currentHealth += (int)health;
         }
     }
 

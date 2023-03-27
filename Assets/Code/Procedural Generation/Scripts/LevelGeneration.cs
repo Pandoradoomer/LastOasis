@@ -527,6 +527,10 @@ public class LevelGeneration : MonoBehaviour
         }
     }
     
+    public bool WasRoomVisited(int room)
+    {
+        return visitedRooms.Contains(room);
+    }
 
     private IEnumerator CameraTransition(IEventPacket packet)
     {
