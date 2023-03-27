@@ -6,18 +6,11 @@ public class Weapons : MonoBehaviour, IPlayerWeapon
 {
     [SerializeField] private GameObject sword;
     [SerializeField] private GameObject pistol;
-    private Weapons weapon1;
-    private Weapons weapon2;
+
     public void DealDamage(int damage)
     {
         throw new System.NotImplementedException();
     }
-
-    public void Dequip()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void OnEquip()
     {
         Debug.Log("You eqipped: " + this.gameObject.name);

@@ -157,6 +157,7 @@ public class Inventory : MonoBehaviour
     public void AddWeapon(GameObject weapon)
     {
         weaponList.Add(weapon);
+        Destroy(weapon);
         Debug.Log("Weapon added " + weapon.name);
     }
 }
