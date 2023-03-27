@@ -38,46 +38,46 @@ public class ContractsShop : ScriptableObject
     {
         for(int i = 0; i < GainList.Count; i++)
         {
-            switch(GainList[i])
-            {
-                case GAIN_STAT.Health:
-                    PlayerStats.Instance.maxHealth += 20;
-                    PlayerStats.Instance.currentHealth = PlayerStats.Instance.maxHealth;
-                    break;
-                case GAIN_STAT.Damage:
-                    PlayerStats.Instance.maxDamage += 6;
-                    PlayerStats.Instance.currentDamage = PlayerStats.Instance.maxDamage;
-                    break;
-                case GAIN_STAT.Defence:
-                    break;
-                case GAIN_STAT.Dexterity:
-                    break;
-                case GAIN_STAT.Speed:
-                    PlayerStats.Instance.maxSpeed += 0.5f;
-                    PlayerStats.Instance.currentSpeed = PlayerStats.Instance.maxSpeed;
-                    break;
-            }
+            //switch(GainList[i])
+            //{
+            //    case GAIN_STAT.Health:
+            //        PlayerStats.Instance.maxHealth += 20;
+            //        PlayerStats.Instance.currentHealth = PlayerStats.Instance.maxHealth;
+            //        break;
+            //    case GAIN_STAT.Damage:
+            //        PlayerStats.Instance.maxDamage += 6;
+            //        PlayerStats.Instance.currentDamage = PlayerStats.Instance.maxDamage;
+            //        break;
+            //    case GAIN_STAT.Defence:
+            //        break;
+            //    case GAIN_STAT.Dexterity:
+            //        break;
+            //    case GAIN_STAT.Speed:
+            //        PlayerStats.Instance.maxSpeed += 0.5f;
+            //        PlayerStats.Instance.currentSpeed = PlayerStats.Instance.maxSpeed;
+            //        break;
+            //}
         }
 
         for (int i = 0; i < LostList.Count; i++)
         {
-            switch (LostList[i])
-            {
-                case LOSE_STAT.Health:
-                    break;
-                case LOSE_STAT.Damage:
-                    PlayerStats.Instance.maxDamage -= 3;
-                    PlayerStats.Instance.currentDamage = PlayerStats.Instance.maxDamage;
-                    break;
-                case LOSE_STAT.Defence:
-                    break;
-                case LOSE_STAT.Dexterity:
-                    break;
-                case LOSE_STAT.Speed:
-                    PlayerStats.Instance.maxSpeed -= 0.7f;
-                    PlayerStats.Instance.currentSpeed = PlayerStats.Instance.maxSpeed;
-                    break;
-            }
+            //switch (LostList[i])
+            //{
+            //    case LOSE_STAT.Health:
+            //        break;
+            //    case LOSE_STAT.Damage:
+            //        PlayerStats.Instance.maxDamage -= 3;
+            //        PlayerStats.Instance.currentDamage = PlayerStats.Instance.maxDamage;
+            //        break;
+            //    case LOSE_STAT.Defence:
+            //        break;
+            //    case LOSE_STAT.Dexterity:
+            //        break;
+            //    case LOSE_STAT.Speed:
+            //        PlayerStats.Instance.maxSpeed -= 0.7f;
+            //        PlayerStats.Instance.currentSpeed = PlayerStats.Instance.maxSpeed;
+            //        break;
+            //}
         }
 
         Inventory.Instance.RemoveCoins(ContractCost);

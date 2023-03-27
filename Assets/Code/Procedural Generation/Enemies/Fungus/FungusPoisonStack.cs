@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FungusPoisonStack : DepletableStack
+public class FungusPoisonStack : TimeDepletableStack
 {
     [SerializeField]
     private int damagePerStack;
@@ -13,12 +13,22 @@ public class FungusPoisonStack : DepletableStack
     }
     public override void OnDeplete()
     {
-        PlayerStats.Instance.currentHealth -= damagePerStack;
+        PlayerStats.Instance.WoundPlayer(damagePerStack, false);
         EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
         {
             textColor = Color.green,
             damage = damagePerStack,
             position = PlayerController.Instance.transform.position
         });
+    }
+
+    public override void OnAdd()
+    {
+
+    }
+
+    public override void OnFinalDeplete()
+    {
+
     }
 }

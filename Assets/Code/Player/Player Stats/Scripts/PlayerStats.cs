@@ -7,17 +7,29 @@ using UnityEngine.UI;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
+using System.Linq;
 
-public enum Stats
+public enum Stat
 {
     Health,
     Speed,
     Defence,
     Dexterity,
-    Damage
+    Damage,
+    Coin_Gain,
+    Enemy_Dmg,
+    Enemy_HP,
+    Healing,
+    Death_Save,
+    Blindness,
+    UI_Blindness,
+    Current_Health,
+    Coin_Loss
 }
 
-public enum MaxStats
+public enum MaxStat
+
+
 {
     MaxHealth,
     MaxSpeed,
@@ -26,34 +38,42 @@ public enum MaxStats
     MaxDamage
 }
 
+public enum StatModifierType
+{
+    SET,
+    PERCENTAGE,
+    NUMERICAL
+}
+
+public class StatModifier
+{
+    public Stat stat;
+    public StatModifierType statModifierType;
+    public float modifierValue;
+    public object modifier;
+    public Type modifierType;
+
+    public StatModifier(Stat stat, StatModifierType type, float value)
+    {
+        this.stat = stat;
+        this.statModifierType = type;
+        modifierValue = value;
+    }
+}
+
 public class PlayerStats : MonoBehaviour
 {
     //Values that the player is currently holding
-    [Header("Current Values")]
-    public int currentHealth = -1;
-    public float currentSpeed = -1;
-    public float currentDexterity = -1;
-    public int currentDamage = -1;
-    public float currentDefence = -1;
 
     private bool hasBeenInit = false;
-    //Values used for INITIALISATION ONLY
-    [Header("Base values")]
-    public int baseHealth = 100;
-    public float baseSpeed = 2.0f;
-    public float baseDexterity = 0.0f;
-    public int baseDamage = 5;
-    public float baseDefence = 1.0f;
-
-    //Values used to define the maximum value of a stat
-    //Useful for when we temporarily increase/decrease a stat, so we can then reset them to this value
-    [Header("Max values")]
-    public int maxHealth = -1;
-    public float maxSpeed = -1;
-    public float maxDexterity = -1;
-    public int maxDamage = -1;
-    public float maxDefence = -1;
     public static PlayerStats Instance { get; private set; }
+
+    [SerializeField]
+    private StatValues baseValuesObject;
+
+    public Dictionary<Stat, float> baseStatValues;
+    public Dictionary<Stat, float> cachedCalculatedValues;
+    public List<StatModifier> statModifiers;
 
     bool isDead = false;
     private void Awake()
@@ -68,16 +88,25 @@ public class PlayerStats : MonoBehaviour
             Instance = this;
 
         }
+        statModifiers = new List<StatModifier>();
         if (PlayerPrefs.HasKey("isSet"))
             hasBeenInit = Convert.ToBoolean(PlayerPrefs.GetString("isSet"));
+        else
+        {
+            hasBeenInit = false;
+            PlayerPrefs.SetString("isSet", false.ToString());
+        }
         if(!hasBeenInit)
         {
             hasBeenInit = true;
-            currentHealth = maxHealth = baseHealth;
-            currentSpeed = maxSpeed = baseSpeed;
-            currentDexterity = maxDexterity = baseDexterity;
-            currentDefence = maxDefence = baseDefence;
-            currentDamage = maxDamage = baseDamage;
+            baseStatValues = new Dictionary<Stat, float>();
+            cachedCalculatedValues = new Dictionary<Stat, float>();
+            foreach(StatValue sv in baseValuesObject.statValues)
+            {
+                baseStatValues.Add(sv.stat, sv.value);
+                cachedCalculatedValues.Add(sv.stat, sv.value);
+            }
+
         }
         else
         {
@@ -101,14 +130,19 @@ public class PlayerStats : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.K))
         {
-            currentHealth = 0;
+            cachedCalculatedValues[Stat.Current_Health] = 0;
         }
-
-        if (currentHealth > maxHealth)
-            currentHealth = maxHealth;
-        if (currentHealth <= 0)
+        if (IsPlayerDead())
         {
-            currentHealth = 0;
+            if (cachedCalculatedValues[Stat.Death_Save] > 0)
+            {
+                EventManager.TriggerEvent(Event.DeathSave, null);
+                cachedCalculatedValues[Stat.Death_Save] = 0;
+                cachedCalculatedValues[Stat.Current_Health] = (int)(30.0f * cachedCalculatedValues[Stat.Health] / 100.0f);
+                return;
+
+            }
+            cachedCalculatedValues[Stat.Current_Health] = 0;
             //Reload scene
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             if(!isDead)
@@ -116,154 +150,34 @@ public class PlayerStats : MonoBehaviour
                 isDead = true;
                 EventManager.TriggerEvent(Event.PlayerDeath, null);
             }
-            Debug.Log("Player died");
         }
-        //if (currentHealth >= baseHealth)
-        //{
-        //    currentHealth = baseHealth;
-        //}
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if(Input.GetKeyDown(KeyCode.L)) 
         {
-            maxHealth += 5;
-            currentHealth = maxHealth;
-            Debug.Log("Current health: " + currentHealth);
-            Debug.Log("Base health: " + maxHealth);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            maxHealth -= 5;
-            currentHealth = maxHealth;
-            Debug.Log("Current health: " + currentHealth);
-            Debug.Log("Base health: " + maxHealth);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            maxDamage += 2;
-            currentDamage = maxDamage;
-
-            Debug.Log("Current damage: " + currentDamage);
-            Debug.Log("Base damage: " + maxDamage);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            maxDamage -= 2;
-            currentDamage = maxDamage;
-
-            Debug.Log("Current damage: " + currentDamage);
-            Debug.Log("Base damage: " + maxDamage);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            maxSpeed += 0.1f;
-            currentSpeed = maxSpeed;
-
-            Debug.Log("Current move speed: " + currentSpeed);
-            Debug.Log("Base move speed: " + maxSpeed);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            maxSpeed -= 0.1f;
-            currentSpeed = maxSpeed;
-
-            Debug.Log("Current move speed: " + currentSpeed);
-            Debug.Log("Base move speed: " + maxSpeed);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            maxDefence += 1.0f;
-            currentDefence = maxDefence;
-
-            Debug.Log("Current defence: " + currentDefence);
-            Debug.Log("Base defence: " + maxDefence);
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            maxDefence -= 1.0f;
-            currentDefence = maxDefence;
-
-            Debug.Log("Current defence: " + currentDefence);
-            Debug.Log("Base defence: " + maxDefence);
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            maxDexterity += 0.005f;
-            currentDexterity = maxDexterity;
-            
-            Debug.Log("Current dexterity: " + currentDexterity);
-            Debug.Log("Base dexterity: " + maxDexterity);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            maxDexterity -= 0.005f;
-            currentDexterity = maxDexterity;
-
-            Debug.Log("Current dexterity: " + currentDexterity);
-            Debug.Log("Base dexterity: " + maxDexterity);
+            hasBeenInit = false;
         }
     }
 
-    void OnTriggerEnter2D(Collider2D coll)
+    bool IsPlayerDead()
     {
-        //if (coll.gameObject.CompareTag("Coin"))
-        //{
-        //    coinCounter += Random.Range(item_coin.minValue,item_coin.maxValue);
-        //    coinText.text = "Coins: " + coinCounter;
-        //}
-        //
-        //else if (coll.gameObject.CompareTag("CoinPile"))
-        //{
-        //    coinCounter += Random.Range(item_coin_pile.minValue, item_coin_pile.maxValue);
-        //    coinText.text = "Coins: " + coinCounter;
-        //}
-        //
-        //else if (coll.gameObject.CompareTag("CoinBag"))
-        //{
-        //    coinCounter += Random.Range(item_coin_bag.minValue, item_coin_bag.maxValue);
-        //    coinText.text = "Coins: " + coinCounter;
-        //}
-
-
+        return cachedCalculatedValues[Stat.Current_Health] <= 0;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // When collided with enemy or boss, the player will take damage.
-        if (!PlayerController.Instance.invulnerability)
-        {
-        }
-    }
-
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        // When player does not move from the collision point, player will still take damage.
-        if (!PlayerController.Instance.invulnerability)
-        {
-        }
-    }
 
     private void OnEnemyHit(IEventPacket packet)
     {
         EnemyHitPacket ehp = packet as EnemyHitPacket;
         if (!PlayerController.Instance.invulnerability)
         {
-            currentHealth -= (int)ehp.healthDeplete;
+            float enemyDamage = ehp.healthDeplete;
+            enemyDamage = (cachedCalculatedValues[Stat.Enemy_Dmg]) / 100.0f * enemyDamage;
+            WoundPlayer((int)enemyDamage, false);
+            //cachedCalculatedValues[Stat.Current_Health] -= (int)ehp.healthDeplete;
             PlayerController.Instance.invulnerability = true;
             EventManager.TriggerEvent(Event.DamageDealt, new DamageDealtPacket()
             {
                 textColor = Color.red,
                 position = PlayerController.Instance.transform.position,
-                damage = (int)ehp.healthDeplete
+                damage = (int)enemyDamage
             });
         }
     }
@@ -276,44 +190,47 @@ public class PlayerStats : MonoBehaviour
 
     public void SaveValues()
     {
-        PlayerPrefs.SetInt(Stats.Health.ToString(), currentHealth);
-        PlayerPrefs.SetInt(Stats.Damage.ToString(), currentDamage);
-        PlayerPrefs.SetFloat(Stats.Defence.ToString(), currentDefence);
-        PlayerPrefs.SetFloat(Stats.Dexterity.ToString(), currentDexterity);
-        PlayerPrefs.SetFloat(Stats.Speed.ToString(), currentSpeed);
-
-        PlayerPrefs.SetInt(MaxStats.MaxHealth.ToString(), maxHealth);
-        PlayerPrefs.SetInt(MaxStats.MaxDamage.ToString(), maxDamage);
-        PlayerPrefs.SetFloat(MaxStats.MaxDefence.ToString(), maxDefence);
-        PlayerPrefs.SetFloat(MaxStats.MaxDexterity.ToString(), maxDexterity);
-        PlayerPrefs.SetFloat(MaxStats.MaxSpeed.ToString(), maxSpeed);
+        foreach(var kvp in baseStatValues)
+        {
+            PlayerPrefs.SetFloat(kvp.Key.ToString(), kvp.Value);
+        }
         PlayerPrefs.SetString("isSet", hasBeenInit.ToString());
     }
 
     public void LoadValues()
     {
+        baseStatValues = new Dictionary<Stat, float>();
+        cachedCalculatedValues = new Dictionary<Stat, float>();
+        var values = Enum.GetValues(typeof(Stat));
+        foreach(var stat in values)
+        {
+            baseStatValues.Add((Stat)stat, PlayerPrefs.GetFloat(stat.ToString()));
+            cachedCalculatedValues.Add((Stat)stat, PlayerPrefs.GetFloat(stat.ToString()));
 
-        currentHealth = PlayerPrefs.GetInt(Stats.Health.ToString(), currentHealth);
-        currentDamage = PlayerPrefs.GetInt(Stats.Damage.ToString(), currentDamage);
-        currentDefence = PlayerPrefs.GetFloat(Stats.Defence.ToString(), currentDefence);
-        currentDexterity = PlayerPrefs.GetFloat(Stats.Dexterity.ToString(), currentDexterity);
-        currentSpeed = PlayerPrefs.GetFloat(Stats.Speed.ToString(), currentSpeed);
+        }
 
-        maxHealth =  PlayerPrefs.GetInt(MaxStats.MaxHealth.ToString(), maxHealth);
-        maxDamage = PlayerPrefs.GetInt(MaxStats.MaxDamage.ToString(), maxDamage);
-        maxDefence = PlayerPrefs.GetFloat(MaxStats.MaxDefence.ToString(), maxDefence);
-        maxDexterity = PlayerPrefs.GetFloat(MaxStats.MaxDexterity.ToString(), maxDexterity);
-        maxSpeed = PlayerPrefs.GetFloat(MaxStats.MaxSpeed.ToString(), maxSpeed);
+        //maxHealth =  PlayerPrefs.GetInt(MaxStat.MaxHealth.ToString(), maxHealth);
+        //maxDamage = PlayerPrefs.GetInt(MaxStat.MaxDamage.ToString(), maxDamage);
+        //maxDefence = PlayerPrefs.GetFloat(MaxStat.MaxDefence.ToString(), maxDefence);
+        //maxDexterity = PlayerPrefs.GetFloat(MaxStat.MaxDexterity.ToString(), maxDexterity);
+        //maxSpeed = PlayerPrefs.GetFloat(MaxStat.MaxSpeed.ToString(), maxSpeed);
         hasBeenInit = Convert.ToBoolean(PlayerPrefs.GetString("isSet"));
     }
 
     public void ResetStatValues()
     {
-        currentHealth = maxHealth = baseHealth;
-        currentDamage = maxDamage = baseDamage;
-        currentSpeed = maxSpeed = baseSpeed;
-        currentDexterity = currentDexterity = baseDexterity;
-        currentDefence = maxDefence = baseDefence;
+        //currentHealth = maxHealth = baseHealth;
+        //currentDamage = maxDamage = baseDamage;
+        //currentSpeed = maxSpeed = baseSpeed;
+        //currentDexterity = currentDexterity = baseDexterity;
+        //currentDefence = maxDefence = baseDefence;
+        baseStatValues.Clear();
+        cachedCalculatedValues.Clear();
+        foreach(var sv in baseValuesObject.statValues)
+        {
+            baseStatValues.Add(sv.stat, sv.value);
+            cachedCalculatedValues.Add(sv.stat, sv.value);
+        }
     }
 
     private void OnPlayerDeath(IEventPacket packet)
@@ -331,9 +248,81 @@ public class PlayerStats : MonoBehaviour
 
     }
 
+    public void WoundPlayer(int amount, bool isDefence)
+    {
+        if(isDefence)
+        {
+
+        }
+        else
+        {
+            cachedCalculatedValues[Stat.Current_Health] -= amount;
+            baseStatValues[Stat.Current_Health] -= amount;
+        }
+    }
+
+    public void HealPlayer(float amount)
+    {
+        amount = (int)((cachedCalculatedValues[Stat.Healing] / 100.0f) * amount);
+        cachedCalculatedValues[Stat.Current_Health] += amount;
+    }
+
+    public void AddModifier(StatModifier modifier)
+    {
+        statModifiers.Add(modifier);
+        CalculateStat(modifier.stat);
+    }
+
+    public void RemoveModifier(StatModifier modifier)
+    {
+        statModifiers.Remove(modifier);
+        CalculateStat(modifier.stat);
+    }
+
+    public void CalculateStat(Stat stat)
+    {
+        List<StatModifier> modifiers = statModifiers.Where(x => x.stat == stat).ToList();
+        List<StatModifier> setModifiers = modifiers.Where(x => x.statModifierType == StatModifierType.SET).ToList();
+        float numerical = 0;
+        float percentage = 0;
+        if(setModifiers.Count != 0)
+        {
+            cachedCalculatedValues[stat] = setModifiers[0].modifierValue;
+            EventManager.TriggerEvent(Event.StatChanged, new StatChangedPacket()
+            {
+                stat = stat
+            });
+            return;
+        }
+        else
+        {
+            foreach(StatModifier modifier in modifiers)
+            {
+                if (modifier.statModifierType == StatModifierType.PERCENTAGE)
+                    percentage += modifier.modifierValue;
+                else if (modifier.statModifierType == StatModifierType.NUMERICAL)
+                    numerical += modifier.modifierValue;
+            }
+
+            percentage = Mathf.Clamp(percentage, -100.0f, 1000.0f);
+
+            cachedCalculatedValues[stat] = (baseStatValues[stat] + numerical) * (100.0f + percentage)/100.0f;
+            EventManager.TriggerEvent(Event.StatChanged, new StatChangedPacket()
+            {
+                stat = stat
+            });
+        }
+    }
+
+    public float GetCurrentHealthPercentage()
+    {
+        return cachedCalculatedValues[Stat.Current_Health] / cachedCalculatedValues[Stat.Health];
+    }
+
     public void ResetDeath()
     {
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
+        cachedCalculatedValues[Stat.Current_Health] = baseStatValues[Stat.Health];
         isDead = false;
     }
 }

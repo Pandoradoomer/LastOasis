@@ -88,13 +88,16 @@ public class ShopItem : ScriptableObject
             switch (ItemStat)
             {
                 case ITEM_STAT.HEALTH:
-                    PlayerStats.Instance.maxHealth += (int)CalculateStatValue();
-                    PlayerStats.Instance.currentHealth = PlayerStats.Instance.maxHealth;
+                    PlayerStats.Instance.baseStatValues[Stat.Health] += CalculateStatValue();
+                    PlayerStats.Instance.baseStatValues[Stat.Current_Health] = PlayerStats.Instance.baseStatValues[Stat.Health];
+                    PlayerStats.Instance.cachedCalculatedValues[Stat.Current_Health] = PlayerStats.Instance.baseStatValues[Stat.Current_Health];
+                    PlayerStats.Instance.cachedCalculatedValues[Stat.Health] = PlayerStats.Instance.baseStatValues[Stat.Health];
+
                     break;
 
                 case ITEM_STAT.DAMAGE:
-                    PlayerStats.Instance.maxDamage += (int)CalculateStatValue();
-                    PlayerStats.Instance.currentDamage = PlayerStats.Instance.maxDamage;
+                    PlayerStats.Instance.baseStatValues[Stat.Damage] += CalculateStatValue();
+                    PlayerStats.Instance.cachedCalculatedValues[Stat.Damage] = PlayerStats.Instance.baseStatValues[Stat.Damage];
                     break;
 
                 case ITEM_STAT.DEFENCE:
@@ -102,13 +105,13 @@ public class ShopItem : ScriptableObject
                     break;
 
                 case ITEM_STAT.DEXTERITY:
-                    PlayerStats.Instance.maxDexterity += CalculateStatValue();
-                    PlayerStats.Instance.currentDexterity = PlayerStats.Instance.maxDexterity;
+                    PlayerStats.Instance.baseStatValues[Stat.Dexterity] += CalculateStatValue();
+                    PlayerStats.Instance.cachedCalculatedValues[Stat.Dexterity] = PlayerStats.Instance.baseStatValues[Stat.Dexterity];
                     break;
 
                 case ITEM_STAT.MOVEMENT_SPEED:
-                    PlayerStats.Instance.maxSpeed += CalculateStatValue();
-                    PlayerStats.Instance.currentSpeed = PlayerStats.Instance.maxSpeed;
+                    PlayerStats.Instance.baseStatValues[Stat.Speed] += CalculateStatValue();
+                    PlayerStats.Instance.cachedCalculatedValues[Stat.Speed] = PlayerStats.Instance.baseStatValues[Stat.Speed];
                     break;
             }
             ItemLevel++;

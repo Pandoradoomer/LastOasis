@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c10c15294d8ad114d95708932c5bbf9b, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: Assembly-CSharp::NewBehaviourScript
-  healthSpawnChanceDestructible: 0.05
+  healthSpawnChanceDestructible: 1
   coinSpawnChanceDestructible: 0.08
   mediumThreshold: 0.3
   highThreshold: 0.6

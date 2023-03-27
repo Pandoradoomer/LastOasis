@@ -57,8 +57,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddCoins(int amount)
+    public void AddCoins(int amount, bool ignoreCoinGain = false)
     {
+        if(!ignoreCoinGain)
+            amount = (int)((PlayerStats.Instance.cachedCalculatedValues[Stat.Coin_Gain] / 100.0f) * amount);
         itemDictionary[coinEntry] += amount;
     }
 

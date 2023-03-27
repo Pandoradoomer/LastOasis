@@ -20,6 +20,8 @@ public enum Event
     DamageDealt,
     SpawnObelisk,
     PlayerDeath,
-    TestRoom
+    TestRoom,
+    StatChanged,
+    DeathSave
 
 }
