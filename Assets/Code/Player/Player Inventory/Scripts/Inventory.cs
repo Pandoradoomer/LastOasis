@@ -1,13 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
     //Dictionary handles item stacking from List
+    [Header("Collectables")]
     private Dictionary<CollectableData, int> itemDictionary = new Dictionary<CollectableData, int>();
     [SerializeField]
     private CollectableData coinEntry;
+    [Header("Weapons")]
+    //Weapon handler
+    [SerializeField]
+    private List<GameObject> weaponList = new List<GameObject>();
+    private List<IPlayerWeapon> weapons = new List<IPlayerWeapon>();
 
     public static Inventory Instance;
 
@@ -135,5 +142,21 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+    //Check if player has weapon
+    public bool HasWeapon(GameObject weapon)
+    {
+        if (weaponList.Contains(weapon))
+        {
+            Debug.Log("Player has weapon:" + weapon);
+            return true;
+        }
+        return false;
+    }
 
+    //Add weapon
+    public void AddWeapon(GameObject weapon)
+    {
+        weaponList.Add(weapon);
+        Debug.Log("Weapon added " + weapon.name);
+    }
 }
