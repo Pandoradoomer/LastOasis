@@ -39,6 +39,10 @@ public abstract class EventDepletableStack : DepletableStack
     {
         EventManager.StopListening(depleteOnEvent, OnDeplete);
     }
+    public void RemoveEventListeners()
+    {
+        EventManager.StopListening(depleteOnEvent, OnDeplete);
+    }
 }
 
 public abstract class PermanentStack : Stack
@@ -51,38 +55,3 @@ public abstract class PersistentStack : Stack
 
 }
 
-public class TestEventDepletableStack : EventDepletableStack
-{
-    StatModifier modifier = null;
-    public TestEventDepletableStack()
-    {
-        depleteOnEvent = Event.RoomExit;
-        modifier = new StatModifier(Stat.Speed, StatModifierType.PERCENTAGE, 50.0f);
-    }
-
-    public override bool DepleteCondition(IEventPacket packet)
-    {
-        RoomExitPacket rep = packet as RoomExitPacket;
-        if(rep != null)
-        {
-            return !LevelGeneration.Instance.WasRoomVisited(rep.nextRoomIndex);
-        }
-        return false;
-    }
-
-    public override void OnAdd()
-    {
-        base.OnAdd();
-        PlayerStats.Instance.AddModifier(modifier);
-    }
-    public override void OnDeplete()
-    {
-        
-    }
-
-    public override void OnFinalDeplete()
-    {
-        base.OnFinalDeplete();
-        PlayerStats.Instance.RemoveModifier(modifier);
-    }
-}

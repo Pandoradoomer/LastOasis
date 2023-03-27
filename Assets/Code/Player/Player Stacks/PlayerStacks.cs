@@ -32,6 +32,14 @@ public class PlayerStacks : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.StopListening(Event.StackAdded, AddStack);
+        foreach(var kvp in stacks)
+        {
+            if(kvp.Key is EventDepletableStack)
+            {
+                EventDepletableStack eds = kvp.Key as EventDepletableStack;
+                eds.RemoveEventListeners();
+            }
+        }
     }
 
     void AddStack(IEventPacket packet)

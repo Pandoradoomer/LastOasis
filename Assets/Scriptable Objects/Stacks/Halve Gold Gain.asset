@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88eec29f32ee5024f82c6fd0dfca956d, type: 3}
   m_Name: Halve Gold Gain
   m_EditorClassIdentifier: 
-  modifierType: 0
-  value: 0
+  modifierType: 1
+  value: -50

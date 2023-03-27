@@ -39,3 +39,5 @@ MonoBehaviour:
     value: 0
   - stat: 12
     value: 100
+  - stat: 13
+    value: 100

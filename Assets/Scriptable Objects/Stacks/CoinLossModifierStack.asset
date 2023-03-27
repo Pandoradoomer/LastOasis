@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff68e713f8668934db1f7032108d0490, type: 3}
-  m_Name: Death Save
+  m_Script: {fileID: 11500000, guid: 34c35a48899bd764aa692a61437850e6, type: 3}
+  m_Name: CoinLossModifierStack
   m_EditorClassIdentifier: 
-  depleteOnEvent: 18
+  modifierType: 0
+  value: 50

@@ -288,6 +288,10 @@ public class PlayerStats : MonoBehaviour
         if(setModifiers.Count != 0)
         {
             cachedCalculatedValues[stat] = setModifiers[0].modifierValue;
+            EventManager.TriggerEvent(Event.StatChanged, new StatChangedPacket()
+            {
+                stat = stat
+            });
             return;
         }
         else

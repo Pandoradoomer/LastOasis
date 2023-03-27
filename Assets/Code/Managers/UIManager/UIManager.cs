@@ -42,6 +42,8 @@ public class UIManager : MonoBehaviour
     float buttonDelay = 0.5f;
     [SerializeField]
     float buttonFadeIn = 1.0f;
+
+    private int lostCoins = 0;
     
     void Start()
     {
@@ -94,7 +96,13 @@ public class UIManager : MonoBehaviour
             yield return null;
 
         Color inventoryTextColor = _inventoryLostText.color;
-        _inventoryLostText.text = $"You've lost {Inventory.Instance.GetCoins()} coins xD";
+
+        lostCoins = (int)(Inventory.Instance.GetCoins() * PlayerStats.Instance.cachedCalculatedValues[Stat.Coin_Loss]/100.0f);
+        if(lostCoins > Inventory.Instance.GetCoins())
+            lostCoins = Inventory.Instance.GetCoins();
+        if (lostCoins < 0)
+            lostCoins = 0;
+        _inventoryLostText.text = $"You've lost {lostCoins} coins xD";
         inventoryTextColor.a = 0.0f;
         _inventoryLostText.color = inventoryTextColor;
         _inventoryLostText.gameObject.SetActive(true);
@@ -154,7 +162,10 @@ public class UIManager : MonoBehaviour
     }
     IEnumerator ReturnTransition()
     {
+        int remainingCoins = 0;
+        remainingCoins = Inventory.Instance.GetCoins() - lostCoins;
         Inventory.Instance.ClearInventory();
+        Inventory.Instance.AddCoins(remainingCoins, true);
         yield return StartCoroutine(FadeOutDeath());
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Ship");
         while (!asyncLoad.isDone)
